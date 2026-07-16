@@ -1,0 +1,6 @@
+on early-init
+    mkdir /tmp
+
+    # set SEAndroid permissive mode at init
+    setenforce 0
+
