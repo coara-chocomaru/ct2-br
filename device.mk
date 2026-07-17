@@ -6,7 +6,7 @@ TARGET_IS_TABLET := true
 TARGET_NO_TELEPHONY := true
 TARGET_HAS_NO_RADIO := true
 LOCAL_PATH := device/sts/a03br
-PRODUCT_BUILD_VENDOR_IMAGE := false
+# PRODUCT_BUILD_VENDOR_IMAGE := false
 
 # Product characteristics
 # PRODUCT_PACKAGE_OVERLAYS += \
