@@ -179,7 +179,7 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/fstab.pxa1928
 TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
+VENDOR_SECURITY_PATCH := 2018-03-05
 
 include vendor/sts/a03br/BoardConfigVendor.mk
 
