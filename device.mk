@@ -1,3 +1,4 @@
+$(call inherit-product-if-exists, vendor/sts/a03br/a03br-vendor.mk)
 PRODUCT_SHIPPING_API_LEVEL := 22
 PRODUCT_FIRST_API_LEVEL := 22
 PRODUCT_CHARACTERISTICS := tablet
