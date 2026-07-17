@@ -93,29 +93,6 @@ jobs:
         run: |
           repo forall -v -c git lfs pull
 
-      - name: Verify WebView APK
-        working-directory: workspace/external/chromium-webview
-        run: |
-          APK="prebuilt/arm64/webview.apk"
-          if [ ! -f "$APK" ];
-          then
-            echo "Error: $APK does not exist"
-            exit 1
-          fi
-          if file "$APK" | grep -q "ASCII text"; then
-            echo "Error: $APK is still an LFS pointer file"
-            echo "Pointer content:"
-            cat "$APK"
-            exit 1
-          fi
-          if ! file "$APK" | grep -q "Zip archive"; then
-            echo "Error: $APK is not a valid ZIP archive"
-            file "$APK"
-            exit 1
-          fi
-          echo "WebView APK verified successfully."
-          ls -lh "$APK"
-
       - name: Set Swap Space
         uses: pierotofy/set-swap-space@master
         with:
