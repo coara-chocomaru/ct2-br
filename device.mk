@@ -99,20 +99,34 @@ PRODUCT_PACKAGES += \
     make_ext4fs
 
 PRODUCT_PACKAGES += \
-    fstab.mt8167 \
-    init.mt8167.rc \
-    init.mt8167.usb.rc \
+    fstab.pxa1928 \
+    init.pxa1928.power.rc \
+    init.pxa1928.rc \
+    init.pxa1928.sensor.rc \
+    init.pxa1928.usb.rc \
     init.usb.rc \
-    init.usb.configfs.rc \
-    init.recovery.mt8167.rc \
-    init.connectivity.rc \
-    ueventd.mt8167.rc \
-    ueventd.rc \
-    init.modem.rc \
     init.zygote32.rc \
     init.zygote64_32.rc \
-    init.cm.rc \
-    init.rc
+    init_bsp.pxa1928.rc \
+    gator.ko \
+    gspca_main.ko \
+    mbt8777.ko \
+    mbt8787.ko \
+    mbt8887.ko \
+    mlan8777.ko \
+    mlan8787.ko \
+    mlan8801.ko \
+    mlan8887.ko \
+    sd8777.ko \
+    sd8787.ko \
+    sd8801.ko \
+    sd8887.ko \
+    ed_mac_ctrl.conf \
+    ed_mac_ctrl_8801.conf \
+    mlaninit.sh \
+    mlaninit_8801.sh \
+    ueventd.pxa1928.rc \
+    ueventd.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/fstab.pxa1928:root/fstab.pxa1928 \
