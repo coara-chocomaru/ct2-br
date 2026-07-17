@@ -1,3 +1,3 @@
-add_lunch_combo 
-add_lunch_combo 
-add_lunch_combo 
+add_lunch_combo lineage_a03br-eng
+
+export ALLOW_MISSING_DEPENDENCIES=true
