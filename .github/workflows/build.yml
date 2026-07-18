@@ -395,8 +395,9 @@ jobs:
         with:
           name: ${{ env.DEVICE_NAME }}-${{ github.run_id }}
           path: |
-            workspace/out/target/product/${{ env.DEVICE_NAME }}/lineage-*.zip
+            workspace/out/target/product/${{ env.DEVICE_NAME }}/cm-*.zip
             workspace/out/target/product/${{ env.DEVICE_NAME }}/boot.img
             workspace/out/target/product/${{ env.DEVICE_NAME }}/recovery.img
+            workspace/out/target/product/${{ env.DEVICE_NAME }}/system.img
           retention-days: 14
           if-no-files-found: error
