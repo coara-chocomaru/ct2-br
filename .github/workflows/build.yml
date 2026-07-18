@@ -39,7 +39,6 @@ jobs:
       - name: Prepare the environment
         run: |
           sudo apt update
-          sudo apt -y upgrade
           sudo apt -y install \
             gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib \
             libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree \
@@ -93,6 +92,84 @@ jobs:
         working-directory: workspace
         run: |
           repo forall -v -c git lfs pull
+
+      - name: Restore ccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: ccache-${{ env.DEVICE_NAME }}-${{ env.MANIFEST_BRANCH }}-${{ github.run_id }}
+          restore-keys: |
+            ccache-${{ env.DEVICE_NAME }}-${{ env.MANIFEST_BRANCH }}-
+
+      - name: Configure ccache
+        run: |
+          echo "webview alone accounted for 1h36m (58% of the last full run's total wall-clock time), and this is the single largest lever for iterative CI reruns like this project's: ccache lets every source file that already compiled identically in a previous run skip recompilation entirely. The GitHub Actions free cache storage tier is 10 GB per repository by default (usage beyond that is billed to the account, and repository admins can raise the limit), so the cache is sized conservatively at 8 GB with compression to stay comfortably inside the free tier while still covering a meaningful share of the tree. A cold cache (first run, or after the 7-day GitHub Actions cache eviction window with no access) gets no benefit and behaves exactly as before - this only accelerates repeated runs against a mostly-unchanged source tree, which matches how this workflow has actually been used across this debugging session."
+          echo "Two CI-specific tuning knobs, both aimed at not losing cache hits to things that differ between runs but not in ways that should matter: (1) compiler_check=content hashes the actual compiler binary content instead of its mtime/size - the toolchain is freshly apt-installed every run, so it always gets a new mtime even though it is byte-identical, which would otherwise silently invalidate the entire cache on every single run. (2) sloppiness=include_file_mtime,include_file_ctime,time_macros makes ccache ignore header mtimes/ctimes when hashing - the WebKit header-mismatch fix step symlinks/regenerates CSSGrammar.hpp and XPathGrammar.hpp fresh on every run, which would otherwise poison cache hits for every object file that includes them even though their content never changes."
+          mkdir -p ~/.ccache
+          ccache -M 8G
+          ccache -o compression=true
+          ccache -o compression_level=6
+          ccache -o compiler_check=content
+          ccache -o sloppiness=include_file_mtime,include_file_ctime,time_macros
+          ccache -z
+          ccache -s
+
+      - name: Scan device tree for other missing PRODUCT_COPY_FILES sources (fail fast, read-only)
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          echo "This device tree has twice shipped PRODUCT_COPY_FILES entries pointing at source files that do not exist in this cm-12.1 (Android 5.1.1) tree (audio_policy_volumes.xml and friends in media.mk, android.hardware.microphone.xml in permissions.mk) - both only surfaced as 'No rule to make target' after ~2h45m of build time, in the final bacon packaging stage. This step statically scans every .mk file under device/sts/a03br for the same src:dest pattern and checks the source exists right now, right after repo sync, so any further landmine of this kind fails in minutes instead of hours. This is read-only - it never edits any file, only reports and, if it finds something new and unresolved, fails the job early with a clear list."
+
+          python3 - << 'PYEOF'
+          import os
+          import re
+
+          device_dir = "device/sts/a03br"
+          local_path_value = "device/sts/a03br"
+
+          mk_files = []
+          for root, dirs, files in os.walk(device_dir):
+              for fn in files:
+                  if fn.endswith(".mk"):
+                      mk_files.append(os.path.join(root, fn))
+
+          entry_re = re.compile(r'^\s*(?P<src>[A-Za-z0-9_./\-\$\(\)]+):(?P<dest>[A-Za-z0-9_./\-]+)\s*\\?\s*$')
+
+          missing = []
+          checked = 0
+          for path in sorted(mk_files):
+              with open(path, "r") as f:
+                  lines = f.readlines()
+              for lineno, raw in enumerate(lines, start=1):
+                  line = raw.rstrip("\n")
+                  m = entry_re.match(line)
+                  if not m:
+                      continue
+                  src = m.group("src")
+                  if "*" in src or "%" in src:
+                      continue
+                  resolved = src.replace("$(LOCAL_PATH)", local_path_value)
+                  if "$(" in resolved:
+                      continue
+                  if "/" not in resolved:
+                      continue
+                  checked += 1
+                  if not os.path.isfile(resolved):
+                      missing.append((path, lineno, line.strip(), resolved))
+
+          print("Statically checked " + str(checked) + " PRODUCT_COPY_FILES-style source paths across " + str(len(mk_files)) + " .mk files under " + device_dir)
+
+          if missing:
+              print("")
+              print("ERROR: found entries whose source file does not exist in the synced tree:")
+              for path, lineno, line, resolved in missing:
+                  print("  " + path + ":" + str(lineno) + "  (resolved source: " + resolved + ")")
+                  print("    " + line)
+              print("")
+              print("Fix the offending line(s) in the device tree (or patch them in this workflow, as already done for media.mk and permissions.mk) before re-running - this would otherwise only surface after hours of build time in the bacon stage.")
+              raise SystemExit(1)
+
+          print("OK: no other missing PRODUCT_COPY_FILES sources detected.")
+          PYEOF
 
       - name: Patch Java version detection in build/core/main.mk
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
@@ -181,6 +258,8 @@ jobs:
           export LC_ALL=C
           export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
           export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
+          export USE_CCACHE=1
+          export CCACHE_DIR="$HOME/.ccache"
           lunch ${{ env.MAKEFILE_NAME }}-userdebug
 
           mkdir -p out/target/product/${{ env.DEVICE_NAME }}/obj/KERNEL_OBJ/usr/include/linux
@@ -213,6 +292,8 @@ jobs:
           export LC_ALL=C
           export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
           export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
+          export USE_CCACHE=1
+          export CCACHE_DIR="$HOME/.ccache"
           lunch ${{ env.MAKEFILE_NAME }}-userdebug
 
           echo "Root cause confirmed by inspecting external/chromium_org/third_party/WebKit/Source/build/scripts/rule_bison.py directly (LineageOS/android_external_chromium_org_third_party_WebKit, cm-12.1 branch): after running bison, the script reads whichever header bison produced (X.cpp.h on old bison, X.hpp on modern bison), deletes it, and writes a NEW file named X.h with include guards added. This is not a race - a -j1 fully serial build reproduces the exact same failure every time. Modern bison (3.7+, confirmed on this runner's bison 3.8.2 via direct test: 'bison -d -o test.cpp' emits test.hpp AND auto-inserts #include \"test.hpp\" inside test.cpp itself) leaves CSSGrammar.cpp/XPathGrammar.cpp permanently referencing a header the script has already deleted and replaced under a different name (X.h). No amount of parallelism control fixes this; the .cpp file's own #include line is simply wrong for the header that ends up on disk."
@@ -269,6 +350,8 @@ jobs:
           export LC_ALL=C
           export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
           export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
+          export USE_CCACHE=1
+          export CCACHE_DIR="$HOME/.ccache"
           export WITH_DEXPREOPT=true
           lunch ${{ env.MAKEFILE_NAME }}-userdebug
 
@@ -299,6 +382,13 @@ jobs:
           retry_make org.cyanogenmod.platform-res -j$(nproc --all)
           retry_make webview -j$(nproc --all)
           retry_make ${{ env.BUILD_TARGET }} -j$(nproc --all) WITH_DEXPREOPT=true
+
+      - name: Show ccache statistics
+        if: always()
+        run: |
+          echo "ccache's cleanup-to-configured-limit is asynchronous, not real-time - under sustained -j4 write load over a multi-hour build it can transiently overshoot the configured max size significantly before the next cleanup pass catches up (observed directly: 17.36 GB actual vs an 8 GB configured limit in one run). Forcing cleanup here, right before the job ends and actions/cache automatically saves ~/.ccache, keeps the uploaded cache within the intended budget instead of eating further into the account's shared 10 GB free cache storage tier."
+          ccache -c
+          ccache -s
       
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
