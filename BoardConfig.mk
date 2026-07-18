@@ -194,3 +194,4 @@ include vendor/sts/a03br/BoardConfigVendor.mk
 	#$(DEVICE_PATH)/sepolicy/
 #BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
 #SELINUX_IGNORE_NEVERALLOWS := true
+SELINUX_IGNORE_NEVERALLOWS := true
