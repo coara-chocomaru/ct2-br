@@ -179,7 +179,7 @@ RECOVERY_SDCARD_ON_DATA := true
 LZMA_RAMDISK_TARGETS := recovery
 BOARD_RECOVERY_SWIPE := true
 BOARD_SUPPRESS_EMMC_WIPE := true
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/fstab.pxa1928
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/etc/recovery.fstab
 TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 
 # Security patch level
