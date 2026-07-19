@@ -4,6 +4,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+$(call inherit-product, vendor/cm/config/common_full_tablet_wifionly.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
@@ -26,6 +27,7 @@ TARGET_SCREEN_WIDTH := 1280
 TARGET_SCREEN_HEIGHT := 800
 PRODUCT_RESTRICT_VENDOR_FILES := false
 TEMPORARY_DISABLE_PATH_RESTRICTIONS := true
+TARGET_LOCALES := ja_JP en_US en_AU
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="TAB-A03-BR-user 5.1 02.04.000 02.04.000.20191125.213021 release-keys"
