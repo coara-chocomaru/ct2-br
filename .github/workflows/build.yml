@@ -346,7 +346,6 @@ jobs:
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
           source build/envsetup.sh
-          export ALLOW_MISSING_DEPENDENCIES=true
           export LC_ALL=C
           export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
           export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
