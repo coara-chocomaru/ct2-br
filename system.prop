@@ -14,7 +14,6 @@ media.stagefright.enable-meta=false
 media.stagefright.enable-scan=false
 media.stagefright.enable-http=false
 ro.hardware=pxa1928
-ro.board.platform=mrvl
 ro.boot.selinux=disabled
 ro.zygote.disable_gl_preload=true
 ro.sf.lcd_density=160
