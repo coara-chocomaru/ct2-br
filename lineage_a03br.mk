@@ -12,8 +12,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, device/sts/a03br/device.mk)
 
 PRODUCT_DEVICE := a03br
-PRODUCT_NAME := lineage_a03br
-PRODUCT_RELEASE_NAME := lineage_a03br
+PRODUCT_NAME := cm_a03br
+PRODUCT_RELEASE_NAME := cm_a03br
 PRODUCT_BRAND := benesse
 PRODUCT_MODEL := TAB-A03-BR
 PRODUCT_MANUFACTURER := STS-TOTTORI
