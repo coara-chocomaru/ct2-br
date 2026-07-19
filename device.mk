@@ -152,5 +152,5 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/ueventd.pxa1928.rc:root/ueventd.pxa1928.rc \
     $(LOCAL_PATH)/rootdir/ueventd.rc:root/ueventd.rc
 
-include device/sts/a03br/media.mk
+# include device/sts/a03br/media.mk
 include device/sts/a03br/permissions.mk
