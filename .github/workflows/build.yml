@@ -10,7 +10,7 @@ env:
   MANIFEST_URL: 'https://github.com/LineageOS/android'
   MANIFEST_BRANCH: 'cm-12.1'
   DEVICE_NAME: 'a03br'
-  MAKEFILE_NAME: 'lineage_a03br'
+  MAKEFILE_NAME: 'cm_a03br'
   BUILD_TARGET: 'bacon'
 jobs:
   build:
