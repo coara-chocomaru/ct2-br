@@ -1,8 +1,6 @@
 import /init.pxa1928.sensor.rc
-import /init.pxa1928.security.rc
 import /init.pxa1928.power.rc
 import /init.pxa1928.usb.rc
-#import /init.pxa1928.tel.rc
 
 on early-init
     write /proc/1/oom_score_adj -1000 # kernels >= 2.6.36
@@ -16,9 +14,9 @@ on init
     mkdir /mnt/media_rw/external 0700 media_rw media_rw
     mkdir /mnt/media_rw/usb 0700 media_rw media_rw
 
-    mkdir /storage/emulated 0555 root root
-    mkdir /storage/external 0555 root root
-    mkdir /storage/usb      0555 root root
+    mkdir /storage/emulated 0777 root root
+    mkdir /storage/external 0777 root root
+    mkdir /storage/usb      0777 root root
 
     mkdir /factory 0771 system system
 
@@ -97,9 +95,6 @@ on init
 
 on fs
     mount_all /fstab.pxa1928
-
-    setprop ro.crypto.fuse_sdcard true
-
     # create /tmp directory
     mkdir /tmp 0700 system system
     mount tmpfs tmpfs /tmp mode=0700,uid=1000,gid=1000
