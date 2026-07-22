@@ -5,7 +5,7 @@
 
 /dev/block/platform/soc.1/by-name/system     /system       ext4      ro                                                          wait
 /dev/block/platform/soc.1/by-name/cache      /cache        ext4      discard,noatime,nosuid,nodev,nomblk_io_submit,errors=panic,journal_checksum  wait,check
-/dev/block/platform/soc.1/by-name/userdata   /data         ext4      discard,noatime,nosuid,nodev,nomblk_io_submit,errors=panic,journal_checksum  wait,check,encryptable=footer
+/dev/block/platform/soc.1/by-name/userdata   /data         ext4      discard,noatime,nosuid,nodev,nomblk_io_submit,errors=panic,journal_checksum  wait,check
 /dev/block/platform/soc.1/by-name/factory    /factory      ext4      discard,noatime,nosuid,nodev,nomblk_io_submit,errors=panic,journal_checksum  wait,check
 /devices/platform/soc.1/d4200000.axi/sdhci-pxav3.0/mmc_host/mmc1        auto          vfat      defaults                                                    voldmanaged=external:auto
 /devices/platform/soc.1/d4200000.axi/pxa-u2oehci/usb			auto		vfat	defaults							voldmanaged=usb:auto
