@@ -99,13 +99,6 @@ TARGET_LD_SHIM_LIBS += \
 
 
 PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    audio.usb.default \
-    audio.r_submix.default \
-    libtinyalsa \
-    libaudioroute
-
-PRODUCT_PACKAGES += \
     libstlport
 
 PRODUCT_PACKAGES += \
