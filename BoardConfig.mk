@@ -7,6 +7,10 @@ TARGET_SOC := pxa1928
 TARGET_BOARD_PLATFORM := mrvl
 BOARD_USES_MRVL_HARDWARE := true
 
+# gpuが無理だったら
+# TARGET_FORCE_CPU_UPLOAD := true
+
+
 USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 USE_CAMERA_STUB := false
@@ -116,7 +120,7 @@ ENABLE_WEBGL := true
 BOARD_EGL_CFG := $(DEVICE_PATH)/prebuilt/egl.cfg
 TARGET_USES_ION := true
 BACKLIGHT_PATH := /sys/devices/platform/panel_vx5b1d.19/backlight/lcd-bl/brightness
-
+BOARD_USE_BGRA_8888 := true
 
 
 #prop
