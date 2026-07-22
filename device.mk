@@ -8,6 +8,9 @@ TARGET_HAS_NO_RADIO := true
 
 PRODUCT_PACKAGE_OVERLAYS :=
 DEVICE_PACKAGE_OVERLAYS :=
+TARGET_LD_SHIM_LIBS += \
+    /system/lib/hw/camera.mrvl.so|libcamera_parameters_shim.so \
+    /system/lib64/hw/camera.mrvl.so|libcamera_parameters_shim.so
 
 
 LOCAL_PATH := device/sts/a03br
@@ -91,7 +94,8 @@ ADDITIONAL_BUILD_PROPERTIES += \
     persist.sys.timezone=Asia/Tokyo
 
 PRODUCT_PACKAGES += \
-    LatinIME
+    LatinIME \
+    libcamera_parameters_shim
 
 PRODUCT_PACKAGES += \
     libstlport
