@@ -8,10 +8,6 @@ TARGET_HAS_NO_RADIO := true
 
 PRODUCT_PACKAGE_OVERLAYS :=
 DEVICE_PACKAGE_OVERLAYS :=
-TARGET_LD_SHIM_LIBS += \
-    /system/lib/hw/camera.mrvl.so|libcamera_parameters_shim.so \
-    /system/lib64/hw/camera.mrvl.so|libcamera_parameters_shim.so
-
 
 LOCAL_PATH := device/sts/a03br
 # PRODUCT_BUILD_VENDOR_IMAGE := false
@@ -96,6 +92,18 @@ ADDITIONAL_BUILD_PROPERTIES += \
 PRODUCT_PACKAGES += \
     LatinIME \
     libcamera_parameters_shim
+
+TARGET_LD_SHIM_LIBS += \
+    /system/lib/hw/camera.mrvl.so|libcamera_parameters_shim.so \
+    /system/lib64/hw/camera.mrvl.so|libcamera_parameters_shim.so
+
+
+PRODUCT_PACKAGES += \
+    audio.a2dp.default \
+    audio.usb.default \
+    audio.r_submix.default \
+    libtinyalsa \
+    libaudioroute
 
 PRODUCT_PACKAGES += \
     libstlport
