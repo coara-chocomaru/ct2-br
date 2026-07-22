@@ -8,6 +8,7 @@ persist.sys.purgeable_assets=1
 debug.hwui.render_dirty_regions=false
 debug.performance.tuning=1
 persist.sys.ui.hw=false
+ro.board.platform=mrvl
 video.accelerate.hw=1
 media.stagefright.enable-player=false
 media.stagefright.enable-meta=false
