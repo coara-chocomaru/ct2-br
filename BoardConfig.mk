@@ -115,6 +115,9 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 ENABLE_WEBGL := true
 BOARD_EGL_CFG := $(DEVICE_PATH)/prebuilt/egl.cfg
 TARGET_USES_ION := true
+BACKLIGHT_PATH := /sys/devices/platform/panel_vx5b1d.19/backlight/lcd-bl/brightness
+
+
 
 #prop
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
