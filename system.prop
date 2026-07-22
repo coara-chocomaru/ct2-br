@@ -31,3 +31,7 @@ ro.config.alarm_alert=Cesium.ogg
 ro.wm.default_rotation=0
 ro.product.first_api_level=22
 persist.service.adb.enable=1
+wifi.interface=wlan0
+wifidirect.interface=p2p0
+ro.wifi.active_roaming.enable=true
+persist.sys.display.format=1
