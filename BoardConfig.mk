@@ -11,7 +11,6 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 USE_CAMERA_STUB := false
 
-
 BOARD_USES_ALSA_AUDIO := true
 BOARD_USES_GENERIC_AUDIO := false
 USE_XML_AUDIO_POLICY_CONF := 1
@@ -167,9 +166,6 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/prebuilt/kernel:kernel
 endif
 
-# Vendor partition configure
-# BOARD_USES_VENDORIMAGE := false
-
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
@@ -180,8 +176,6 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/etc/recovery.fstab
 TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 
-# Security patch level
-# VENDOR_SECURITY_PATCH := 2018-03-05
 
 include vendor/sts/a03br/BoardConfigVendor.mk
 
