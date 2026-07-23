@@ -17,16 +17,6 @@ LOCAL_PATH := device/sts/a03br
     $(LOCAL_PATH)/overlay \
     $(LOCAL_PATH)/overlay-lineage
 
-PRODUCT_PACKAGES := $(filter-out \
-    libdashplayer \
-    libdashplayer.so \
-,$(PRODUCT_PACKAGES))
-
-PRODUCT_COPY_FILES := $(filter-out \
-    %/libdashplayer.so
-,$(PRODUCT_COPY_FILES))
-
-
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.adb.secure=0 \
     ro.secure=0 \
