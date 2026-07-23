@@ -1,8 +1,19 @@
-#include <stdint.h>
-extern "C" {
+#define LOG_TAG "CameraParamsShim"
 
-__attribute__((visibility("default")))
-const int android_CameraParameters_PIXEL_FORMAT_YUV420P_I420E
-    __asm__("_ZN7android16CameraParameters25PIXEL_FORMAT_YUV420P_I420E") = 0;
+#include <utils/Log.h>
 
-}  // extern "C"
+namespace android {
+
+class CameraParameters {
+public:
+    static const char PIXEL_FORMAT_YUV420P_I420[];
+};
+
+const char CameraParameters::PIXEL_FORMAT_YUV420P_I420[] = "yuv420p";
+
+}
+
+extern "C" __attribute__((constructor)) void camera_params_shim_ctor(void)
+{
+    ALOGI("libcamera_params_shim loaded: android::CameraParameters::PIXEL_FORMAT_YUV420P_I420 resolved");
+}
