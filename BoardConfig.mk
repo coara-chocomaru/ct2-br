@@ -208,6 +208,7 @@ include vendor/sts/a03br/BoardConfigVendor.mk
 # SELinux
 #BOARD_SEPOLICY_DIRS := \
 	#$(DEVICE_PATH)/sepolicy/
-#BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
-#SELINUX_IGNORE_NEVERALLOWS := true
+
+BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
+TARGET_SELINUX_ENFORCE := false
 SELINUX_IGNORE_NEVERALLOWS := true
