@@ -138,6 +138,8 @@ BACKLIGHT_PATH := /sys/devices/platform/panel_vx5b1d.19/backlight/lcd-bl/brightn
 BOARD_USE_BGRA_8888 := true
 BOARD_EGL_NEEDS_HANDLE_VALUE := true
 BOARD_ENABLE_OVERLAY := false
+BOARD_HAVE_PIXEL_FORMAT_INFO := true
+
 
 #prop
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
@@ -153,6 +155,7 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1988100096
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_USES_MALLOC_IMPL := jemalloc
+BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/f_mass_storage/lun%d/file"
 BOARD_UMS_LUNFILE := "/sys/class/android_usb/f_mass_storage/lun0/file"
 BOARD_USES_MMCUTILS := true
