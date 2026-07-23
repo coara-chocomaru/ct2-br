@@ -6,4 +6,5 @@ LOCAL_SRC_FILES := camera_parameters_shim.cpp
 LOCAL_SHARED_LIBRARIES := liblog libutils libcutils
 LOCAL_CFLAGS := -Wall -Wextra -fvisibility=default
 LOCAL_PRELINK_MODULE := false
+LOCAL_MULTILIB := both
 include $(BUILD_SHARED_LIBRARY)
