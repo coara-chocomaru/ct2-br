@@ -93,6 +93,42 @@ jobs:
         run: |
           repo forall -v -c git lfs pull
 
+      - name: Patch libcamera_parameters_shim into libcameraservice Android.mk
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          python3 - << 'PYEOF'
+          path = "frameworks/av/services/camera/libcameraservice/Android.mk"
+          with open(path, "r") as f:
+              content = f.read()
+
+          old = "    libcamera_client \\\n"
+          new = "    libcamera_client \\\n    libcamera_parameters_shim \\\n"
+
+          if old not in content:
+              raise SystemExit(
+                  "ERROR: expected 'libcamera_client \\\\' line not found in "
+                  + path
+                  + " - upstream Android.mk may have changed, refusing to patch blindly"
+              )
+
+          if content.count(old) != 1:
+              raise SystemExit(
+                  "ERROR: 'libcamera_client \\\\' line matched "
+                  + str(content.count(old))
+                  + " times in "
+                  + path
+                  + " - expected exactly 1, refusing to patch ambiguously"
+              )
+
+          content = content.replace(old, new)
+
+          with open(path, "w") as f:
+              f.write(content)
+
+          print("Patched libcamera_parameters_shim into LOCAL_SHARED_LIBRARIES in " + path)
+          PYEOF
+          grep -n -A 12 "LOCAL_SHARED_LIBRARIES:=" frameworks/av/services/camera/libcameraservice/Android.mk
+
       - name: Restore ccache
         uses: actions/cache@v4
         with:
