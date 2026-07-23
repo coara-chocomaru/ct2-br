@@ -388,7 +388,7 @@ jobs:
           export USE_CCACHE=1
           export CCACHE_DIR="$HOME/.ccache"
           export WITH_DEXPREOPT=true
-          lunch ${{ env.MAKEFILE_NAME }}-userdebug
+          lunch ${{ env.MAKEFILE_NAME }}-eng
 
           rm -rf out/target/product/${{ env.DEVICE_NAME }}/obj/APPS/webview_intermediates
           rm -rf out/target/product/${{ env.DEVICE_NAME }}/obj/APPS/ChromeWebView_intermediates 2>/dev/null || true
