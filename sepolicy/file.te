@@ -1,4 +1,3 @@
-type rootfs;
 allow adbd rootfs:file { read getattr execute entrypoint open };
 allow domain rootfs:dir { ioctl read getattr search open };
 allow domain rootfs:file { ioctl read getattr lock open };
