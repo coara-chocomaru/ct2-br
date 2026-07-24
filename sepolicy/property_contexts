@@ -1,0 +1,21 @@
+#line 1 "external/sepolicy/property_contexts"
+##########################
+# property service keys
+#
+#
+
+
+
+
+# selinux non-persistent properties
+
+# default property context
+
+# data partition encryption properties
+
+# ro.build.fingerprint is either set in /system/build.prop, or is
+# set at runtime by system_server.
+
+# ctl properties
+
+# NFC properties
