@@ -2,7 +2,6 @@ type system_server;
 type system_server_tmpfs;
 allow appdomain system_server:binder { transfer };
 allow appdomain system_server:fifo_file { ioctl read write getattr lock append open };
-allow appdomain system_server:tcp_socket { read write getattr getopt shutdown };
 allow appdomain system_server:unix_stream_socket { read write getattr getopt setopt shutdown };
 allow binderservicedomain system_server:binder { transfer };
 allow debuggerd system_server:process { ptrace };

@@ -51,5 +51,4 @@ allow unconfineddomain system_app_tmpfs:file { ioctl read write create getattr s
 allow unconfineddomain system_app_tmpfs:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow unconfineddomain system_app_tmpfs:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app system_app_data_file:dir { getattr search };
-allow untrusted_app system_app_data_file:file { read write getattr };
 allow untrusted_app system_app_device:chr_file { read getattr };

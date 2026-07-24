@@ -11,7 +11,6 @@ allow adbd shell_data_file:file { ioctl read write create getattr setattr lock a
 allow adbd shell_exec:file { read getattr execute open };
 allow adbd shell_prop:property_service { set };
 allow appdomain shell:process { sigchld };
-allow appdomain shell_data_file:file { write getattr };
 allow appdomain shell_exec:file { ioctl read getattr lock execute execute_no_trans open };
 allow binderservicedomain shell_data_file:file { write getattr };
 allow bootanim shell_exec:file { getattr execute execute_no_trans };
@@ -73,9 +72,7 @@ allow recovery shell_exec:file { ioctl read write create getattr setattr lock re
 allow rild shell_exec:file { ioctl read getattr lock execute execute_no_trans open };
 allow run_hawk_on_boot shell_exec:file { read };
 allow runas shell:fd { use };
-allow runas shell:fifo_file { read write };
 allow runas shell:process { sigchld dyntransition };
-allow runas shell_data_file:file { read write };
 allow shell shell_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell shell_data_file:file { ioctl read write create getattr setattr lock append unlink link rename execute execute_no_trans open };
 allow shell shell_data_file:lnk_file { ioctl read write create getattr setattr lock append unlink link rename open };
@@ -99,7 +96,6 @@ allow unconfineddomain shell_tmpfs:lnk_file { ioctl read write create getattr se
 allow unconfineddomain shell_tmpfs:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app shell_data_file:dir { ioctl read write getattr add_name remove_name search open };
 allow untrusted_app shell_data_file:file { ioctl read getattr lock open };
-allow vdc shell_data_file:file { write getattr };
 allow vold shell_exec:file { ioctl read getattr lock execute execute_no_trans open };
 dontaudit adbd shell:process { noatsecure };
 dontaudit init shell:process { noatsecure };

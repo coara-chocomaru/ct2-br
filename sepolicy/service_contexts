@@ -1,6 +1,8 @@
 #line 1 "external/sepolicy/service_contexts"
+
 #line 1 "device/sanyots/ma05/sepolicy/service_contexts"
 # for the binder services
+
 Streaming.Media		u:object_r:mediaserver_service:s0
 ReceiveBootService	u:object_r:system_server_service:s0
 PowerHintService	u:object_r:system_server_service:s0
@@ -8,3 +10,4 @@ FMRadioService		u:object_r:system_server_service:s0
 codecIPCservice		u:object_r:system_server_service:s0
 pen_calibration		u:object_r:system_server_service:s0
 benesse_extension   u:object_r:system_server_service:s0
+

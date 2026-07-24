@@ -39,7 +39,6 @@ allow surfaceflinger surfaceflinger_tmpfs:file { read write };
 allow system_server surfaceflinger:dir { ioctl read getattr search open };
 allow system_server surfaceflinger:file { ioctl read getattr lock open };
 allow system_server surfaceflinger:lnk_file { ioctl read getattr lock open };
-allow system_server surfaceflinger:unix_stream_socket { read write setopt };
 allow unconfineddomain surfaceflinger:binder { call set_context_mgr transfer };
 allow unconfineddomain surfaceflinger_tmpfs:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain surfaceflinger_tmpfs:dir { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
