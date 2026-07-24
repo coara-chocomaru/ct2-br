@@ -223,6 +223,8 @@ BOARD_SEPOLICY_UNION += \
     dumpstate.te \
     file.te \
     gpsd.te \
+    genfs_contexts \
+    file_contexts \
     hci_attach.te \
     healthd.te \
     hostapd.te \
