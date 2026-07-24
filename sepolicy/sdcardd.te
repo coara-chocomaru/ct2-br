@@ -1,4 +1,0 @@
-# additional permissions for sdcardd
-
-#SEC removed: allow sdcardd system_data_file:dir create_dir_perms;
-

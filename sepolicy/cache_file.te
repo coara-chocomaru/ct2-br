@@ -1,3 +1,0 @@
-# for /cache/
-allow cache_file rootfs:filesystem associate;
-
