@@ -1,4 +1,3 @@
-type boot_block_device;
 typeattribute boot_block_device dev_type;
 typeattribute adbd domain, netdomain;
 typeattribute at_router domain;
@@ -8,9 +7,6 @@ typeattribute atcmdsrv domain;
 typeattribute atcmdsrv_device dev_type;
 typeattribute atcmdsrv_exec exec_type, file_type;
 typeattribute atcmdsrv_tmpfs file_type;
-typeattribute bootanim domain;
-typeattribute bootanim_exec exec_type, file_type;
-typeattribute bootanim_tmpfs file_type;
 typeattribute bootloader_block_device dev_type;
 typeattribute clatd domain, netdomain;
 typeattribute clatd_exec exec_type, file_type;
