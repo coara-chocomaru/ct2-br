@@ -1,148 +1,3 @@
-class security { compute_av compute_create compute_member check_context load_policy compute_relabel compute_user setenforce setbool setsecparam setcheckreqprot read_policy }
-class process { fork transition sigchld sigkill sigstop signull signal ptrace getsched setsched getsession getpgid setpgid getcap setcap share getattr setexec setfscreate noatsecure siginh setrlimit rlimitinh dyntransition setcurrent execmem execstack execheap setkeycreate setsockcreate }
-class system { ipc_info syslog_read syslog_mod syslog_console module_request }
-class capability { chown dac_override dac_read_search fowner fsetid kill setgid setuid setpcap linux_immutable net_bind_service net_broadcast net_admin net_raw ipc_lock ipc_owner sys_module sys_rawio sys_chroot sys_ptrace sys_pacct sys_admin sys_boot sys_nice sys_resource sys_time sys_tty_config mknod lease audit_write audit_control setfcap }
-class filesystem { mount remount unmount getattr relabelfrom relabelto transition associate quotamod quotaget }
-class file inherits file { execute_no_trans entrypoint execmod open audit_access }
-class dir inherits file { add_name remove_name reparent search rmdir open audit_access execmod }
-class fd { use }
-class lnk_file inherits file { open audit_access execmod }
-class chr_file inherits file { execute_no_trans entrypoint execmod open audit_access }
-class blk_file inherits file { open audit_access execmod }
-class sock_file inherits file { open audit_access execmod }
-class fifo_file inherits file { open audit_access execmod }
-class socket inherits socket
-class tcp_socket inherits socket { connectto newconn acceptfrom node_bind name_connect }
-class udp_socket inherits socket { node_bind }
-class rawip_socket inherits socket { node_bind }
-class node { tcp_recv tcp_send udp_recv udp_send rawip_recv rawip_send enforce_dest dccp_recv dccp_send recvfrom sendto }
-class netif { tcp_recv tcp_send udp_recv udp_send rawip_recv rawip_send dccp_recv dccp_send ingress egress }
-class netlink_socket inherits socket
-class packet_socket inherits socket
-class key_socket inherits socket
-class unix_stream_socket inherits socket { connectto newconn acceptfrom }
-class unix_dgram_socket inherits socket
-class sem inherits ipc
-class msg { send receive }
-class msgq inherits ipc { enqueue }
-class shm inherits ipc { lock }
-class ipc inherits ipc
-class passwd { passwd chfn chsh rootok crontab }
-class x_drawable { create destroy read write blend getattr setattr list_child add_child remove_child list_property get_property set_property manage override show hide send receive }
-class x_screen { getattr setattr hide_cursor show_cursor saver_getattr saver_setattr saver_hide saver_show }
-class x_gc { create destroy getattr setattr use }
-class x_font { create destroy getattr add_glyph remove_glyph use }
-class x_colormap { create destroy read write getattr add_color remove_color install uninstall use }
-class x_property { create destroy read write append getattr setattr }
-class x_selection { read write getattr setattr }
-class x_cursor { create destroy read write getattr setattr use }
-class x_client { destroy getattr setattr manage }
-class x_device inherits x_device
-class x_server { getattr setattr record debug grab manage }
-class x_extension { query use }
-class netlink_route_socket inherits socket { nlmsg_read nlmsg_write }
-class netlink_firewall_socket inherits socket { nlmsg_read nlmsg_write }
-class netlink_tcpdiag_socket inherits socket { nlmsg_read nlmsg_write }
-class netlink_nflog_socket inherits socket
-class netlink_xfrm_socket inherits socket { nlmsg_read nlmsg_write }
-class netlink_selinux_socket inherits socket
-class netlink_audit_socket inherits socket { nlmsg_read nlmsg_write nlmsg_relay nlmsg_readpriv nlmsg_tty_audit }
-class netlink_ip6fw_socket inherits socket { nlmsg_read nlmsg_write }
-class netlink_dnrt_socket inherits socket
-class dbus { acquire_svc send_msg }
-class nscd { getpwd getgrp gethost getstat admin shmempwd shmemgrp shmemhost getserv shmemserv }
-class association { sendto recvfrom setcontext polmatch }
-class netlink_kobject_uevent_socket inherits socket
-class appletalk_socket inherits socket
-class packet { send recv relabelto flow_in flow_out forward_in forward_out }
-class key { view read write search link setattr create }
-class context { translate contains }
-class dccp_socket inherits socket { node_bind name_connect }
-class memprotect { mmap_zero }
-class db_database inherits database { access install_module load_module get_param set_param }
-class db_table inherits database { use select update insert delete lock }
-class db_procedure inherits database { execute entrypoint install }
-class db_column inherits database { use select update insert }
-class db_tuple { relabelfrom relabelto use select update insert delete }
-class db_blob inherits database { read write import export }
-class peer { recv }
-class capability2 { mac_override mac_admin syslog wake_alarm block_suspend }
-class x_resource { read write }
-class x_event { send receive }
-class x_synthetic_event { send receive }
-class x_application_data { paste paste_after_confirm copy }
-class kernel_service { use_as_override create_files_as }
-class tun_socket inherits socket { attach_queue }
-class x_pointer inherits x_device
-class x_keyboard inherits x_device
-class db_schema inherits database { search add_name remove_name }
-class db_view inherits database { expand }
-class db_sequence inherits database { get_value next_value set_value }
-class db_language inherits database { implement execute }
-class binder { impersonate call set_context_mgr transfer }
-class zygote { specifyids specifyrlimits specifyinvokewith specifyseinfo }
-class property_service { set }
-class service_manager { add find list }
-class keystore_key { test get insert delete exist saw reset password lock unlock zero sign verify grant duplicate clear_uid reset_uid sync_uid password_uid }
-mlsconstrain appletalk_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain blk_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain blk_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain blk_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain chr_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain chr_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain chr_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain dir { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain dir { read getattr search } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain dir { write setattr rename add_name remove_name reparent rmdir } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain fifo_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain fifo_file { read getattr } (((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain fifo_file { write setattr append unlink link rename } (((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain ipc { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain ipc { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
-mlsconstrain ipc { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
-mlsconstrain key_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain lnk_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain lnk_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain lnk_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain msgq { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain msgq { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
-mlsconstrain msgq { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_audit_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_dnrt_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_firewall_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_ip6fw_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_kobject_uevent_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_nflog_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_route_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_selinux_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_tcpdiag_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain netlink_xfrm_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain packet_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain process { ptrace getsched getsession getpgid getcap share getattr } (l1 dom l2 or t1 == NO_IDENTIFIER);
-mlsconstrain process { sigkill sigstop signal ptrace setsched setpgid setcap share setrlimit } (l1 domby l2 or t1 == NO_IDENTIFIER);
-mlsconstrain process { transition dyntransition } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain rawip_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain sem { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain sem { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
-mlsconstrain sem { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
-mlsconstrain shm { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain shm { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
-mlsconstrain shm { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
-mlsconstrain sock_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
-mlsconstrain sock_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain sock_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain tcp_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain tun_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain udp_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain unix_dgram_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
-mlsconstrain unix_dgram_socket { sendto } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain unix_stream_socket { connectto } ((l1 == l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
-mlsconstrain unix_stream_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
 typeattribute FMRadiod domain;
 typeattribute FMRadiod_exec exec_type, file_type;
 typeattribute FMRadiod_tmpfs file_type;
@@ -151,17 +6,6 @@ typeattribute adb_device dev_type;
 typeattribute adb_keys_file data_file_type, file_type;
 typeattribute adbd domain, netdomain;
 typeattribute adbd_socket file_type;
-typeattribute alarm_device dev_type, mlstrustedobject;
-typeattribute anr_data_file data_file_type, file_type, mlstrustedobject;
-typeattribute apk_data_file data_file_type, file_type;
-typeattribute apk_private_data_file data_file_type, file_type;
-typeattribute apk_private_tmp_file data_file_type, file_type, mlstrustedobject;
-typeattribute apk_tmp_file data_file_type, file_type, mlstrustedobject;
-typeattribute app_data_file data_file_type, file_type;
-typeattribute asec_apk_file data_file_type, file_type;
-typeattribute asec_image_file data_file_type, file_type;
-typeattribute asec_public_file data_file_type, file_type;
-typeattribute ashmem_device dev_type, mlstrustedobject;
 typeattribute at_router domain;
 typeattribute at_router_exec exec_type, file_type;
 typeattribute at_router_tmpfs file_type;
@@ -169,40 +13,18 @@ typeattribute atcmdsrv domain;
 typeattribute atcmdsrv_device dev_type;
 typeattribute atcmdsrv_exec exec_type, file_type;
 typeattribute atcmdsrv_tmpfs file_type;
-typeattribute audio_data_file data_file_type, file_type;
-typeattribute audio_device dev_type;
-typeattribute audio_prop property_type;
-typeattribute backup_data_file data_file_type, file_type, mlstrustedobject;
-typeattribute binder_device dev_type, mlstrustedobject;
-typeattribute block_device dev_type;
-typeattribute bluetooth appdomain, domain, netdomain;
-typeattribute bluetooth_data_file data_file_type, file_type;
-typeattribute bluetooth_device dev_type;
-typeattribute bluetooth_efs_file file_type;
-typeattribute bluetooth_prop property_type;
-typeattribute bluetooth_service service_manager_type;
-typeattribute bluetooth_socket file_type;
-typeattribute bluetooth_tmpfs file_type;
 typeattribute boot_block_device dev_type;
 typeattribute bootanim domain;
 typeattribute bootanim_exec exec_type, file_type;
 typeattribute bootanim_tmpfs file_type;
 typeattribute bootloader_block_device dev_type;
-typeattribute cache_backup_file file_type, mlstrustedobject;
-typeattribute cache_block_device dev_type;
-typeattribute cache_file file_type, mlstrustedobject;
-typeattribute camera_data_file data_file_type, file_type;
-typeattribute camera_device dev_type;
-typeattribute cgroup fs_type, mlstrustedobject;
 typeattribute clatd domain, netdomain;
 typeattribute clatd_exec exec_type, file_type;
 typeattribute codecIPC_server domain;
 typeattribute codecIPC_server_exec exec_type, file_type;
 typeattribute codecIPC_server_tmpfs file_type;
-typeattribute console_device dev_type;
 typeattribute core_compressor domain;
 typeattribute core_compressor_exec exec_type, file_type;
-typeattribute coredump_file file_type;
 typeattribute cploader_block_device dev_type;
 typeattribute cpuctl_device dev_type;
 typeattribute ctl_bootanim_prop property_type;
@@ -213,18 +35,10 @@ typeattribute ctl_dumpstate_prop property_type;
 typeattribute ctl_fuse_prop property_type;
 typeattribute ctl_mdnsd_prop property_type;
 typeattribute ctl_rildaemon_prop property_type;
-typeattribute dalvikcache_data_file data_file_type, file_type;
-typeattribute dalvikcache_profiles_data_file data_file_type, file_type;
-typeattribute debug_prop property_type;
-typeattribute debugfs fs_type, mlstrustedobject;
 typeattribute debuggerd domain, mlstrustedsubject;
 typeattribute debuggerd_exec exec_type, file_type;
 typeattribute debuggerd_prop property_type;
 typeattribute debuggerd_tmpfs file_type;
-typeattribute default_android_service service_manager_type;
-typeattribute default_prop property_type;
-typeattribute device dev_type, fs_type;
-typeattribute devpts fs_type, mlstrustedobject;
 typeattribute dex2oat domain;
 typeattribute dex2oat_exec exec_type, file_type;
 typeattribute dhcp domain, netdomain;
@@ -236,18 +50,15 @@ typeattribute diag domain;
 typeattribute diag_device dev_type;
 typeattribute diag_exec exec_type, file_type;
 typeattribute diag_tmpfs file_type;
-typeattribute dm_device dev_type;
 typeattribute dnsmasq domain, netdomain;
 typeattribute dnsmasq_exec exec_type, file_type;
 typeattribute dnsproxyd_socket file_type, mlstrustedobject;
-typeattribute drm_data_file data_file_type, file_type;
 typeattribute drmserver binderservicedomain, domain, mlstrustedsubject, netdomain;
 typeattribute drmserver_exec exec_type, file_type;
 typeattribute drmserver_service service_manager_type;
 typeattribute drmserver_socket file_type;
 typeattribute drmserver_tmpfs file_type;
 typeattribute dtim_block_device dev_type;
-typeattribute dump_log_data_file data_file_type, file_type;
 typeattribute dumpstate domain, netdomain;
 typeattribute dumpstate_exec exec_type, file_type;
 typeattribute dumpstate_socket file_type;
@@ -256,18 +67,12 @@ typeattribute eeh domain;
 typeattribute eeh_device dev_type;
 typeattribute eeh_exec exec_type, file_type;
 typeattribute eeh_tmpfs file_type;
-typeattribute efs_file file_type;
 typeattribute embmsd_socket file_type;
 typeattribute env domain;
 typeattribute env_exec exec_type, file_type;
 typeattribute env_tmpfs file_type;
-typeattribute fingerprint_prop property_type;
 typeattribute fota_block_device dev_type;
 typeattribute frp_block_device dev_type;
-typeattribute fscklogs dev_type;
-typeattribute full_device dev_type;
-typeattribute functionfs fs_type;
-typeattribute fuse fs_type, mlstrustedobject, sdcard_type;
 typeattribute fuse_device dev_type;
 typeattribute fwmarkd_socket file_type, mlstrustedobject;
 typeattribute geu_device dev_type;
@@ -278,8 +83,6 @@ typeattribute gps_socket file_type;
 typeattribute gpsd domain, netdomain;
 typeattribute gpsd_exec exec_type, file_type;
 typeattribute gpsd_tmpfs file_type;
-typeattribute gpu_device dev_type, mlstrustedobject;
-typeattribute graphics_device dev_type;
 typeattribute hawk domain;
 typeattribute hawk_exec exec_type, file_type;
 typeattribute hawk_tmpfs file_type;
@@ -291,9 +94,7 @@ typeattribute healthd binderservicedomain, domain;
 typeattribute healthd_service service_manager_type;
 typeattribute hostapd domain, netdomain;
 typeattribute hostapd_exec exec_type, file_type;
-typeattribute hw_random_device dev_type;
 typeattribute i2c_device dev_type;
-typeattribute iio_device dev_type;
 typeattribute iml domain;
 typeattribute iml_exec exec_type, file_type;
 typeattribute iml_tmpfs file_type;
@@ -302,16 +103,10 @@ typeattribute imsc_exec exec_type, file_type;
 typeattribute imsc_tmpfs file_type;
 typeattribute imsd_socket file_type;
 typeattribute infor_device dev_type;
-typeattribute init domain, mlstrustedsubject, unconfineddomain;
-typeattribute init_shell domain, mlstrustedsubject, unconfineddomain;
-typeattribute init_tmpfs file_type;
-typeattribute inotify fs_type, mlstrustedobject;
-typeattribute input_device dev_type;
 typeattribute inputflinger binderservicedomain, domain;
 typeattribute inputflinger_exec exec_type, file_type;
 typeattribute inputflinger_service service_manager_type;
 typeattribute inputflinger_tmpfs file_type;
-typeattribute install_data_file data_file_type, file_type;
 typeattribute install_recovery domain;
 typeattribute install_recovery_exec exec_type, file_type;
 typeattribute install_recovery_tmpfs file_type;
@@ -319,27 +114,16 @@ typeattribute installd domain, mlstrustedsubject;
 typeattribute installd_exec exec_type, file_type;
 typeattribute installd_socket file_type;
 typeattribute installd_tmpfs file_type;
-typeattribute ion_device dev_type, mlstrustedobject;
 typeattribute ipc_device dev_type;
 typeattribute isolated_app appdomain, domain, netdomain;
 typeattribute isolated_app_tmpfs file_type;
-typeattribute kernel domain, mlstrustedsubject, unconfineddomain;
-typeattribute keychain_data_file data_file_type, file_type;
-typeattribute keystore binderservicedomain, domain, mlstrustedsubject;
-typeattribute keystore_data_file data_file_type, file_type;
-typeattribute keystore_exec exec_type, file_type;
-typeattribute keystore_service service_manager_type;
-typeattribute keystore_tmpfs file_type;
 typeattribute kinitlog domain;
 typeattribute kinitlog_exec exec_type, file_type;
 typeattribute kinitlog_tmpfs file_type;
-typeattribute klog_device dev_type;
-typeattribute kmem_device dev_type;
 typeattribute kmsg domain;
 typeattribute kmsg_device dev_type;
 typeattribute kmsg_exec exec_type, file_type;
 typeattribute kmsg_tmpfs file_type;
-typeattribute labeledfs fs_type;
 typeattribute lmkd domain;
 typeattribute lmkd_exec exec_type, file_type;
 typeattribute lmkd_socket file_type;
@@ -350,7 +134,6 @@ typeattribute load_g_cali_data_tmpfs file_type;
 typeattribute load_g_sensor domain;
 typeattribute load_g_sensor_exec exec_type, file_type;
 typeattribute load_g_sensor_tmpfs file_type;
-typeattribute log_device dev_type, mlstrustedobject;
 typeattribute log_on_boot domain;
 typeattribute log_on_boot_exec exec_type, file_type;
 typeattribute log_on_boot_tmpfs file_type;
@@ -362,18 +145,14 @@ typeattribute logd_socket file_type;
 typeattribute logd_tmpfs file_type;
 typeattribute logdr_socket file_type;
 typeattribute logdw_socket file_type;
-typeattribute loop_device dev_type;
 typeattribute marvelltel domain;
 typeattribute marvelltel_device dev_type;
 typeattribute marvelltel_exec exec_type, file_type;
 typeattribute marvelltel_tmpfs file_type;
-typeattribute mdns_socket file_type;
 typeattribute mdnsd domain, netdomain;
 typeattribute mdnsd_exec exec_type, file_type;
 typeattribute mdnsd_socket file_type;
 typeattribute mdnsd_tmpfs file_type;
-typeattribute media_data_file data_file_type, file_type;
-typeattribute media_rw_data_file data_file_type, file_type;
 typeattribute mediaserver binderservicedomain, domain, mlstrustedsubject, netdomain;
 typeattribute mediaserver_device dev_type;
 typeattribute mediaserver_exec exec_type, file_type;
@@ -387,7 +166,6 @@ typeattribute memsicp domain;
 typeattribute memsicp_exec exec_type, file_type;
 typeattribute memsicp_tmpfs file_type;
 typeattribute mep2_block_device dev_type;
-typeattribute misc_block_device dev_type;
 typeattribute misc_user_data_file data_file_type, file_type;
 typeattribute mlan2040coex domain;
 typeattribute mlan2040coex_exec exec_type, file_type;
@@ -398,14 +176,12 @@ typeattribute mlaninit_tmpfs file_type;
 typeattribute mned domain;
 typeattribute mned_exec exec_type, file_type;
 typeattribute mned_tmpfs file_type;
-typeattribute mqueue fs_type;
 typeattribute mrd1_block_device dev_type;
 typeattribute mrd_block_device dev_type;
 typeattribute mrvl_gpsd domain;
 typeattribute mrvl_gpsd_exec exec_type, file_type;
 typeattribute mrvl_gpsd_tmpfs file_type;
 typeattribute mrvlgpu_device dev_type;
-typeattribute mtd_device dev_type;
 typeattribute mtp domain, netdomain;
 typeattribute mtp_device dev_type, mlstrustedobject;
 typeattribute mtp_exec exec_type, file_type;
@@ -415,38 +191,27 @@ typeattribute mwireless_device dev_type;
 typeattribute mwirelessd domain;
 typeattribute mwirelessd_exec exec_type, file_type;
 typeattribute mwirelessd_tmpfs file_type;
-typeattribute net_data_file data_file_type, file_type;
-typeattribute net_radio_prop property_type;
 typeattribute netd domain, netdomain;
 typeattribute netd_exec exec_type, file_type;
 typeattribute netd_socket file_type;
 typeattribute netd_tmpfs file_type;
-typeattribute netif netif_type;
 typeattribute nfc appdomain, binderservicedomain, domain, netdomain;
 typeattribute nfc_data_file data_file_type, file_type;
 typeattribute nfc_device dev_type;
 typeattribute nfc_prop property_type;
 typeattribute nfc_service service_manager_type;
 typeattribute nfc_tmpfs file_type;
-typeattribute node node_type;
-typeattribute null_device dev_type, mlstrustedobject;
 typeattribute nvm domain;
 typeattribute nvm_block_device dev_type;
 typeattribute nvm_data_file data_file_type, file_type;
 typeattribute nvm_device dev_type;
 typeattribute nvm_exec exec_type, file_type;
 typeattribute nvm_tmpfs file_type;
-typeattribute oemfs contextmount_type, fs_type;
-typeattribute owntty_device dev_type, mlstrustedobject;
-typeattribute pan_result_prop property_type;
 typeattribute phservice domain;
 typeattribute phservice_exec exec_type, file_type;
 typeattribute phservice_tmpfs file_type;
-typeattribute pipefs fs_type;
 typeattribute platform_app appdomain, bluetoothdomain, domain, netdomain;
 typeattribute platform_app_tmpfs file_type;
-typeattribute port port_type;
-typeattribute powerctl_prop property_type;
 typeattribute ppp domain, netdomain;
 typeattribute ppp_device dev_type;
 typeattribute ppp_exec exec_type, file_type;
@@ -454,19 +219,11 @@ typeattribute pppmodem domain;
 typeattribute pppmodem_device dev_type;
 typeattribute pppmodem_exec exec_type, file_type;
 typeattribute pppmodem_tmpfs file_type;
-typeattribute proc fs_type;
 typeattribute proc_bluetooth_writable fs_type;
 typeattribute proc_cpuinfo fs_type;
-typeattribute proc_net fs_type;
 typeattribute proc_security fs_type;
 typeattribute proc_sysrq fs_type;
-typeattribute properties_device dev_type;
-typeattribute property_data_file data_file_type, file_type;
-typeattribute property_socket file_type;
-typeattribute pstorefs fs_type;
-typeattribute ptmx_device dev_type, mlstrustedobject;
 typeattribute qtaguid_device dev_type;
-typeattribute qtaguid_proc fs_type, mlstrustedobject;
 typeattribute racoon domain, mlstrustedsubject, netdomain;
 typeattribute racoon_exec exec_type, file_type;
 typeattribute racoon_socket file_type;
@@ -478,11 +235,8 @@ typeattribute radio_device dev_type;
 typeattribute radio_prop property_type;
 typeattribute radio_service service_manager_type;
 typeattribute radio_tmpfs file_type;
-typeattribute ram_device dev_type;
-typeattribute random_device dev_type;
 typeattribute recovery domain;
 typeattribute recovery_block_device dev_type;
-typeattribute resourcecache_data_file data_file_type, file_type;
 typeattribute rild domain, netdomain;
 typeattribute rild_debug_socket file_type;
 typeattribute rild_exec exec_type, file_type;
@@ -492,8 +246,6 @@ typeattribute root_block_device dev_type;
 typeattribute root_detect domain;
 typeattribute root_detect_exec exec_type, file_type;
 typeattribute root_detect_tmpfs file_type;
-typeattribute rootfs fs_type;
-typeattribute rpmsg_device dev_type;
 typeattribute run_hawk_on_boot domain;
 typeattribute run_hawk_on_boot_exec exec_type, file_type;
 typeattribute run_hawk_on_boot_tmpfs file_type;
@@ -503,32 +255,23 @@ typeattribute sdcardd domain;
 typeattribute sdcardd_exec exec_type, file_type;
 typeattribute sdcardd_tmpfs file_type;
 typeattribute security_block_device dev_type;
-typeattribute security_file file_type;
 typeattribute security_prop property_type;
-typeattribute selinuxfs fs_type;
 typeattribute sensor_device dev_type;
 typeattribute sensors_device dev_type;
-typeattribute serial_device dev_type;
 typeattribute servicemanager domain;
 typeattribute servicemanager_exec exec_type, file_type;
 typeattribute servicemanager_tmpfs file_type;
 typeattribute setup_fs domain;
 typeattribute setup_fs_exec exec_type, file_type;
 typeattribute setup_fs_tmpfs file_type;
-typeattribute shared_relro appdomain, domain;
-typeattribute shared_relro_file data_file_type, file_type;
-typeattribute shared_relro_tmpfs file_type;
 typeattribute shell appdomain, domain, mlstrustedsubject, netdomain;
 typeattribute shell_data_file data_file_type, file_type;
 typeattribute shell_exec exec_type, file_type;
 typeattribute shell_prop property_type;
 typeattribute shell_tmpfs file_type;
-typeattribute shm fs_type;
 typeattribute smartcard appdomain, domain;
 typeattribute smartcard_data_file data_file_type, file_type;
 typeattribute smartcard_tmpfs file_type;
-typeattribute socket_device dev_type;
-typeattribute sockfs fs_type;
 typeattribute splash_block_device dev_type;
 typeattribute ssipc_device dev_type;
 typeattribute su_exec exec_type, file_type;
@@ -536,7 +279,6 @@ typeattribute surfaceflinger binderservicedomain, domain, mlstrustedsubject;
 typeattribute surfaceflinger_exec exec_type, file_type;
 typeattribute surfaceflinger_service service_manager_type;
 typeattribute surfaceflinger_tmpfs file_type;
-typeattribute sysfs fs_type, mlstrustedobject, sysfs_type;
 typeattribute sysfs_bluetooth_writable fs_type, mlstrustedobject, sysfs_type;
 typeattribute sysfs_devices_system_cpu fs_type, sysfs_type;
 typeattribute sysfs_lowmemorykiller fs_type, sysfs_type;
@@ -552,13 +294,11 @@ typeattribute system_block_device dev_type;
 typeattribute system_data_file data_file_type, file_type;
 typeattribute system_file file_type;
 typeattribute system_ndebug_socket file_type;
-typeattribute system_prop property_type;
 typeattribute system_radio_prop property_type;
 typeattribute system_server binderservicedomain, bluetoothdomain, domain, mlstrustedsubject, netdomain;
 typeattribute system_server_service service_manager_type;
 typeattribute system_server_tmpfs file_type;
 typeattribute system_wpa_socket file_type;
-typeattribute systemkeys_data_file data_file_type, file_type;
 typeattribute tee domain;
 typeattribute tee_data_file data_file_type, file_type;
 typeattribute tee_device dev_type;
@@ -570,56 +310,36 @@ typeattribute teecsstdca_exec exec_type, file_type;
 typeattribute teecsstdca_tmpfs file_type;
 typeattribute teesst_data_file data_file_type, file_type;
 typeattribute tel_data_file data_file_type, file_type;
-typeattribute tmpfs fs_type;
-typeattribute tombstone_data_file data_file_type, file_type;
 typeattribute touch_updater domain;
 typeattribute touch_updater_exec exec_type, file_type;
 typeattribute touch_updater_tmpfs file_type;
 typeattribute ts_device dev_type;
-typeattribute tty_device dev_type;
-typeattribute tun_device dev_type, mlstrustedobject;
 typeattribute ueventd domain;
 typeattribute ueventd_tmpfs file_type;
-typeattribute uhid_device dev_type;
-typeattribute uio_device dev_type;
 typeattribute uncrypt domain;
 typeattribute uncrypt_exec exec_type, file_type;
 typeattribute uncrypt_tmpfs file_type;
-typeattribute unlabeled file_type;
 typeattribute untrusted_app appdomain, bluetoothdomain, domain, netdomain;
 typeattribute untrusted_app_devpts fs_type;
 typeattribute untrusted_app_tmpfs file_type;
-typeattribute urandom_device dev_type;
-typeattribute usb_device dev_type;
-typeattribute usbaccessory_device dev_type;
-typeattribute usbfs fs_type;
 typeattribute userdata_block_device dev_type;
 typeattribute usermodehelper fs_type, sysfs_type;
-typeattribute vcs_device dev_type;
 typeattribute vdc domain;
 typeattribute vdc_exec exec_type, file_type;
 typeattribute vdc_tmpfs file_type;
-typeattribute vfat fs_type, mlstrustedobject, sdcard_type;
-typeattribute video_device dev_type;
 typeattribute vold domain, mlstrustedsubject;
 typeattribute vold_exec exec_type, file_type;
 typeattribute vold_prop property_type;
 typeattribute vold_socket file_type;
 typeattribute vold_tmpfs file_type;
-typeattribute vpn_data_file data_file_type, file_type;
 typeattribute vpu_device dev_type;
-typeattribute wallpaper_file file_type, mlstrustedobject;
-typeattribute watchdog_device dev_type;
 typeattribute watchdogd domain;
-typeattribute wifi_data_file data_file_type, file_type;
 typeattribute wireless_data_file data_file_type, file_type;
 typeattribute wpa domain, netdomain;
 typeattribute wpa_device dev_type;
 typeattribute wpa_exec exec_type, file_type;
 typeattribute wpa_socket file_type;
 typeattribute wpa_tmpfs file_type;
-typeattribute zero_device dev_type;
-typeattribute zoneinfo_data_file data_file_type, file_type;
 typeattribute zygote domain, mlstrustedsubject;
 typeattribute zygote_exec exec_type, file_type;
 typeattribute zygote_socket file_type;
@@ -714,31 +434,3 @@ type_transition touch_updater tmpfs:file touch_updater_tmpfs;
 type_transition debuggerd device:chr_file klog_device "__kmsg__";
 type_transition recovery device:chr_file klog_device "__kmsg__";
 role r types { FMRadiod adbd at_router atcmdsrv bluetooth bootanim clatd codecIPC_server core_compressor debuggerd dex2oat dhcp diag dnsmasq drmserver dumpstate eeh env gpsd hawk hci_attach healthd hostapd iml imsc init init_shell inputflinger install_recovery installd isolated_app kernel keystore kinitlog kmsg lmkd load_g_cali_data load_g_sensor log_on_boot logd marvelltel mdnsd mediaserver memsicd memsicp mlan2040coex mlaninit mned mrvl_gpsd mtp mwirelessd netd nfc nvm phservice platform_app ppp pppmodem racoon radio recovery rild root_detect run_hawk_on_boot runas sdcardd servicemanager setup_fs shared_relro shell smartcard surfaceflinger system_app system_server tee teecsstdca touch_updater ueventd uncrypt untrusted_app vdc vold watchdogd wpa zygote };
-user u roles r level s0 range s0 - s0:c0.c1023;
-sid kernel u:r:kernel:s0 - s0
-sid security u:object_r:kernel:s0 - s0
-sid unlabeled u:object_r:unlabeled:s0 - s0
-sid fs u:object_r:labeledfs:s0 - s0
-sid file u:object_r:unlabeled:s0 - s0
-sid file_labels u:object_r:unlabeled:s0 - s0
-sid init u:object_r:unlabeled:s0 - s0
-sid any_socket u:object_r:unlabeled:s0 - s0
-sid port u:object_r:port:s0 - s0
-sid netif u:object_r:netif:s0 - s0
-sid netmsg u:object_r:unlabeled:s0 - s0
-sid node u:object_r:node:s0 - s0
-sid igmp_packet u:object_r:unlabeled:s0 - s0
-sid icmp_socket u:object_r:unlabeled:s0 - s0
-sid tcp_socket u:object_r:unlabeled:s0 - s0
-sid sysctl_modprobe u:object_r:unlabeled:s0 - s0
-sid sysctl u:object_r:proc:s0 - s0
-sid sysctl_fs u:object_r:unlabeled:s0 - s0
-sid sysctl_kernel u:object_r:unlabeled:s0 - s0
-sid sysctl_net u:object_r:unlabeled:s0 - s0
-sid sysctl_net_unix u:object_r:unlabeled:s0 - s0
-sid sysctl_vm u:object_r:unlabeled:s0 - s0
-sid sysctl_dev u:object_r:unlabeled:s0 - s0
-sid kmod u:object_r:unlabeled:s0 - s0
-sid policy u:object_r:unlabeled:s0 - s0
-sid scmp_packet u:object_r:unlabeled:s0 - s0
-sid devnull u:object_r:null_device:s0 - s0
