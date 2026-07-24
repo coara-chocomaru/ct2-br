@@ -1,7 +1,3 @@
-type atcmdsrv;
-type atcmdsrv_device;
-type atcmdsrv_exec;
-type atcmdsrv_tmpfs;
 allow atcmdsrv atcmdsrv_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow atcmdsrv atcmdsrv_exec:file { read getattr execute entrypoint open };
 allow atcmdsrv atcmdsrv_tmpfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
