@@ -1,5 +1,3 @@
-type app_data_file;
-type zygote_exec;
 allow FMRadiod app_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow adbd app_data_file:dir { search };
 allow adbd app_data_file:sock_file { write };
