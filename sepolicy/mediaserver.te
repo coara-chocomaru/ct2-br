@@ -1,7 +1,4 @@
-type mediaserver;
-type mediaserver_device;
-type mediaserver_exec;
-type mediaserver_tmpfs;
+
 allow FMRadiod mediaserver:binder { call transfer };
 allow appdomain mediaserver:binder { transfer };
 allow binderservicedomain mediaserver:binder { transfer };
