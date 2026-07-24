@@ -1,8 +1,9 @@
 type cploader_block_device;
+type mrvlgpu_device;
 
-typeattribute cploader_block_device mmc_block_device;
-typeattribute mrvlgpu_device gpu_device;allow diag cploader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow eeh cploader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+
+typealias mmc_block_device alias cploader_block_device;
+typealias gpu_device alias mrvlgpu_device;allow eeh cploader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow marvelltel cploader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery cploader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery cploader_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
