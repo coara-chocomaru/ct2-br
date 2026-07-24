@@ -1,8 +1,4 @@
-type drmserver;
-type drmserver_exec;
-type drmserver_service;
-type drmserver_socket;
-type drmserver_tmpfs;
+
 allow appdomain drmserver:binder { transfer };
 allow debuggerd drmserver:process { ptrace };
 allow drmserver drmserver_exec:file { read getattr execute entrypoint open };
