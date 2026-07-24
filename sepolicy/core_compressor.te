@@ -1,0 +1,11 @@
+type core_compressor;
+type core_compressor_exec;
+allow core_compressor core_compressor_exec:file { read getattr execute entrypoint open };
+allow debuggerd core_compressor:process { ptrace };
+allow init core_compressor:process { noatsecure };
+allow kernel core_compressor:process { transition siginh rlimitinh };
+allow kernel core_compressor_exec:file { read getattr execute open };
+allow recovery core_compressor_exec:file { read write getattr setattr relabelto unlink open };
+allow unconfineddomain core_compressor:binder { call set_context_mgr transfer };
+allow untrusted_app core_compressor_exec:file { read getattr execute open };
+dontaudit kernel core_compressor:process { noatsecure };

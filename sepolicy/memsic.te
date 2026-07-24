@@ -1,0 +1,8 @@
+type memsic_device;
+allow memsicd memsic_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow memsicp memsic_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow shell memsic_device:chr_file { getattr };
+allow system_server memsic_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain memsic_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain memsic_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app memsic_device:chr_file { getattr };
