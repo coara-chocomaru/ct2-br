@@ -1,4 +1,3 @@
-type boot_block_device;
 allow diag boot_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow eeh boot_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow install_recovery boot_block_device:blk_file { read getattr open };
