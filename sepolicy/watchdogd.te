@@ -1,0 +1,4 @@
+type watchdogd;
+allow init watchdogd:process { transition noatsecure siginh rlimitinh };
+allow unconfineddomain watchdogd:binder { call set_context_mgr transfer };
+dontaudit init watchdogd:process { noatsecure };
