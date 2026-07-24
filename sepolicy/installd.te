@@ -1,7 +1,4 @@
-type installd;
-type installd_exec;
-type installd_socket;
-type installd_tmpfs;
+
 allow debuggerd installd:process { ptrace };
 allow dex2oat installd:fd { use };
 allow dex2oat installd:process { sigchld };
