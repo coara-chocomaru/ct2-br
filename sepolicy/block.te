@@ -1,4 +1,3 @@
-type block_device;
 allow atcmdsrv block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow diag block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow eeh block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
