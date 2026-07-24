@@ -1,6 +1,4 @@
-type init;
-type init_shell;
-type init_tmpfs;
+
 allow FMRadiod init:process { sigchld };
 allow adbd init:process { sigchld };
 allow adbd init:unix_stream_socket { connectto };
