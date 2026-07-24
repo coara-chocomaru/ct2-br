@@ -1,7 +1,6 @@
 # define new device type
 #SEC changed : use alias, type mediaserver_device, dev_type;
 typealias camera_device alias mediaserver_device;
-
 #SEC removed: no need, type system_app_device, dev_type;
 type nvm_device, dev_type;
 #SEC removed: conflict, type diag_device, dev_type;
@@ -22,10 +21,9 @@ type ipc_device, dev_type;
 type vpu_device, dev_type;
 type infor_device, dev_type;
 #SEC_SELinux conflict: type ssipc_device, dev_type;
-
 # new block device
-#SEC changed : use alias, type cploader_block_device, dev_type;
-typealias mmc_block_device alias cploader_block_device;
+#SEC changed : mmc_block_device does not exist in this base sepolicy tree, declare as new type instead of alias
+type cploader_block_device, dev_type;
 ## SEC does not use marvell's block device type.
 ## SEC removed: type mrd_block_device, dev_type;
 ## SEC removed: type mrd1_block_device, dev_type;
@@ -43,4 +41,3 @@ typealias mmc_block_device alias cploader_block_device;
 ## SEC removed: type security_block_device, dev_type;
 ## SEC removed: type splash_block_device, dev_type;
 ## SEC removed: type fota_block_device, dev_type;
-
