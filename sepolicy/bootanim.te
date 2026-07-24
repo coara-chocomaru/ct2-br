@@ -1,6 +1,4 @@
-type bootanim;
-type bootanim_exec;
-type bootanim_tmpfs;
+
 allow bootanim bootanim_exec:file { read getattr execute entrypoint open };
 allow debuggerd bootanim:process { ptrace };
 allow hawk bootanim:dir { getattr search };
