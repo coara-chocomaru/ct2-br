@@ -1,0 +1,279 @@
+name: LineageOS sepolicy check
+
+on:
+  workflow_dispatch:
+
+env:
+  MANIFEST_URL: 'https://github.com/LineageOS/android'
+  MANIFEST_BRANCH: 'cm-12.1'
+  DEVICE_NAME: 'a03br'
+  MAKEFILE_NAME: 'cm_a03br'
+
+jobs:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - name: Display Run Parameters
+        run: |
+          echo "::group::User Environment Variables"
+          echo "Manifest URL: ${{ env.MANIFEST_URL }}"
+          echo "Manifest Branch: ${{ env.MANIFEST_BRANCH }}"
+          echo "Device Name: ${{ env.DEVICE_NAME }}"
+          echo "Makefile Name: ${{ env.MAKEFILE_NAME }}"
+          echo "Build Target: sepolicy sepolicy.recovery"
+          echo "::endgroup::"
+
+      - name: Check Out
+        uses: actions/checkout@v3
+
+      - name: Cleanup
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Prepare the environment
+        run: |
+          sudo apt update
+          sudo apt -y install \
+            gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib \
+            libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree \
+            lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache \
+            lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev \
+            libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush \
+            schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp \
+            qemu-user-static libstdc++-10-dev libncurses5 python3 libtinfo5 \
+            libssl-dev bsdmainutils zip unzip
+
+      - name: Install OpenJDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '7'
+
+      - name: Install repo
+        run: |
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          sudo ln -sf ~/bin/repo /usr/bin/repo
+
+      - name: Initialize repo
+        id: pwd
+        run: |
+          mkdir workspace
+          cd workspace
+          echo "workspace-folder=$(pwd)" >> "$GITHUB_OUTPUT"
+          git config --global user.name "azwhikaru"
+          git config --global user.email "azwhikaru+37921907@github.com"
+          repo init --depth=1 -u ${{ env.MANIFEST_URL }} -b ${{ env.MANIFEST_BRANCH }}
+
+      - name: Create Local Manifest
+        run: |
+          mkdir -p workspace/.repo/local_manifests
+          cat << 'EOF' > workspace/.repo/local_manifests/roomservice.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <manifest>
+              <project name="coara-chocomaru/ct2-br" path="device/sts/a03br" remote="github" revision="main" />
+              <project name="coara-chocomaru/a03-br_vendor_blob" path="vendor/sts/a03br" remote="github" revision="main" />
+          </manifest>
+          EOF
+
+      - name: Repo Sync
+        working-directory: workspace
+        run: |
+          repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+
+      - name: Fetch Git LFS files for all repositories
+        working-directory: workspace
+        run: |
+          repo forall -v -c git lfs pull
+
+      - name: Patch libcamera_parameters_shim into libcameraservice Android.mk
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          python3 - << 'PYEOF'
+          path = "frameworks/av/services/camera/libcameraservice/Android.mk"
+          with open(path, "r") as f:
+              content = f.read()
+
+          old = "    libcamera_client \\\n"
+          new = "    libcamera_client \\\n    libcamera_parameters_shim \\\n"
+
+          if old not in content:
+              raise SystemExit(
+                  "ERROR: expected 'libcamera_client \\\\' line not found in "
+                  + path
+                  + " - upstream Android.mk may have changed, refusing to patch blindly"
+              )
+
+          if content.count(old) != 1:
+              raise SystemExit(
+                  "ERROR: 'libcamera_client \\\\' line matched "
+                  + str(content.count(old))
+                  + " times in "
+                  + path
+                  + " - expected exactly 1, refusing to patch ambiguously"
+              )
+
+          content = content.replace(old, new)
+
+          with open(path, "w") as f:
+              f.write(content)
+
+          print("Patched libcamera_parameters_shim into LOCAL_SHARED_LIBRARIES in " + path)
+          PYEOF
+          grep -n -A 12 "LOCAL_SHARED_LIBRARIES:=" frameworks/av/services/camera/libcameraservice/Android.mk
+
+      - name: Patch Java version detection in build/core/main.mk
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          python3 - << 'PYEOF'
+          path = "build/core/main.mk"
+          with open(path, "r") as f:
+              content = f.read()
+
+          old_17 = r"""java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.7[\. "$$]')"""
+          new_17 = r"""java_version := $(shell echo '$(java_version_str)' | grep -i '[ "]1\.7[\. "$$]')"""
+          old_16 = r"""java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.6[\. "$$]')"""
+          new_16 = r"""java_version := $(shell echo '$(java_version_str)' | grep -i '[ "]1\.6[\. "$$]')"""
+
+          if old_17 not in content:
+              raise SystemExit(
+                  "ERROR: expected java_version (1.7) pattern not found in "
+                  + path
+                  + " - upstream main.mk may have changed, refusing to patch blindly"
+              )
+          if old_16 not in content:
+              raise SystemExit(
+                  "ERROR: expected java_version (1.6) pattern not found in "
+                  + path
+                  + " - upstream main.mk may have changed, refusing to patch blindly"
+              )
+
+          content = content.replace(old_17, new_17)
+          content = content.replace(old_16, new_16)
+
+          with open(path, "w") as f:
+              f.write(content)
+
+          print("Patched java_version detection (removed '^java' Oracle-only prefix requirement) in " + path)
+          PYEOF
+          grep -n "java_version :=" build/core/main.mk
+
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 12
+
+      - name: Switch to Python 2
+        run: |
+          sudo apt -y install python2
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+          python --version
+
+      # ---- 新規追加：ビルド前に不足属性を自動補完 ----
+      - name: Fix sepolicy attributes before build
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          SEPOLICY_DIR="device/sts/a03br/sepolicy"
+          mkdir -p "$SEPOLICY_DIR"
+          touch "$SEPOLICY_DIR/attributes"
+          # 既存の宣言済み属性を収集
+          declare -A declared
+          while IFS= read -r attr; do
+            declared["$attr"]=1
+          done < <(grep -h -E '^\s*attribute\s+' "$SEPOLICY_DIR"/*.te 2>/dev/null | awk '{print $2}')
+          # typeattribute で使われている属性をチェック
+          missing=()
+          while IFS= read -r attr; do
+            if [[ -z "${declared[$attr]}" ]]; then
+              missing+=("$attr")
+            fi
+          done < <(grep -h -E '^\s*typeattribute\s+' "$SEPOLICY_DIR"/*.te 2>/dev/null | awk '{print $3}')
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Adding missing attributes: ${missing[*]}"
+            for attr in "${missing[@]}"; do
+              echo "attribute $attr;" >> "$SEPOLICY_DIR/attributes"
+            done
+          else
+            echo "No missing attributes found."
+          fi
+
+      # ---- 変更：ビルドをリトライ可能にする ----
+      - name: Build sepolicy with retry
+        id: build
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          set +e
+          MAX_RETRIES=3
+          SUCCESS=0
+          for ((i=1; i<=MAX_RETRIES; i++)); do
+            echo "========================================"
+            echo "Build attempt $i / $MAX_RETRIES"
+            echo "========================================"
+            source build/envsetup.sh
+            export ALLOW_MISSING_DEPENDENCIES=true
+            export LC_ALL=C
+            export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
+            export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
+            lunch ${{ env.MAKEFILE_NAME }}-eng
+            make -j$(nproc --all) sepolicy sepolicy.recovery 2>&1 | tee build.log
+            if [ ${PIPESTATUS[0]} -eq 0 ]; then
+              echo "Build succeeded on attempt $i"
+              SUCCESS=1
+              break
+            fi
+            # エラーログから未宣言属性を抽出
+            missing=$(grep -oP "attribute \K[^ ]+(?= is not declared)" build.log | sort -u)
+            if [ -n "$missing" ]; then
+              echo "Detected missing attributes: $missing"
+              echo "Adding them to device/sts/a03br/sepolicy/attributes and retrying..."
+              for attr in $missing; do
+                echo "attribute $attr;" >> device/sts/a03br/sepolicy/attributes
+              done
+            else
+              echo "Unknown build error (no missing attribute pattern found). Cannot auto-fix."
+              break
+            fi
+          done
+          if [ $SUCCESS -eq 1 ]; then
+            echo "SUCCESS=1" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "SUCCESS=0" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      # ---- 追加：ビルドログを常にアップロード ----
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sepolicy-build-log
+          path: ${{ steps.pwd.outputs.workspace-folder }}/build.log
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Collect sepolicy build outputs
+        if: always()
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          mkdir -p /tmp/sepolicy-artifacts
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy_intermediates/sepolicy /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy_intermediates/policy.conf /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy.recovery_intermediates/sepolicy.recovery /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy.recovery_intermediates/policy_recovery.conf /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/system/etc/sepolicy /tmp/sepolicy-artifacts/system_etc_sepolicy 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/recovery/root/sepolicy /tmp/sepolicy-artifacts/recovery_root_sepolicy 2>/dev/null || true
+          ls -la /tmp/sepolicy-artifacts
+
+      - name: Upload sepolicy Build Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sepolicy-${{ env.DEVICE_NAME }}-${{ github.run_id }}
+          path: /tmp/sepolicy-artifacts
+          retention-days: 14
+          if-no-files-found: warn
