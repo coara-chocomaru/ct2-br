@@ -1,5 +1,0 @@
-type frp_block_device;
-allow recovery frp_block_device:blk_file { ioctl read write getattr lock append open };
-allow system_server frp_block_device:blk_file { ioctl read write getattr lock append open };
-allow unconfineddomain frp_block_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
-allow unconfineddomain frp_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };

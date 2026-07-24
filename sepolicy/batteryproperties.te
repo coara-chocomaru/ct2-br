@@ -1,2 +1,0 @@
-type healthd_service;
-allow healthd healthd_service:service_manager { add };

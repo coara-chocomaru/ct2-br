@@ -1,7 +1,0 @@
-type alarm_device;
-allow domain alarm_device:chr_file { ioctl read getattr lock open };
-allow radio alarm_device:chr_file { ioctl read write getattr lock append open };
-allow rild alarm_device:chr_file { ioctl read write getattr lock append open };
-allow system_server alarm_device:chr_file { ioctl read write getattr lock append open };
-allow unconfineddomain alarm_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
-allow unconfineddomain alarm_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
