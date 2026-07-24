@@ -109,3 +109,98 @@ jobs:
 
           if content.count(old) != 1:
               raise SystemExit(
+                  "ERROR: 'libcamera_client \\\\' line matched "
+                  + str(content.count(old))
+                  + " times in "
+                  + path
+                  + " - expected exactly 1, refusing to patch ambiguously"
+              )
+
+          content = content.replace(old, new)
+
+          with open(path, "w") as f:
+              f.write(content)
+
+          print("Patched libcamera_parameters_shim into LOCAL_SHARED_LIBRARIES in " + path)
+          PYEOF
+          grep -n -A 12 "LOCAL_SHARED_LIBRARIES:=" frameworks/av/services/camera/libcameraservice/Android.mk
+
+      - name: Patch Java version detection in build/core/main.mk
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          python3 - << 'PYEOF'
+          path = "build/core/main.mk"
+          with open(path, "r") as f:
+              content = f.read()
+
+          old_17 = r"""java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.7[\. "$$]')"""
+          new_17 = r"""java_version := $(shell echo '$(java_version_str)' | grep -i '[ "]1\.7[\. "$$]')"""
+          old_16 = r"""java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.6[\. "$$]')"""
+          new_16 = r"""java_version := $(shell echo '$(java_version_str)' | grep -i '[ "]1\.6[\. "$$]')"""
+
+          if old_17 not in content:
+              raise SystemExit(
+                  "ERROR: expected java_version (1.7) pattern not found in "
+                  + path
+                  + " - upstream main.mk may have changed, refusing to patch blindly"
+              )
+          if old_16 not in content:
+              raise SystemExit(
+                  "ERROR: expected java_version (1.6) pattern not found in "
+                  + path
+                  + " - upstream main.mk may have changed, refusing to patch blindly"
+              )
+
+          content = content.replace(old_17, new_17)
+          content = content.replace(old_16, new_16)
+
+          with open(path, "w") as f:
+              f.write(content)
+
+          print("Patched java_version detection (removed '^java' Oracle-only prefix requirement) in " + path)
+          PYEOF
+          grep -n "java_version :=" build/core/main.mk
+
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 12
+
+      - name: Switch to Python 2
+        run: |
+          sudo apt -y install python2
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+          python --version
+
+      - name: Build sepolicy and sepolicy.recovery
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          source build/envsetup.sh
+          export ALLOW_MISSING_DEPENDENCIES=true
+          export LC_ALL=C
+          export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
+          export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
+          lunch ${{ env.MAKEFILE_NAME }}-eng
+          make -j$(nproc --all) sepolicy sepolicy.recovery
+
+      - name: Collect sepolicy build outputs
+        if: always()
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          mkdir -p /tmp/sepolicy-artifacts
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy_intermediates/sepolicy /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy_intermediates/policy.conf /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy.recovery_intermediates/sepolicy.recovery /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/obj/ETC/sepolicy.recovery_intermediates/policy_recovery.conf /tmp/sepolicy-artifacts/ 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/system/etc/sepolicy /tmp/sepolicy-artifacts/system_etc_sepolicy 2>/dev/null || true
+          cp -v out/target/product/${{ env.DEVICE_NAME }}/recovery/root/sepolicy /tmp/sepolicy-artifacts/recovery_root_sepolicy 2>/dev/null || true
+          ls -la /tmp/sepolicy-artifacts
+
+      - name: Upload sepolicy Build Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sepolicy-${{ env.DEVICE_NAME }}-${{ github.run_id }}
+          path: /tmp/sepolicy-artifacts
+          retention-days: 14
+          if-no-files-found: warn
