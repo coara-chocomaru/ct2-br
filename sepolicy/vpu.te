@@ -1,0 +1,5 @@
+type vpu_device;
+allow shell vpu_device:chr_file { getattr };
+allow unconfineddomain vpu_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain vpu_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app vpu_device:chr_file { getattr };
