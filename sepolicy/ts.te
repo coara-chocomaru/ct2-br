@@ -1,4 +1,0 @@
-type ts_device;
-allow system_app ts_device:chr_file { ioctl read write getattr lock append open };
-allow unconfineddomain ts_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
-allow unconfineddomain ts_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };

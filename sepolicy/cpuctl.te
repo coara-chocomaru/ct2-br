@@ -1,5 +1,0 @@
-type cpuctl_device;
-allow shell cpuctl_device:chr_file { getattr };
-allow unconfineddomain cpuctl_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
-allow unconfineddomain cpuctl_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
-allow untrusted_app cpuctl_device:chr_file { getattr };

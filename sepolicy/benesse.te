@@ -1,5 +1,0 @@
-type system_server_service;
-allow FMRadiod system_server_service:service_manager { add };
-allow codecIPC_server system_server_service:service_manager { add };
-allow phservice system_server_service:service_manager { add find list };
-allow system_server system_server_service:service_manager { add find list };
