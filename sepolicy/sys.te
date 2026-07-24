@@ -1,0 +1,15 @@
+type powerctl_prop;
+type system_radio_prop;
+allow adbd powerctl_prop:property_service { set };
+allow radio system_radio_prop:property_service { set };
+allow recovery powerctl_prop:property_service { set };
+allow rild system_radio_prop:property_service { set };
+allow shell powerctl_prop:property_service { set };
+allow system_app system_radio_prop:property_service { set };
+allow system_server powerctl_prop:property_service { set };
+allow system_server system_radio_prop:property_service { set };
+allow uncrypt powerctl_prop:property_service { set };
+allow vold powerctl_prop:property_service { set };
+auditallow radio system_radio_prop:property_service { set };
+auditallow rild system_radio_prop:property_service { set };
+auditallow system_app system_radio_prop:property_service { set };
