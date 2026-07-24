@@ -216,7 +216,6 @@ BOARD_SEPOLICY_UNION += \
     atcmdsrv.te \
     bluetooth.te \
     bootanim.te \
-    bsp_marvell.mk \
     cache_file.te \
     codecIPC_server.te \
     core_compressor.te \
