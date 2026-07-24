@@ -1,5 +1,4 @@
-type isolated_app;
-type isolated_app_tmpfs;
+
 allow debuggerd isolated_app:process { ptrace };
 allow init isolated_app:process { noatsecure };
 allow init isolated_app_tmpfs:blk_file { relabelto };
