@@ -1,8 +1,4 @@
-type logd;
-type logd_debug;
-type logd_exec;
-type logd_socket;
-type logd_tmpfs;
+
 allow appdomain logd:unix_stream_socket { connectto };
 allow appdomain logd_socket:sock_file { write };
 allow debuggerd logd:process { ptrace };
