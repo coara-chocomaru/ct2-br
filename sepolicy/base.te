@@ -1,0 +1,1991 @@
+class security
+class process
+class system
+class capability
+class filesystem
+class file
+class dir
+class fd
+class lnk_file
+class chr_file
+class blk_file
+class sock_file
+class fifo_file
+class socket
+class tcp_socket
+class udp_socket
+class rawip_socket
+class node
+class netif
+class netlink_socket
+class packet_socket
+class key_socket
+class unix_stream_socket
+class unix_dgram_socket
+class sem
+class msg
+class msgq
+class shm
+class ipc
+class passwd
+class x_drawable
+class x_screen
+class x_gc
+class x_font
+class x_colormap
+class x_property
+class x_selection
+class x_cursor
+class x_client
+class x_device
+class x_server
+class x_extension
+class netlink_route_socket
+class netlink_firewall_socket
+class netlink_tcpdiag_socket
+class netlink_nflog_socket
+class netlink_xfrm_socket
+class netlink_selinux_socket
+class netlink_audit_socket
+class netlink_ip6fw_socket
+class netlink_dnrt_socket
+class dbus
+class nscd
+class association
+class netlink_kobject_uevent_socket
+class appletalk_socket
+class packet
+class key
+class context
+class dccp_socket
+class memprotect
+class db_database
+class db_table
+class db_procedure
+class db_column
+class db_tuple
+class db_blob
+class peer
+class capability2
+class x_resource
+class x_event
+class x_synthetic_event
+class x_application_data
+class kernel_service
+class tun_socket
+class x_pointer
+class x_keyboard
+class db_schema
+class db_view
+class db_sequence
+class db_language
+class binder
+class zygote
+class property_service
+class service_manager
+class keystore_key
+sid kernel
+sid security
+sid unlabeled
+sid fs
+sid file
+sid file_labels
+sid init
+sid any_socket
+sid port
+sid netif
+sid netmsg
+sid node
+sid igmp_packet
+sid icmp_socket
+sid tcp_socket
+sid sysctl_modprobe
+sid sysctl
+sid sysctl_fs
+sid sysctl_kernel
+sid sysctl_net
+sid sysctl_net_unix
+sid sysctl_vm
+sid sysctl_dev
+sid kmod
+sid policy
+sid scmp_packet
+sid devnull
+common file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton }
+common socket { ioctl read write create getattr setattr lock relabelfrom relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto recv_msg send_msg name_bind }
+common ipc { create destroy getattr setattr read write associate unix_read unix_write }
+common x_device { getattr setattr use read write getfocus setfocus bell force_cursor freeze grab manage list_property get_property set_property add remove create destroy }
+common database { create drop getattr setattr relabelfrom relabelto }
+class security { compute_av compute_create compute_member check_context load_policy compute_relabel compute_user setenforce setbool setsecparam setcheckreqprot read_policy }
+class process { fork transition sigchld sigkill sigstop signull signal ptrace getsched setsched getsession getpgid setpgid getcap setcap share getattr setexec setfscreate noatsecure siginh setrlimit rlimitinh dyntransition setcurrent execmem execstack execheap setkeycreate setsockcreate }
+class system { ipc_info syslog_read syslog_mod syslog_console module_request }
+class capability { chown dac_override dac_read_search fowner fsetid kill setgid setuid setpcap linux_immutable net_bind_service net_broadcast net_admin net_raw ipc_lock ipc_owner sys_module sys_rawio sys_chroot sys_ptrace sys_pacct sys_admin sys_boot sys_nice sys_resource sys_time sys_tty_config mknod lease audit_write audit_control setfcap }
+class filesystem { mount remount unmount getattr relabelfrom relabelto transition associate quotamod quotaget }
+class file inherits file { execute_no_trans entrypoint execmod open audit_access }
+class dir inherits file { add_name remove_name reparent search rmdir open audit_access execmod }
+class fd { use }
+class lnk_file inherits file { open audit_access execmod }
+class chr_file inherits file { execute_no_trans entrypoint execmod open audit_access }
+class blk_file inherits file { open audit_access execmod }
+class sock_file inherits file { open audit_access execmod }
+class fifo_file inherits file { open audit_access execmod }
+class socket inherits socket
+class tcp_socket inherits socket { connectto newconn acceptfrom node_bind name_connect }
+class udp_socket inherits socket { node_bind }
+class rawip_socket inherits socket { node_bind }
+class node { tcp_recv tcp_send udp_recv udp_send rawip_recv rawip_send enforce_dest dccp_recv dccp_send recvfrom sendto }
+class netif { tcp_recv tcp_send udp_recv udp_send rawip_recv rawip_send dccp_recv dccp_send ingress egress }
+class netlink_socket inherits socket
+class packet_socket inherits socket
+class key_socket inherits socket
+class unix_stream_socket inherits socket { connectto newconn acceptfrom }
+class unix_dgram_socket inherits socket
+class sem inherits ipc
+class msg { send receive }
+class msgq inherits ipc { enqueue }
+class shm inherits ipc { lock }
+class ipc inherits ipc
+class passwd { passwd chfn chsh rootok crontab }
+class x_drawable { create destroy read write blend getattr setattr list_child add_child remove_child list_property get_property set_property manage override show hide send receive }
+class x_screen { getattr setattr hide_cursor show_cursor saver_getattr saver_setattr saver_hide saver_show }
+class x_gc { create destroy getattr setattr use }
+class x_font { create destroy getattr add_glyph remove_glyph use }
+class x_colormap { create destroy read write getattr add_color remove_color install uninstall use }
+class x_property { create destroy read write append getattr setattr }
+class x_selection { read write getattr setattr }
+class x_cursor { create destroy read write getattr setattr use }
+class x_client { destroy getattr setattr manage }
+class x_device inherits x_device
+class x_server { getattr setattr record debug grab manage }
+class x_extension { query use }
+class netlink_route_socket inherits socket { nlmsg_read nlmsg_write }
+class netlink_firewall_socket inherits socket { nlmsg_read nlmsg_write }
+class netlink_tcpdiag_socket inherits socket { nlmsg_read nlmsg_write }
+class netlink_nflog_socket inherits socket
+class netlink_xfrm_socket inherits socket { nlmsg_read nlmsg_write }
+class netlink_selinux_socket inherits socket
+class netlink_audit_socket inherits socket { nlmsg_read nlmsg_write nlmsg_relay nlmsg_readpriv nlmsg_tty_audit }
+class netlink_ip6fw_socket inherits socket { nlmsg_read nlmsg_write }
+class netlink_dnrt_socket inherits socket
+class dbus { acquire_svc send_msg }
+class nscd { getpwd getgrp gethost getstat admin shmempwd shmemgrp shmemhost getserv shmemserv }
+class association { sendto recvfrom setcontext polmatch }
+class netlink_kobject_uevent_socket inherits socket
+class appletalk_socket inherits socket
+class packet { send recv relabelto flow_in flow_out forward_in forward_out }
+class key { view read write search link setattr create }
+class context { translate contains }
+class dccp_socket inherits socket { node_bind name_connect }
+class memprotect { mmap_zero }
+class db_database inherits database { access install_module load_module get_param set_param }
+class db_table inherits database { use select update insert delete lock }
+class db_procedure inherits database { execute entrypoint install }
+class db_column inherits database { use select update insert }
+class db_tuple { relabelfrom relabelto use select update insert delete }
+class db_blob inherits database { read write import export }
+class peer { recv }
+class capability2 { mac_override mac_admin syslog wake_alarm block_suspend }
+class x_resource { read write }
+class x_event { send receive }
+class x_synthetic_event { send receive }
+class x_application_data { paste paste_after_confirm copy }
+class kernel_service { use_as_override create_files_as }
+class tun_socket inherits socket { attach_queue }
+class x_pointer inherits x_device
+class x_keyboard inherits x_device
+class db_schema inherits database { search add_name remove_name }
+class db_view inherits database { expand }
+class db_sequence inherits database { get_value next_value set_value }
+class db_language inherits database { implement execute }
+class binder { impersonate call set_context_mgr transfer }
+class zygote { specifyids specifyrlimits specifyinvokewith specifyseinfo }
+class property_service { set }
+class service_manager { add find list }
+class keystore_key { test get insert delete exist saw reset password lock unlock zero sign verify grant duplicate clear_uid reset_uid sync_uid password_uid }
+sensitivity s0;
+dominance { s0 }
+category c0;
+category c1;
+category c2;
+category c3;
+category c4;
+category c5;
+category c6;
+category c7;
+category c8;
+category c9;
+category c10;
+category c11;
+category c12;
+category c13;
+category c14;
+category c15;
+category c16;
+category c17;
+category c18;
+category c19;
+category c20;
+category c21;
+category c22;
+category c23;
+category c24;
+category c25;
+category c26;
+category c27;
+category c28;
+category c29;
+category c30;
+category c31;
+category c32;
+category c33;
+category c34;
+category c35;
+category c36;
+category c37;
+category c38;
+category c39;
+category c40;
+category c41;
+category c42;
+category c43;
+category c44;
+category c45;
+category c46;
+category c47;
+category c48;
+category c49;
+category c50;
+category c51;
+category c52;
+category c53;
+category c54;
+category c55;
+category c56;
+category c57;
+category c58;
+category c59;
+category c60;
+category c61;
+category c62;
+category c63;
+category c64;
+category c65;
+category c66;
+category c67;
+category c68;
+category c69;
+category c70;
+category c71;
+category c72;
+category c73;
+category c74;
+category c75;
+category c76;
+category c77;
+category c78;
+category c79;
+category c80;
+category c81;
+category c82;
+category c83;
+category c84;
+category c85;
+category c86;
+category c87;
+category c88;
+category c89;
+category c90;
+category c91;
+category c92;
+category c93;
+category c94;
+category c95;
+category c96;
+category c97;
+category c98;
+category c99;
+category c100;
+category c101;
+category c102;
+category c103;
+category c104;
+category c105;
+category c106;
+category c107;
+category c108;
+category c109;
+category c110;
+category c111;
+category c112;
+category c113;
+category c114;
+category c115;
+category c116;
+category c117;
+category c118;
+category c119;
+category c120;
+category c121;
+category c122;
+category c123;
+category c124;
+category c125;
+category c126;
+category c127;
+category c128;
+category c129;
+category c130;
+category c131;
+category c132;
+category c133;
+category c134;
+category c135;
+category c136;
+category c137;
+category c138;
+category c139;
+category c140;
+category c141;
+category c142;
+category c143;
+category c144;
+category c145;
+category c146;
+category c147;
+category c148;
+category c149;
+category c150;
+category c151;
+category c152;
+category c153;
+category c154;
+category c155;
+category c156;
+category c157;
+category c158;
+category c159;
+category c160;
+category c161;
+category c162;
+category c163;
+category c164;
+category c165;
+category c166;
+category c167;
+category c168;
+category c169;
+category c170;
+category c171;
+category c172;
+category c173;
+category c174;
+category c175;
+category c176;
+category c177;
+category c178;
+category c179;
+category c180;
+category c181;
+category c182;
+category c183;
+category c184;
+category c185;
+category c186;
+category c187;
+category c188;
+category c189;
+category c190;
+category c191;
+category c192;
+category c193;
+category c194;
+category c195;
+category c196;
+category c197;
+category c198;
+category c199;
+category c200;
+category c201;
+category c202;
+category c203;
+category c204;
+category c205;
+category c206;
+category c207;
+category c208;
+category c209;
+category c210;
+category c211;
+category c212;
+category c213;
+category c214;
+category c215;
+category c216;
+category c217;
+category c218;
+category c219;
+category c220;
+category c221;
+category c222;
+category c223;
+category c224;
+category c225;
+category c226;
+category c227;
+category c228;
+category c229;
+category c230;
+category c231;
+category c232;
+category c233;
+category c234;
+category c235;
+category c236;
+category c237;
+category c238;
+category c239;
+category c240;
+category c241;
+category c242;
+category c243;
+category c244;
+category c245;
+category c246;
+category c247;
+category c248;
+category c249;
+category c250;
+category c251;
+category c252;
+category c253;
+category c254;
+category c255;
+category c256;
+category c257;
+category c258;
+category c259;
+category c260;
+category c261;
+category c262;
+category c263;
+category c264;
+category c265;
+category c266;
+category c267;
+category c268;
+category c269;
+category c270;
+category c271;
+category c272;
+category c273;
+category c274;
+category c275;
+category c276;
+category c277;
+category c278;
+category c279;
+category c280;
+category c281;
+category c282;
+category c283;
+category c284;
+category c285;
+category c286;
+category c287;
+category c288;
+category c289;
+category c290;
+category c291;
+category c292;
+category c293;
+category c294;
+category c295;
+category c296;
+category c297;
+category c298;
+category c299;
+category c300;
+category c301;
+category c302;
+category c303;
+category c304;
+category c305;
+category c306;
+category c307;
+category c308;
+category c309;
+category c310;
+category c311;
+category c312;
+category c313;
+category c314;
+category c315;
+category c316;
+category c317;
+category c318;
+category c319;
+category c320;
+category c321;
+category c322;
+category c323;
+category c324;
+category c325;
+category c326;
+category c327;
+category c328;
+category c329;
+category c330;
+category c331;
+category c332;
+category c333;
+category c334;
+category c335;
+category c336;
+category c337;
+category c338;
+category c339;
+category c340;
+category c341;
+category c342;
+category c343;
+category c344;
+category c345;
+category c346;
+category c347;
+category c348;
+category c349;
+category c350;
+category c351;
+category c352;
+category c353;
+category c354;
+category c355;
+category c356;
+category c357;
+category c358;
+category c359;
+category c360;
+category c361;
+category c362;
+category c363;
+category c364;
+category c365;
+category c366;
+category c367;
+category c368;
+category c369;
+category c370;
+category c371;
+category c372;
+category c373;
+category c374;
+category c375;
+category c376;
+category c377;
+category c378;
+category c379;
+category c380;
+category c381;
+category c382;
+category c383;
+category c384;
+category c385;
+category c386;
+category c387;
+category c388;
+category c389;
+category c390;
+category c391;
+category c392;
+category c393;
+category c394;
+category c395;
+category c396;
+category c397;
+category c398;
+category c399;
+category c400;
+category c401;
+category c402;
+category c403;
+category c404;
+category c405;
+category c406;
+category c407;
+category c408;
+category c409;
+category c410;
+category c411;
+category c412;
+category c413;
+category c414;
+category c415;
+category c416;
+category c417;
+category c418;
+category c419;
+category c420;
+category c421;
+category c422;
+category c423;
+category c424;
+category c425;
+category c426;
+category c427;
+category c428;
+category c429;
+category c430;
+category c431;
+category c432;
+category c433;
+category c434;
+category c435;
+category c436;
+category c437;
+category c438;
+category c439;
+category c440;
+category c441;
+category c442;
+category c443;
+category c444;
+category c445;
+category c446;
+category c447;
+category c448;
+category c449;
+category c450;
+category c451;
+category c452;
+category c453;
+category c454;
+category c455;
+category c456;
+category c457;
+category c458;
+category c459;
+category c460;
+category c461;
+category c462;
+category c463;
+category c464;
+category c465;
+category c466;
+category c467;
+category c468;
+category c469;
+category c470;
+category c471;
+category c472;
+category c473;
+category c474;
+category c475;
+category c476;
+category c477;
+category c478;
+category c479;
+category c480;
+category c481;
+category c482;
+category c483;
+category c484;
+category c485;
+category c486;
+category c487;
+category c488;
+category c489;
+category c490;
+category c491;
+category c492;
+category c493;
+category c494;
+category c495;
+category c496;
+category c497;
+category c498;
+category c499;
+category c500;
+category c501;
+category c502;
+category c503;
+category c504;
+category c505;
+category c506;
+category c507;
+category c508;
+category c509;
+category c510;
+category c511;
+category c512;
+category c513;
+category c514;
+category c515;
+category c516;
+category c517;
+category c518;
+category c519;
+category c520;
+category c521;
+category c522;
+category c523;
+category c524;
+category c525;
+category c526;
+category c527;
+category c528;
+category c529;
+category c530;
+category c531;
+category c532;
+category c533;
+category c534;
+category c535;
+category c536;
+category c537;
+category c538;
+category c539;
+category c540;
+category c541;
+category c542;
+category c543;
+category c544;
+category c545;
+category c546;
+category c547;
+category c548;
+category c549;
+category c550;
+category c551;
+category c552;
+category c553;
+category c554;
+category c555;
+category c556;
+category c557;
+category c558;
+category c559;
+category c560;
+category c561;
+category c562;
+category c563;
+category c564;
+category c565;
+category c566;
+category c567;
+category c568;
+category c569;
+category c570;
+category c571;
+category c572;
+category c573;
+category c574;
+category c575;
+category c576;
+category c577;
+category c578;
+category c579;
+category c580;
+category c581;
+category c582;
+category c583;
+category c584;
+category c585;
+category c586;
+category c587;
+category c588;
+category c589;
+category c590;
+category c591;
+category c592;
+category c593;
+category c594;
+category c595;
+category c596;
+category c597;
+category c598;
+category c599;
+category c600;
+category c601;
+category c602;
+category c603;
+category c604;
+category c605;
+category c606;
+category c607;
+category c608;
+category c609;
+category c610;
+category c611;
+category c612;
+category c613;
+category c614;
+category c615;
+category c616;
+category c617;
+category c618;
+category c619;
+category c620;
+category c621;
+category c622;
+category c623;
+category c624;
+category c625;
+category c626;
+category c627;
+category c628;
+category c629;
+category c630;
+category c631;
+category c632;
+category c633;
+category c634;
+category c635;
+category c636;
+category c637;
+category c638;
+category c639;
+category c640;
+category c641;
+category c642;
+category c643;
+category c644;
+category c645;
+category c646;
+category c647;
+category c648;
+category c649;
+category c650;
+category c651;
+category c652;
+category c653;
+category c654;
+category c655;
+category c656;
+category c657;
+category c658;
+category c659;
+category c660;
+category c661;
+category c662;
+category c663;
+category c664;
+category c665;
+category c666;
+category c667;
+category c668;
+category c669;
+category c670;
+category c671;
+category c672;
+category c673;
+category c674;
+category c675;
+category c676;
+category c677;
+category c678;
+category c679;
+category c680;
+category c681;
+category c682;
+category c683;
+category c684;
+category c685;
+category c686;
+category c687;
+category c688;
+category c689;
+category c690;
+category c691;
+category c692;
+category c693;
+category c694;
+category c695;
+category c696;
+category c697;
+category c698;
+category c699;
+category c700;
+category c701;
+category c702;
+category c703;
+category c704;
+category c705;
+category c706;
+category c707;
+category c708;
+category c709;
+category c710;
+category c711;
+category c712;
+category c713;
+category c714;
+category c715;
+category c716;
+category c717;
+category c718;
+category c719;
+category c720;
+category c721;
+category c722;
+category c723;
+category c724;
+category c725;
+category c726;
+category c727;
+category c728;
+category c729;
+category c730;
+category c731;
+category c732;
+category c733;
+category c734;
+category c735;
+category c736;
+category c737;
+category c738;
+category c739;
+category c740;
+category c741;
+category c742;
+category c743;
+category c744;
+category c745;
+category c746;
+category c747;
+category c748;
+category c749;
+category c750;
+category c751;
+category c752;
+category c753;
+category c754;
+category c755;
+category c756;
+category c757;
+category c758;
+category c759;
+category c760;
+category c761;
+category c762;
+category c763;
+category c764;
+category c765;
+category c766;
+category c767;
+category c768;
+category c769;
+category c770;
+category c771;
+category c772;
+category c773;
+category c774;
+category c775;
+category c776;
+category c777;
+category c778;
+category c779;
+category c780;
+category c781;
+category c782;
+category c783;
+category c784;
+category c785;
+category c786;
+category c787;
+category c788;
+category c789;
+category c790;
+category c791;
+category c792;
+category c793;
+category c794;
+category c795;
+category c796;
+category c797;
+category c798;
+category c799;
+category c800;
+category c801;
+category c802;
+category c803;
+category c804;
+category c805;
+category c806;
+category c807;
+category c808;
+category c809;
+category c810;
+category c811;
+category c812;
+category c813;
+category c814;
+category c815;
+category c816;
+category c817;
+category c818;
+category c819;
+category c820;
+category c821;
+category c822;
+category c823;
+category c824;
+category c825;
+category c826;
+category c827;
+category c828;
+category c829;
+category c830;
+category c831;
+category c832;
+category c833;
+category c834;
+category c835;
+category c836;
+category c837;
+category c838;
+category c839;
+category c840;
+category c841;
+category c842;
+category c843;
+category c844;
+category c845;
+category c846;
+category c847;
+category c848;
+category c849;
+category c850;
+category c851;
+category c852;
+category c853;
+category c854;
+category c855;
+category c856;
+category c857;
+category c858;
+category c859;
+category c860;
+category c861;
+category c862;
+category c863;
+category c864;
+category c865;
+category c866;
+category c867;
+category c868;
+category c869;
+category c870;
+category c871;
+category c872;
+category c873;
+category c874;
+category c875;
+category c876;
+category c877;
+category c878;
+category c879;
+category c880;
+category c881;
+category c882;
+category c883;
+category c884;
+category c885;
+category c886;
+category c887;
+category c888;
+category c889;
+category c890;
+category c891;
+category c892;
+category c893;
+category c894;
+category c895;
+category c896;
+category c897;
+category c898;
+category c899;
+category c900;
+category c901;
+category c902;
+category c903;
+category c904;
+category c905;
+category c906;
+category c907;
+category c908;
+category c909;
+category c910;
+category c911;
+category c912;
+category c913;
+category c914;
+category c915;
+category c916;
+category c917;
+category c918;
+category c919;
+category c920;
+category c921;
+category c922;
+category c923;
+category c924;
+category c925;
+category c926;
+category c927;
+category c928;
+category c929;
+category c930;
+category c931;
+category c932;
+category c933;
+category c934;
+category c935;
+category c936;
+category c937;
+category c938;
+category c939;
+category c940;
+category c941;
+category c942;
+category c943;
+category c944;
+category c945;
+category c946;
+category c947;
+category c948;
+category c949;
+category c950;
+category c951;
+category c952;
+category c953;
+category c954;
+category c955;
+category c956;
+category c957;
+category c958;
+category c959;
+category c960;
+category c961;
+category c962;
+category c963;
+category c964;
+category c965;
+category c966;
+category c967;
+category c968;
+category c969;
+category c970;
+category c971;
+category c972;
+category c973;
+category c974;
+category c975;
+category c976;
+category c977;
+category c978;
+category c979;
+category c980;
+category c981;
+category c982;
+category c983;
+category c984;
+category c985;
+category c986;
+category c987;
+category c988;
+category c989;
+category c990;
+category c991;
+category c992;
+category c993;
+category c994;
+category c995;
+category c996;
+category c997;
+category c998;
+category c999;
+category c1000;
+category c1001;
+category c1002;
+category c1003;
+category c1004;
+category c1005;
+category c1006;
+category c1007;
+category c1008;
+category c1009;
+category c1010;
+category c1011;
+category c1012;
+category c1013;
+category c1014;
+category c1015;
+category c1016;
+category c1017;
+category c1018;
+category c1019;
+category c1020;
+category c1021;
+category c1022;
+category c1023;
+level s0:c0.c1023;
+mlsconstrain appletalk_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain blk_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain blk_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain blk_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain chr_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain chr_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain chr_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain dir { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain dir { read getattr search } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain dir { write setattr rename add_name remove_name reparent rmdir } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain fifo_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain fifo_file { read getattr } (((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain fifo_file { write setattr append unlink link rename } (((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain ipc { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain ipc { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
+mlsconstrain ipc { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
+mlsconstrain key_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain lnk_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain lnk_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain lnk_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain msgq { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain msgq { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
+mlsconstrain msgq { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_audit_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_dnrt_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_firewall_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_ip6fw_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_kobject_uevent_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_nflog_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_route_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_selinux_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_tcpdiag_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain netlink_xfrm_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain packet_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain process { ptrace getsched getsession getpgid getcap share getattr } (l1 dom l2 or t1 == NO_IDENTIFIER);
+mlsconstrain process { sigkill sigstop signal ptrace setsched setpgid setcap share setrlimit } (l1 domby l2 or t1 == NO_IDENTIFIER);
+mlsconstrain process { transition dyntransition } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain rawip_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain sem { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain sem { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
+mlsconstrain sem { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
+mlsconstrain shm { create destroy } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain shm { getattr read associate unix_read } (l1 dom l2 or t1 == NO_IDENTIFIER);
+mlsconstrain shm { write unix_write } (l1 domby l2 or t1 == NO_IDENTIFIER);
+mlsconstrain sock_file { create relabelfrom relabelto } (l2 == h2 and (l1 == l2 or t1 == NO_IDENTIFIER));
+mlsconstrain sock_file { read getattr execute } ((l1 dom l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain sock_file { write setattr append unlink link rename } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain tcp_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain tun_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain udp_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain unix_dgram_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+mlsconstrain unix_dgram_socket { sendto } ((l1 domby l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain unix_stream_socket { connectto } ((l1 == l2 or t1 == NO_IDENTIFIER) or t2 == NO_IDENTIFIER);
+mlsconstrain unix_stream_socket { create relabelfrom relabelto } ((h1 == h2 and l1 == l2) or t1 == NO_IDENTIFIER);
+policycap network_peer_controls;
+policycap open_perms;
+typealias audio_data_file alias audio_firmware_file;
+typealias app_data_file alias download_file;
+typealias app_data_file alias platform_app_data_file;
+typealias vfat alias sdcard_external;
+typealias fuse alias sdcard_internal;
+typeattribute FMRadiod domain;
+typeattribute FMRadiod_exec exec_type, file_type;
+typeattribute FMRadiod_tmpfs file_type;
+typeattribute adb_data_file data_file_type, file_type;
+typeattribute adb_device dev_type;
+typeattribute adb_keys_file data_file_type, file_type;
+typeattribute adbd domain, netdomain;
+typeattribute adbd_socket file_type;
+typeattribute alarm_device dev_type, mlstrustedobject;
+typeattribute anr_data_file data_file_type, file_type, mlstrustedobject;
+typeattribute apk_data_file data_file_type, file_type;
+typeattribute apk_private_data_file data_file_type, file_type;
+typeattribute apk_private_tmp_file data_file_type, file_type, mlstrustedobject;
+typeattribute apk_tmp_file data_file_type, file_type, mlstrustedobject;
+typeattribute app_data_file data_file_type, file_type;
+typeattribute asec_apk_file data_file_type, file_type;
+typeattribute asec_image_file data_file_type, file_type;
+typeattribute asec_public_file data_file_type, file_type;
+typeattribute ashmem_device dev_type, mlstrustedobject;
+typeattribute at_router domain;
+typeattribute at_router_exec exec_type, file_type;
+typeattribute at_router_tmpfs file_type;
+typeattribute atcmdsrv domain;
+typeattribute atcmdsrv_device dev_type;
+typeattribute atcmdsrv_exec exec_type, file_type;
+typeattribute atcmdsrv_tmpfs file_type;
+typeattribute audio_data_file data_file_type, file_type;
+typeattribute audio_device dev_type;
+typeattribute audio_prop property_type;
+typeattribute backup_data_file data_file_type, file_type, mlstrustedobject;
+typeattribute binder_device dev_type, mlstrustedobject;
+typeattribute block_device dev_type;
+typeattribute bluetooth appdomain, domain, netdomain;
+typeattribute bluetooth_data_file data_file_type, file_type;
+typeattribute bluetooth_device dev_type;
+typeattribute bluetooth_efs_file file_type;
+typeattribute bluetooth_prop property_type;
+typeattribute bluetooth_service service_manager_type;
+typeattribute bluetooth_socket file_type;
+typeattribute bluetooth_tmpfs file_type;
+typeattribute boot_block_device dev_type;
+typeattribute bootanim domain;
+typeattribute bootanim_exec exec_type, file_type;
+typeattribute bootanim_tmpfs file_type;
+typeattribute bootloader_block_device dev_type;
+typeattribute cache_backup_file file_type, mlstrustedobject;
+typeattribute cache_block_device dev_type;
+typeattribute cache_file file_type, mlstrustedobject;
+typeattribute camera_data_file data_file_type, file_type;
+typeattribute camera_device dev_type;
+typeattribute cgroup fs_type, mlstrustedobject;
+typeattribute clatd domain, netdomain;
+typeattribute clatd_exec exec_type, file_type;
+typeattribute codecIPC_server domain;
+typeattribute codecIPC_server_exec exec_type, file_type;
+typeattribute codecIPC_server_tmpfs file_type;
+typeattribute console_device dev_type;
+typeattribute core_compressor domain;
+typeattribute core_compressor_exec exec_type, file_type;
+typeattribute coredump_file file_type;
+typeattribute cploader_block_device dev_type;
+typeattribute cpuctl_device dev_type;
+typeattribute ctl_bootanim_prop property_type;
+typeattribute ctl_bugreport_prop property_type;
+typeattribute ctl_default_prop property_type;
+typeattribute ctl_dhcp_pan_prop property_type;
+typeattribute ctl_dumpstate_prop property_type;
+typeattribute ctl_fuse_prop property_type;
+typeattribute ctl_mdnsd_prop property_type;
+typeattribute ctl_rildaemon_prop property_type;
+typeattribute dalvikcache_data_file data_file_type, file_type;
+typeattribute dalvikcache_profiles_data_file data_file_type, file_type;
+typeattribute debug_prop property_type;
+typeattribute debugfs fs_type, mlstrustedobject;
+typeattribute debuggerd domain, mlstrustedsubject;
+typeattribute debuggerd_exec exec_type, file_type;
+typeattribute debuggerd_prop property_type;
+typeattribute debuggerd_tmpfs file_type;
+typeattribute default_android_service service_manager_type;
+typeattribute default_prop property_type;
+typeattribute device dev_type, fs_type;
+typeattribute devpts fs_type, mlstrustedobject;
+typeattribute dex2oat domain;
+typeattribute dex2oat_exec exec_type, file_type;
+typeattribute dhcp domain, netdomain;
+typeattribute dhcp_data_file data_file_type, file_type;
+typeattribute dhcp_exec exec_type, file_type;
+typeattribute dhcp_prop property_type;
+typeattribute dhcp_tmpfs file_type;
+typeattribute diag domain;
+typeattribute diag_device dev_type;
+typeattribute diag_exec exec_type, file_type;
+typeattribute diag_tmpfs file_type;
+typeattribute dm_device dev_type;
+typeattribute dnsmasq domain, netdomain;
+typeattribute dnsmasq_exec exec_type, file_type;
+typeattribute dnsproxyd_socket file_type, mlstrustedobject;
+typeattribute drm_data_file data_file_type, file_type;
+typeattribute drmserver binderservicedomain, domain, mlstrustedsubject, netdomain;
+typeattribute drmserver_exec exec_type, file_type;
+typeattribute drmserver_service service_manager_type;
+typeattribute drmserver_socket file_type;
+typeattribute drmserver_tmpfs file_type;
+typeattribute dtim_block_device dev_type;
+typeattribute dump_log_data_file data_file_type, file_type;
+typeattribute dumpstate domain, netdomain;
+typeattribute dumpstate_exec exec_type, file_type;
+typeattribute dumpstate_socket file_type;
+typeattribute dumpstate_tmpfs file_type;
+typeattribute eeh domain;
+typeattribute eeh_device dev_type;
+typeattribute eeh_exec exec_type, file_type;
+typeattribute eeh_tmpfs file_type;
+typeattribute efs_file file_type;
+typeattribute embmsd_socket file_type;
+typeattribute env domain;
+typeattribute env_exec exec_type, file_type;
+typeattribute env_tmpfs file_type;
+typeattribute fingerprint_prop property_type;
+typeattribute fota_block_device dev_type;
+typeattribute frp_block_device dev_type;
+typeattribute fscklogs dev_type;
+typeattribute full_device dev_type;
+typeattribute functionfs fs_type;
+typeattribute fuse fs_type, mlstrustedobject, sdcard_type;
+typeattribute fuse_device dev_type;
+typeattribute fwmarkd_socket file_type, mlstrustedobject;
+typeattribute geu_device dev_type;
+typeattribute gps_control file_type;
+typeattribute gps_data_file data_file_type, file_type;
+typeattribute gps_device dev_type;
+typeattribute gps_socket file_type;
+typeattribute gpsd domain, netdomain;
+typeattribute gpsd_exec exec_type, file_type;
+typeattribute gpsd_tmpfs file_type;
+typeattribute gpu_device dev_type, mlstrustedobject;
+typeattribute graphics_device dev_type;
+typeattribute hawk domain;
+typeattribute hawk_exec exec_type, file_type;
+typeattribute hawk_tmpfs file_type;
+typeattribute hci_attach domain;
+typeattribute hci_attach_dev dev_type;
+typeattribute hci_attach_exec exec_type, file_type;
+typeattribute hci_attach_tmpfs file_type;
+typeattribute healthd binderservicedomain, domain;
+typeattribute healthd_service service_manager_type;
+typeattribute hostapd domain, netdomain;
+typeattribute hostapd_exec exec_type, file_type;
+typeattribute hw_random_device dev_type;
+typeattribute i2c_device dev_type;
+typeattribute iio_device dev_type;
+typeattribute iml domain;
+typeattribute iml_exec exec_type, file_type;
+typeattribute iml_tmpfs file_type;
+typeattribute imsc domain;
+typeattribute imsc_exec exec_type, file_type;
+typeattribute imsc_tmpfs file_type;
+typeattribute imsd_socket file_type;
+typeattribute infor_device dev_type;
+typeattribute init domain, mlstrustedsubject, unconfineddomain;
+typeattribute init_shell domain, mlstrustedsubject, unconfineddomain;
+typeattribute init_tmpfs file_type;
+typeattribute inotify fs_type, mlstrustedobject;
+typeattribute input_device dev_type;
+typeattribute inputflinger binderservicedomain, domain;
+typeattribute inputflinger_exec exec_type, file_type;
+typeattribute inputflinger_service service_manager_type;
+typeattribute inputflinger_tmpfs file_type;
+typeattribute install_data_file data_file_type, file_type;
+typeattribute install_recovery domain;
+typeattribute install_recovery_exec exec_type, file_type;
+typeattribute install_recovery_tmpfs file_type;
+typeattribute installd domain, mlstrustedsubject;
+typeattribute installd_exec exec_type, file_type;
+typeattribute installd_socket file_type;
+typeattribute installd_tmpfs file_type;
+typeattribute ion_device dev_type, mlstrustedobject;
+typeattribute ipc_device dev_type;
+typeattribute isolated_app appdomain, domain, netdomain;
+typeattribute isolated_app_tmpfs file_type;
+typeattribute kernel domain, mlstrustedsubject, unconfineddomain;
+typeattribute keychain_data_file data_file_type, file_type;
+typeattribute keystore binderservicedomain, domain, mlstrustedsubject;
+typeattribute keystore_data_file data_file_type, file_type;
+typeattribute keystore_exec exec_type, file_type;
+typeattribute keystore_service service_manager_type;
+typeattribute keystore_tmpfs file_type;
+typeattribute kinitlog domain;
+typeattribute kinitlog_exec exec_type, file_type;
+typeattribute kinitlog_tmpfs file_type;
+typeattribute klog_device dev_type;
+typeattribute kmem_device dev_type;
+typeattribute kmsg domain;
+typeattribute kmsg_device dev_type;
+typeattribute kmsg_exec exec_type, file_type;
+typeattribute kmsg_tmpfs file_type;
+typeattribute labeledfs fs_type;
+typeattribute lmkd domain;
+typeattribute lmkd_exec exec_type, file_type;
+typeattribute lmkd_socket file_type;
+typeattribute lmkd_tmpfs file_type;
+typeattribute load_g_cali_data domain;
+typeattribute load_g_cali_data_exec exec_type, file_type;
+typeattribute load_g_cali_data_tmpfs file_type;
+typeattribute load_g_sensor domain;
+typeattribute load_g_sensor_exec exec_type, file_type;
+typeattribute load_g_sensor_tmpfs file_type;
+typeattribute log_device dev_type, mlstrustedobject;
+typeattribute log_on_boot domain;
+typeattribute log_on_boot_exec exec_type, file_type;
+typeattribute log_on_boot_tmpfs file_type;
+typeattribute logd domain;
+typeattribute logd_debug file_type;
+typeattribute logd_exec exec_type, file_type;
+typeattribute logd_prop property_type;
+typeattribute logd_socket file_type;
+typeattribute logd_tmpfs file_type;
+typeattribute logdr_socket file_type;
+typeattribute logdw_socket file_type;
+typeattribute loop_device dev_type;
+typeattribute marvelltel domain;
+typeattribute marvelltel_device dev_type;
+typeattribute marvelltel_exec exec_type, file_type;
+typeattribute marvelltel_tmpfs file_type;
+typeattribute mdns_socket file_type;
+typeattribute mdnsd domain, netdomain;
+typeattribute mdnsd_exec exec_type, file_type;
+typeattribute mdnsd_socket file_type;
+typeattribute mdnsd_tmpfs file_type;
+typeattribute media_data_file data_file_type, file_type;
+typeattribute media_rw_data_file data_file_type, file_type;
+typeattribute mediaserver binderservicedomain, domain, mlstrustedsubject, netdomain;
+typeattribute mediaserver_device dev_type;
+typeattribute mediaserver_exec exec_type, file_type;
+typeattribute mediaserver_service service_manager_type;
+typeattribute mediaserver_tmpfs file_type;
+typeattribute memsic_device dev_type;
+typeattribute memsicd domain;
+typeattribute memsicd_exec exec_type, file_type;
+typeattribute memsicd_tmpfs file_type;
+typeattribute memsicp domain;
+typeattribute memsicp_exec exec_type, file_type;
+typeattribute memsicp_tmpfs file_type;
+typeattribute mep2_block_device dev_type;
+typeattribute misc_block_device dev_type;
+typeattribute misc_user_data_file data_file_type, file_type;
+typeattribute mlan2040coex domain;
+typeattribute mlan2040coex_exec exec_type, file_type;
+typeattribute mlan2040coex_tmpfs file_type;
+typeattribute mlaninit domain;
+typeattribute mlaninit_exec exec_type, file_type;
+typeattribute mlaninit_tmpfs file_type;
+typeattribute mned domain;
+typeattribute mned_exec exec_type, file_type;
+typeattribute mned_tmpfs file_type;
+typeattribute mqueue fs_type;
+typeattribute mrd1_block_device dev_type;
+typeattribute mrd_block_device dev_type;
+typeattribute mrvl_gpsd domain;
+typeattribute mrvl_gpsd_exec exec_type, file_type;
+typeattribute mrvl_gpsd_tmpfs file_type;
+typeattribute mrvlgpu_device dev_type;
+typeattribute mtd_device dev_type;
+typeattribute mtp domain, netdomain;
+typeattribute mtp_device dev_type, mlstrustedobject;
+typeattribute mtp_exec exec_type, file_type;
+typeattribute mtp_tmpfs file_type;
+typeattribute mtpd_socket file_type;
+typeattribute mwireless_device dev_type;
+typeattribute mwirelessd domain;
+typeattribute mwirelessd_exec exec_type, file_type;
+typeattribute mwirelessd_tmpfs file_type;
+typeattribute net_data_file data_file_type, file_type;
+typeattribute net_radio_prop property_type;
+typeattribute netd domain, netdomain;
+typeattribute netd_exec exec_type, file_type;
+typeattribute netd_socket file_type;
+typeattribute netd_tmpfs file_type;
+typeattribute netif netif_type;
+typeattribute nfc appdomain, binderservicedomain, domain, netdomain;
+typeattribute nfc_data_file data_file_type, file_type;
+typeattribute nfc_device dev_type;
+typeattribute nfc_prop property_type;
+typeattribute nfc_service service_manager_type;
+typeattribute nfc_tmpfs file_type;
+typeattribute node node_type;
+typeattribute null_device dev_type, mlstrustedobject;
+typeattribute nvm domain;
+typeattribute nvm_block_device dev_type;
+typeattribute nvm_data_file data_file_type, file_type;
+typeattribute nvm_device dev_type;
+typeattribute nvm_exec exec_type, file_type;
+typeattribute nvm_tmpfs file_type;
+typeattribute oemfs contextmount_type, fs_type;
+typeattribute owntty_device dev_type, mlstrustedobject;
+typeattribute pan_result_prop property_type;
+typeattribute phservice domain;
+typeattribute phservice_exec exec_type, file_type;
+typeattribute phservice_tmpfs file_type;
+typeattribute pipefs fs_type;
+typeattribute platform_app appdomain, bluetoothdomain, domain, netdomain;
+typeattribute platform_app_tmpfs file_type;
+typeattribute port port_type;
+typeattribute powerctl_prop property_type;
+typeattribute ppp domain, netdomain;
+typeattribute ppp_device dev_type;
+typeattribute ppp_exec exec_type, file_type;
+typeattribute pppmodem domain;
+typeattribute pppmodem_device dev_type;
+typeattribute pppmodem_exec exec_type, file_type;
+typeattribute pppmodem_tmpfs file_type;
+typeattribute proc fs_type;
+typeattribute proc_bluetooth_writable fs_type;
+typeattribute proc_cpuinfo fs_type;
+typeattribute proc_net fs_type;
+typeattribute proc_security fs_type;
+typeattribute proc_sysrq fs_type;
+typeattribute properties_device dev_type;
+typeattribute property_data_file data_file_type, file_type;
+typeattribute property_socket file_type;
+typeattribute pstorefs fs_type;
+typeattribute ptmx_device dev_type, mlstrustedobject;
+typeattribute qtaguid_device dev_type;
+typeattribute qtaguid_proc fs_type, mlstrustedobject;
+typeattribute racoon domain, mlstrustedsubject, netdomain;
+typeattribute racoon_exec exec_type, file_type;
+typeattribute racoon_socket file_type;
+typeattribute racoon_tmpfs file_type;
+typeattribute radio appdomain, binderservicedomain, bluetoothdomain, domain, netdomain;
+typeattribute radio_block_device dev_type;
+typeattribute radio_data_file data_file_type, file_type;
+typeattribute radio_device dev_type;
+typeattribute radio_prop property_type;
+typeattribute radio_service service_manager_type;
+typeattribute radio_tmpfs file_type;
+typeattribute ram_device dev_type;
+typeattribute random_device dev_type;
+typeattribute recovery domain;
+typeattribute recovery_block_device dev_type;
+typeattribute resourcecache_data_file data_file_type, file_type;
+typeattribute rild domain, netdomain;
+typeattribute rild_debug_socket file_type;
+typeattribute rild_exec exec_type, file_type;
+typeattribute rild_socket file_type;
+typeattribute rild_tmpfs file_type;
+typeattribute root_block_device dev_type;
+typeattribute root_detect domain;
+typeattribute root_detect_exec exec_type, file_type;
+typeattribute root_detect_tmpfs file_type;
+typeattribute rootfs fs_type;
+typeattribute rpmsg_device dev_type;
+typeattribute run_hawk_on_boot domain;
+typeattribute run_hawk_on_boot_exec exec_type, file_type;
+typeattribute run_hawk_on_boot_tmpfs file_type;
+typeattribute runas domain, mlstrustedsubject;
+typeattribute runas_exec exec_type, file_type;
+typeattribute sdcardd domain;
+typeattribute sdcardd_exec exec_type, file_type;
+typeattribute sdcardd_tmpfs file_type;
+typeattribute security_block_device dev_type;
+typeattribute security_file file_type;
+typeattribute security_prop property_type;
+typeattribute selinuxfs fs_type;
+typeattribute sensor_device dev_type;
+typeattribute sensors_device dev_type;
+typeattribute serial_device dev_type;
+typeattribute servicemanager domain;
+typeattribute servicemanager_exec exec_type, file_type;
+typeattribute servicemanager_tmpfs file_type;
+typeattribute setup_fs domain;
+typeattribute setup_fs_exec exec_type, file_type;
+typeattribute setup_fs_tmpfs file_type;
+typeattribute shared_relro appdomain, domain;
+typeattribute shared_relro_file data_file_type, file_type;
+typeattribute shared_relro_tmpfs file_type;
+typeattribute shell appdomain, domain, mlstrustedsubject, netdomain;
+typeattribute shell_data_file data_file_type, file_type;
+typeattribute shell_exec exec_type, file_type;
+typeattribute shell_prop property_type;
+typeattribute shell_tmpfs file_type;
+typeattribute shm fs_type;
+typeattribute smartcard appdomain, domain;
+typeattribute smartcard_data_file data_file_type, file_type;
+typeattribute smartcard_tmpfs file_type;
+typeattribute socket_device dev_type;
+typeattribute sockfs fs_type;
+typeattribute splash_block_device dev_type;
+typeattribute ssipc_device dev_type;
+typeattribute su_exec exec_type, file_type;
+typeattribute surfaceflinger binderservicedomain, domain, mlstrustedsubject;
+typeattribute surfaceflinger_exec exec_type, file_type;
+typeattribute surfaceflinger_service service_manager_type;
+typeattribute surfaceflinger_tmpfs file_type;
+typeattribute sysfs fs_type, mlstrustedobject, sysfs_type;
+typeattribute sysfs_bluetooth_writable fs_type, mlstrustedobject, sysfs_type;
+typeattribute sysfs_devices_system_cpu fs_type, sysfs_type;
+typeattribute sysfs_lowmemorykiller fs_type, sysfs_type;
+typeattribute sysfs_nfc_power_writable fs_type, mlstrustedobject, sysfs_type;
+typeattribute sysfs_wake_lock fs_type, sysfs_type;
+typeattribute sysfs_writable fs_type, mlstrustedobject, sysfs_type;
+typeattribute system_app appdomain, binderservicedomain, domain, netdomain;
+typeattribute system_app_data_file data_file_type, file_type;
+typeattribute system_app_device dev_type;
+typeattribute system_app_service service_manager_type;
+typeattribute system_app_tmpfs file_type;
+typeattribute system_block_device dev_type;
+typeattribute system_data_file data_file_type, file_type;
+typeattribute system_file file_type;
+typeattribute system_ndebug_socket file_type;
+typeattribute system_prop property_type;
+typeattribute system_radio_prop property_type;
+typeattribute system_server binderservicedomain, bluetoothdomain, domain, mlstrustedsubject, netdomain;
+typeattribute system_server_service service_manager_type;
+typeattribute system_server_tmpfs file_type;
+typeattribute system_wpa_socket file_type;
+typeattribute systemkeys_data_file data_file_type, file_type;
+typeattribute tee domain;
+typeattribute tee_data_file data_file_type, file_type;
+typeattribute tee_device dev_type;
+typeattribute tee_exec exec_type, file_type;
+typeattribute tee_tmpfs file_type;
+typeattribute teecsstdca domain;
+typeattribute teecsstdca_device dev_type;
+typeattribute teecsstdca_exec exec_type, file_type;
+typeattribute teecsstdca_tmpfs file_type;
+typeattribute teesst_data_file data_file_type, file_type;
+typeattribute tel_data_file data_file_type, file_type;
+typeattribute tmpfs fs_type;
+typeattribute tombstone_data_file data_file_type, file_type;
+typeattribute touch_updater domain;
+typeattribute touch_updater_exec exec_type, file_type;
+typeattribute touch_updater_tmpfs file_type;
+typeattribute ts_device dev_type;
+typeattribute tty_device dev_type;
+typeattribute tun_device dev_type, mlstrustedobject;
+typeattribute ueventd domain;
+typeattribute ueventd_tmpfs file_type;
+typeattribute uhid_device dev_type;
+typeattribute uio_device dev_type;
+typeattribute uncrypt domain;
+typeattribute uncrypt_exec exec_type, file_type;
+typeattribute uncrypt_tmpfs file_type;
+typeattribute unlabeled file_type;
+typeattribute untrusted_app appdomain, bluetoothdomain, domain, netdomain;
+typeattribute untrusted_app_devpts fs_type;
+typeattribute untrusted_app_tmpfs file_type;
+typeattribute urandom_device dev_type;
+typeattribute usb_device dev_type;
+typeattribute usbaccessory_device dev_type;
+typeattribute usbfs fs_type;
+typeattribute userdata_block_device dev_type;
+typeattribute usermodehelper fs_type, sysfs_type;
+typeattribute vcs_device dev_type;
+typeattribute vdc domain;
+typeattribute vdc_exec exec_type, file_type;
+typeattribute vdc_tmpfs file_type;
+typeattribute vfat fs_type, mlstrustedobject, sdcard_type;
+typeattribute video_device dev_type;
+typeattribute vold domain, mlstrustedsubject;
+typeattribute vold_exec exec_type, file_type;
+typeattribute vold_prop property_type;
+typeattribute vold_socket file_type;
+typeattribute vold_tmpfs file_type;
+typeattribute vpn_data_file data_file_type, file_type;
+typeattribute vpu_device dev_type;
+typeattribute wallpaper_file file_type, mlstrustedobject;
+typeattribute watchdog_device dev_type;
+typeattribute watchdogd domain;
+typeattribute wifi_data_file data_file_type, file_type;
+typeattribute wireless_data_file data_file_type, file_type;
+typeattribute wpa domain, netdomain;
+typeattribute wpa_device dev_type;
+typeattribute wpa_exec exec_type, file_type;
+typeattribute wpa_socket file_type;
+typeattribute wpa_tmpfs file_type;
+typeattribute zero_device dev_type;
+typeattribute zoneinfo_data_file data_file_type, file_type;
+typeattribute zygote domain, mlstrustedsubject;
+typeattribute zygote_exec exec_type, file_type;
+typeattribute zygote_socket file_type;
+typeattribute zygote_tmpfs file_type;
+type_transition FMRadiod tmpfs:file FMRadiod_tmpfs;
+type_transition adbd shell_exec:process shell;
+type_transition at_router tmpfs:file at_router_tmpfs;
+type_transition atcmdsrv tmpfs:file atcmdsrv_tmpfs;
+type_transition bluetooth bluetooth_data_file:sock_file bluetooth_socket;
+type_transition bluetooth tmpfs:file bluetooth_tmpfs;
+type_transition bootanim tmpfs:file bootanim_tmpfs;
+type_transition codecIPC_server tmpfs:file codecIPC_server_tmpfs;
+type_transition debuggerd tmpfs:file debuggerd_tmpfs;
+type_transition dhcp system_data_file:dir dhcp_data_file;
+type_transition dhcp system_data_file:file dhcp_data_file;
+type_transition dhcp tmpfs:file dhcp_tmpfs;
+type_transition diag system_data_file:fifo_file tel_data_file;
+type_transition diag system_data_file:file tel_data_file;
+type_transition diag system_data_file:lnk_file tel_data_file;
+type_transition diag system_data_file:sock_file tel_data_file;
+type_transition diag tmpfs:file diag_tmpfs;
+type_transition drmserver apk_data_file:sock_file drmserver_socket;
+type_transition drmserver tmpfs:file drmserver_tmpfs;
+type_transition dumpstate system_data_file:dir dump_log_data_file;
+type_transition dumpstate system_data_file:fifo_file dump_log_data_file;
+type_transition dumpstate system_data_file:file dump_log_data_file;
+type_transition dumpstate system_data_file:lnk_file dump_log_data_file;
+type_transition dumpstate system_data_file:sock_file dump_log_data_file;
+type_transition dumpstate tmpfs:file dumpstate_tmpfs;
+type_transition dumpstate vdc_exec:process vdc;
+type_transition eeh tmpfs:file eeh_tmpfs;
+type_transition env tmpfs:file env_tmpfs;
+type_transition gpsd gps_data_file:sock_file gps_socket;
+type_transition gpsd tmpfs:file gpsd_tmpfs;
+type_transition hawk tmpfs:file hawk_tmpfs;
+type_transition hci_attach tmpfs:file hci_attach_tmpfs;
+type_transition iml system_data_file:fifo_file tel_data_file;
+type_transition iml system_data_file:file tel_data_file;
+type_transition iml system_data_file:lnk_file tel_data_file;
+type_transition iml system_data_file:sock_file tel_data_file;
+type_transition iml tmpfs:file iml_tmpfs;
+type_transition imsc socket_device:dir imsd_socket;
+type_transition imsc socket_device:fifo_file imsd_socket;
+type_transition imsc socket_device:file imsd_socket;
+type_transition imsc socket_device:lnk_file imsd_socket;
+type_transition imsc socket_device:sock_file imsd_socket;
+type_transition imsc tmpfs:file imsc_tmpfs;
+type_transition init FMRadiod_exec:process FMRadiod;
+type_transition init at_router_exec:process at_router;
+type_transition init atcmdsrv_exec:process atcmdsrv;
+type_transition init bootanim_exec:process bootanim;
+type_transition init codecIPC_server_exec:process codecIPC_server;
+type_transition init debuggerd_exec:process debuggerd;
+type_transition init dhcp_exec:process dhcp;
+type_transition init diag_exec:process diag;
+type_transition init drmserver_exec:process drmserver;
+type_transition init dumpstate_exec:process dumpstate;
+type_transition init eeh_exec:process eeh;
+type_transition init env_exec:process env;
+type_transition init gpsd_exec:process gpsd;
+type_transition init hawk_exec:process hawk;
+type_transition init hci_attach_exec:process hci_attach;
+type_transition init iml_exec:process iml;
+type_transition init imsc_exec:process imsc;
+type_transition init inputflinger_exec:process inputflinger;
+type_transition init install_recovery_exec:process install_recovery;
+type_transition init installd_exec:process installd;
+type_transition init keystore_exec:process keystore;
+type_transition init kinitlog_exec:process kinitlog;
+type_transition init kmsg_exec:process kmsg;
+type_transition init lmkd_exec:process lmkd;
+type_transition init load_g_cali_data_exec:process load_g_cali_data;
+type_transition init load_g_sensor_exec:process load_g_sensor;
+type_transition init log_on_boot_exec:process log_on_boot;
+type_transition init logd_exec:process logd;
+type_transition init marvelltel_exec:process marvelltel;
+type_transition init mdnsd_exec:process mdnsd;
+type_transition init mediaserver_exec:process mediaserver;
+type_transition init memsicd_exec:process memsicd;
+type_transition init memsicp_exec:process memsicp;
+type_transition init mlan2040coex_exec:process mlan2040coex;
+type_transition init mlaninit_exec:process mlaninit;
+type_transition init mned_exec:process mned;
+type_transition init mrvl_gpsd_exec:process mrvl_gpsd;
+type_transition init mtp_exec:process mtp;
+type_transition init mwirelessd_exec:process mwirelessd;
+type_transition init netd_exec:process netd;
+type_transition init nvm_exec:process nvm;
+type_transition init phservice_exec:process phservice;
+type_transition init pppmodem_exec:process pppmodem;
+type_transition init racoon_exec:process racoon;
+type_transition init rild_exec:process rild;
+type_transition init root_detect_exec:process root_detect;
+type_transition init rootfs:process healthd;
+type_transition init run_hawk_on_boot_exec:process run_hawk_on_boot;
+type_transition init sdcardd_exec:process sdcardd;
+type_transition init servicemanager_exec:process servicemanager;
+type_transition init setup_fs_exec:process setup_fs;
+type_transition init shell_exec:process init_shell;
+type_transition init surfaceflinger_exec:process surfaceflinger;
+type_transition init tee_exec:process tee;
+type_transition init teecsstdca_exec:process teecsstdca;
+type_transition init tmpfs:file init_tmpfs;
+type_transition init touch_updater_exec:process touch_updater;
+type_transition init uncrypt_exec:process uncrypt;
+type_transition init vdc_exec:process vdc;
+type_transition init vold_exec:process vold;
+type_transition init wpa_exec:process wpa;
+type_transition init zygote_exec:process zygote;
+type_transition inputflinger tmpfs:file inputflinger_tmpfs;
+type_transition install_recovery tmpfs:file install_recovery_tmpfs;
+type_transition installd dex2oat_exec:process dex2oat;
+type_transition installd system_data_file:file install_data_file;
+type_transition installd tmpfs:file installd_tmpfs;
+type_transition isolated_app tmpfs:file isolated_app_tmpfs;
+type_transition kernel core_compressor_exec:process core_compressor;
+type_transition keystore tmpfs:file keystore_tmpfs;
+type_transition kinitlog tmpfs:file kinitlog_tmpfs;
+type_transition kmsg tmpfs:file kmsg_tmpfs;
+type_transition lmkd tmpfs:file lmkd_tmpfs;
+type_transition load_g_cali_data tmpfs:file load_g_cali_data_tmpfs;
+type_transition load_g_sensor tmpfs:file load_g_sensor_tmpfs;
+type_transition log_on_boot tmpfs:file log_on_boot_tmpfs;
+type_transition logd tmpfs:file logd_tmpfs;
+type_transition marvelltel tmpfs:file marvelltel_tmpfs;
+type_transition mdnsd tmpfs:file mdnsd_tmpfs;
+type_transition mediaserver tmpfs:file mediaserver_tmpfs;
+type_transition memsicd tmpfs:file memsicd_tmpfs;
+type_transition memsicp tmpfs:file memsicp_tmpfs;
+type_transition mlan2040coex tmpfs:file mlan2040coex_tmpfs;
+type_transition mlaninit tmpfs:file mlaninit_tmpfs;
+type_transition mned tmpfs:file mned_tmpfs;
+type_transition mrvl_gpsd tmpfs:file mrvl_gpsd_tmpfs;
+type_transition mtp ppp_exec:process ppp;
+type_transition mtp tmpfs:file mtp_tmpfs;
+type_transition mwirelessd tmpfs:file mwirelessd_tmpfs;
+type_transition netd clatd_exec:process clatd;
+type_transition netd dhcp_exec:process dhcp;
+type_transition netd dnsmasq_exec:process dnsmasq;
+type_transition netd hostapd_exec:process hostapd;
+type_transition netd tmpfs:file netd_tmpfs;
+type_transition nfc tmpfs:file nfc_tmpfs;
+type_transition nvm tmpfs:file nvm_tmpfs;
+type_transition phservice tmpfs:file phservice_tmpfs;
+type_transition platform_app tmpfs:file platform_app_tmpfs;
+type_transition pppmodem tmpfs:file pppmodem_tmpfs;
+type_transition racoon tmpfs:file racoon_tmpfs;
+type_transition radio tmpfs:file radio_tmpfs;
+type_transition rild tmpfs:file rild_tmpfs;
+type_transition root_detect tmpfs:file root_detect_tmpfs;
+type_transition run_hawk_on_boot tmpfs:file run_hawk_on_boot_tmpfs;
+type_transition sdcardd system_data_file:dir media_rw_data_file;
+type_transition sdcardd system_data_file:file media_rw_data_file;
+type_transition sdcardd tmpfs:file sdcardd_tmpfs;
+type_transition servicemanager tmpfs:file servicemanager_tmpfs;
+type_transition setup_fs tmpfs:file setup_fs_tmpfs;
+type_transition shared_relro tmpfs:file shared_relro_tmpfs;
+type_transition shell runas_exec:process runas;
+type_transition shell tmpfs:file shell_tmpfs;
+type_transition smartcard tmpfs:file smartcard_tmpfs;
+type_transition surfaceflinger tmpfs:file surfaceflinger_tmpfs;
+type_transition system_app tmpfs:file system_app_tmpfs;
+type_transition system_server tmpfs:file system_server_tmpfs;
+type_transition system_server wifi_data_file:sock_file system_wpa_socket;
+type_transition system_server wpa_socket:sock_file system_wpa_socket;
+type_transition tee tmpfs:file tee_tmpfs;
+type_transition teecsstdca tmpfs:file teecsstdca_tmpfs;
+type_transition touch_updater tmpfs:file touch_updater_tmpfs;
+type_transition ueventd tmpfs:file ueventd_tmpfs;
+type_transition uncrypt tmpfs:file uncrypt_tmpfs;
+type_transition untrusted_app devpts:chr_file untrusted_app_devpts;
+type_transition untrusted_app tmpfs:file untrusted_app_tmpfs;
+type_transition vdc tmpfs:file vdc_tmpfs;
+type_transition vold tmpfs:file vold_tmpfs;
+type_transition wpa tmpfs:file wpa_tmpfs;
+type_transition zygote tmpfs:file zygote_tmpfs;
+type_transition debuggerd device:chr_file klog_device "__kmsg__";
+type_transition healthd device:chr_file klog_device "__kmsg__";
+type_transition hostapd wifi_data_file:dir wpa_socket "hostapd";
+type_transition hostapd wifi_data_file:dir wpa_socket "sockets";
+type_transition recovery device:chr_file klog_device "__kmsg__";
+type_transition system_server system_data_file:sock_file system_ndebug_socket "ndebugsocket";
+type_transition ueventd device:chr_file klog_device "__kmsg__";
+type_transition vold device:chr_file klog_device "__kmsg__";
+type_transition watchdogd device:chr_file klog_device "__kmsg__";
+type_transition watchdogd device:chr_file null_device "__null__";
+type_transition wpa wifi_data_file:dir wpa_socket "sockets";
+role r;
+role r types { FMRadiod adbd at_router atcmdsrv bluetooth bootanim clatd codecIPC_server core_compressor debuggerd dex2oat dhcp diag dnsmasq drmserver dumpstate eeh env gpsd hawk hci_attach healthd hostapd iml imsc init init_shell inputflinger install_recovery installd isolated_app kernel keystore kinitlog kmsg lmkd load_g_cali_data load_g_sensor log_on_boot logd marvelltel mdnsd mediaserver memsicd memsicp mlan2040coex mlaninit mned mrvl_gpsd mtp mwirelessd netd nfc nvm phservice platform_app ppp pppmodem racoon radio recovery rild root_detect run_hawk_on_boot runas sdcardd servicemanager setup_fs shared_relro shell smartcard surfaceflinger system_app system_server tee teecsstdca touch_updater ueventd uncrypt untrusted_app vdc vold watchdogd wpa zygote };
+user u roles r level s0 range s0 - s0:c0.c1023;
+sid kernel u:r:kernel:s0 - s0
+sid security u:object_r:kernel:s0 - s0
+sid unlabeled u:object_r:unlabeled:s0 - s0
+sid fs u:object_r:labeledfs:s0 - s0
+sid file u:object_r:unlabeled:s0 - s0
+sid file_labels u:object_r:unlabeled:s0 - s0
+sid init u:object_r:unlabeled:s0 - s0
+sid any_socket u:object_r:unlabeled:s0 - s0
+sid port u:object_r:port:s0 - s0
+sid netif u:object_r:netif:s0 - s0
+sid netmsg u:object_r:unlabeled:s0 - s0
+sid node u:object_r:node:s0 - s0
+sid igmp_packet u:object_r:unlabeled:s0 - s0
+sid icmp_socket u:object_r:unlabeled:s0 - s0
+sid tcp_socket u:object_r:unlabeled:s0 - s0
+sid sysctl_modprobe u:object_r:unlabeled:s0 - s0
+sid sysctl u:object_r:proc:s0 - s0
+sid sysctl_fs u:object_r:unlabeled:s0 - s0
+sid sysctl_kernel u:object_r:unlabeled:s0 - s0
+sid sysctl_net u:object_r:unlabeled:s0 - s0
+sid sysctl_net_unix u:object_r:unlabeled:s0 - s0
+sid sysctl_vm u:object_r:unlabeled:s0 - s0
+sid sysctl_dev u:object_r:unlabeled:s0 - s0
+sid kmod u:object_r:unlabeled:s0 - s0
+sid policy u:object_r:unlabeled:s0 - s0
+sid scmp_packet u:object_r:unlabeled:s0 - s0
+sid devnull u:object_r:null_device:s0 - s0

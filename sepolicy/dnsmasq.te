@@ -1,0 +1,12 @@
+type dnsmasq;
+type dnsmasq_exec;
+allow debuggerd dnsmasq:process { ptrace };
+allow dnsmasq dnsmasq_exec:file { read getattr execute entrypoint open };
+allow init dnsmasq:process { noatsecure };
+allow netd dnsmasq:process { transition signal siginh rlimitinh };
+allow netd dnsmasq_exec:file { read getattr execute open };
+allow recovery dnsmasq_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow shell dnsmasq_exec:file { getattr };
+allow unconfineddomain dnsmasq:binder { call set_context_mgr transfer };
+allow untrusted_app dnsmasq_exec:file { read getattr execute open };
+dontaudit netd dnsmasq:process { noatsecure };

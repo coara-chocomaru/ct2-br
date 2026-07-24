@@ -1,0 +1,10 @@
+type mrd1_block_device;
+allow atcmdsrv mrd1_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow eeh mrd1_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow marvelltel mrd1_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow recovery mrd1_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow recovery mrd1_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow shell mrd1_block_device:blk_file { getattr };
+allow unconfineddomain mrd1_block_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain mrd1_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app mrd1_block_device:blk_file { getattr };

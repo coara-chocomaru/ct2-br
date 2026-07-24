@@ -1,0 +1,7 @@
+type bootloader_block_device;
+allow recovery bootloader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow recovery bootloader_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow shell bootloader_block_device:blk_file { getattr };
+allow unconfineddomain bootloader_block_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain bootloader_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app bootloader_block_device:blk_file { getattr };

@@ -1,0 +1,15 @@
+type healthd;
+allow hawk healthd:dir { getattr search };
+allow hawk healthd:file { read open };
+allow init healthd:process { transition noatsecure siginh rlimitinh };
+allow marvelltel healthd:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow marvelltel healthd:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow marvelltel healthd:lnk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow servicemanager healthd:dir { search };
+allow servicemanager healthd:file { read open };
+allow servicemanager healthd:process { getattr };
+allow system_server healthd:binder { transfer };
+allow unconfineddomain healthd:binder { call set_context_mgr transfer };
+allow vold healthd:binder { call transfer };
+allow vold healthd:fd { use };
+dontaudit init healthd:process { noatsecure };
