@@ -201,12 +201,11 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/etc/recovery.fstab
 TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 
-
 include vendor/sts/a03br/BoardConfigVendor.mk
 
 # SELinux
 BOARD_SEPOLICY_DIRS := \
-	$(DEVICE_PATH)/sepolicy/
+	$(DEVICE_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     FMRadiod.te \
