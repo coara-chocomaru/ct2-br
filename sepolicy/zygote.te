@@ -1,6 +1,4 @@
-type zygote;
-type zygote_socket;
-type zygote_tmpfs;
+
 allow appdomain zygote:fd { use };
 allow appdomain zygote:process { sigchld };
 allow appdomain zygote:unix_dgram_socket { write };
