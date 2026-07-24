@@ -1,6 +1,4 @@
-type cache_backup_file;
-type cache_block_device;
-type cache_file;
+
 allow appdomain cache_backup_file:dir { getattr };
 allow domain cache_file:dir { ioctl read getattr search open };
 allow domain cache_file:file { read getattr };
