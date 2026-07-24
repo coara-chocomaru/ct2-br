@@ -1,7 +1,3 @@
-type surfaceflinger;
-type surfaceflinger_exec;
-type surfaceflinger_service;
-type surfaceflinger_tmpfs;
 allow adbd surfaceflinger:binder { call transfer };
 allow adbd surfaceflinger:fd { use };
 allow appdomain surfaceflinger:binder { transfer };
