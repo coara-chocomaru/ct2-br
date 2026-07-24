@@ -1,10 +1,4 @@
-type bluetooth;
-type bluetooth_data_file;
-type bluetooth_device;
-type bluetooth_efs_file;
-type bluetooth_service;
-type bluetooth_socket;
-type bluetooth_tmpfs;
+
 allow bluetooth bluetooth_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow bluetooth bluetooth_data_file:fifo_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow bluetooth bluetooth_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
