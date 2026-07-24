@@ -34,7 +34,6 @@ allow shell mediaserver_exec:file { getattr };
 allow system_server mediaserver:dir { ioctl read getattr search open };
 allow system_server mediaserver:file { ioctl read getattr lock open };
 allow system_server mediaserver:lnk_file { ioctl read getattr lock open };
-allow system_server mediaserver:process { getsched setsched };
 allow system_server mediaserver:tcp_socket { ioctl read write getattr setattr lock append bind connect getopt setopt shutdown };
 allow system_server mediaserver:udp_socket { ioctl read write getattr setattr lock append bind connect getopt setopt shutdown };
 allow unconfineddomain mediaserver:binder { call set_context_mgr transfer };

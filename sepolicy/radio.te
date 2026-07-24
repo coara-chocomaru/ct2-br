@@ -4,10 +4,8 @@ type radio_data_file;
 type radio_device;
 type radio_service;
 type radio_tmpfs;
-allow appdomain radio_data_file:file { read write getattr };
 allow debuggerd radio:process { ptrace };
 allow diag radio_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow drmserver radio_data_file:file { read getattr };
 allow eeh radio_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow init radio:process { noatsecure };
 allow init radio_data_file:blk_file { relabelto };
@@ -30,7 +28,6 @@ allow installd radio_data_file:file { getattr setattr relabelfrom relabelto unli
 allow installd radio_data_file:lnk_file { create getattr setattr relabelfrom relabelto unlink rename };
 allow installd radio_data_file:sock_file { getattr setattr relabelfrom relabelto unlink rename };
 allow marvelltel radio_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow mediaserver radio_data_file:file { read getattr };
 allow radio radio_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow radio radio_data_file:fifo_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow radio radio_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };

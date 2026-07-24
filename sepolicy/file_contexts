@@ -1,11 +1,60 @@
 #line 1 "external/sepolicy/file_contexts"
+###########################################
+# Root
+
+# Data files
+
+# Executables
+
+# Empty directories
+
+# SELinux policy files
+
+##########################
+# Devices
+#
+#############################
+# System files
+#
+# patchoat executable has (essentially) the same requirements as dex2oat.
+
+#############################
+# Vendor files
+#
+#############################
+# Data files
+#
+
+# Misc data
+
+# coredump directory for userdebug/eng devices
+
+# Wallpaper file for other users
+#############################
+# efs files
+#
+#############################
+# Cache files
+#
+# LocalTransport (backup) uses this directory
+#############################
+# sysfs files
+#
+
+#############################
+# asec containers
 #line 1 "device/sanyots/ma05/sepolicy/file_contexts"
 # relabel to debug_device
+
 # factory
 /factory(/.*)? 		u:object_r:system_data_file:s0
+
 # nvm
 /NVM(/.*)? 		u:object_r:nvm_data_file:s0
+
+
 /teesst(/.*)? 		u:object_r:teesst_data_file:s0
+
 # dev
 /dev/media[0-9]+	u:object_r:mediaserver_device:s0
 /dev/v4l-subdev[0-9]+	u:object_r:mediaserver_device:s0
@@ -80,6 +129,7 @@
 /dev/lsm9ds1		u:object_r:sensor_device:s0
 /dev/lsm9ds1_gyr	u:object_r:sensor_device:s0
 /dev/ts		u:object_r:ts_device:s0
+
 /dev/umts_boot[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_ipc[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_attest[0-9]+	u:object_r:ssipc_device:s0
@@ -91,9 +141,11 @@
 /dev/umts_at[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_atgps[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_at[0-9]+_[0-9]+   u:object_r:ssipc_device:s0
+
 # define marvell special gpu label
 /dev/galcore		u:object_r:mrvlgpu_device:s0
 /dev/graphics/galcore	u:object_r:mrvlgpu_device:s0
+
 # block dev
 /dev/block/mmcblk0	u:object_r:cploader_block_device:s0
 /dev/block/mmcblk0p1	u:object_r:mrd_block_device:s0
@@ -110,10 +162,13 @@
 /dev/block/mmcblk0p12	u:object_r:frp_block_device:s0
 /dev/block/mmcblk0p13	u:object_r:cache_block_device:s0
 /dev/block/mmcblk0p14	u:object_r:userdata_block_device:s0
+
 # factory reset protection partition
 /dev/block/platform/soc.1/by-name/persistent	u:object_r:frp_block_device:s0
+
 # boot device
 /dev/block/mmcblk0boot[0-9]+  u:object_r:boot_block_device:s0
+
 # socket
 /dev/socket/rild[0-9]+	u:object_r:rild_socket:s0
 /dev/socket/atcmdni[0-9]+	u:object_r:rild_socket:s0
@@ -121,6 +176,7 @@
 /dev/socket/imsd	u:object_r:imsd_socket:s0
 /dev/socket/embmsd	u:object_r:embmsd_socket:s0
 /dev/socket/rild-debug[0-9]+ u:object_r:rild_debug_socket:s0
+
 # system/bin
 /system/bin/nvm		u:object_r:nvm_exec:s0
 /system/bin/setup_fs	u:object_r:setup_fs_exec:s0
@@ -154,14 +210,17 @@
 /system/bin/at_router   u:object_r:at_router_exec:s0
 /system/bin/env.sh   u:object_r:env_exec:s0
 /system/bin/kinitlog.sh   u:object_r:kinitlog_exec:s0
+
 # nfc data
 /data/nfc(/.*)?		u:object_r:nfc_data_file:s0
 /data/misc/wireless(/.*)?	u:object_r:wireless_data_file:s0
 /data/log(/.*)?		u:object_r:dump_log_data_file:s0
 /data/misc/phone/mrvl_tel_diag.cfg	u:object_r:tel_data_file:s0
 /data/misc/phone/mrvl_tel_iml.cfg	u:object_r:tel_data_file:s0
+
 # for tz
 /system/bin/teec_sstd_ca	u:object_r:teecsstdca_exec:s0
+
 # for hawk
 /system/bin/run_hawk_on_boot.sh	u:object_r:run_hawk_on_boot_exec:s0
 /system/bin/hawk		u:object_r:hawk_exec:s0

@@ -6,7 +6,6 @@ allow appdomain domain:process { getattr };
 allow debuggerd domain:dir { ioctl read getattr search open };
 allow debuggerd domain:file { ioctl read getattr lock open };
 allow debuggerd domain:lnk_file { read };
-allow debuggerd domain:process { sigstop signal };
 allow dumpstate domain:dir { ioctl read getattr search open };
 allow dumpstate domain:file { ioctl read getattr lock open };
 allow dumpstate domain:lnk_file { ioctl read getattr lock open };

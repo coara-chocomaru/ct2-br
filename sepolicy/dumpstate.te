@@ -66,6 +66,4 @@ allow untrusted_app dumpstate_exec:file { read getattr execute open };
 allow untrusted_app dumpstate_socket:sock_file { getattr };
 allow vdc dumpstate:fd { use };
 allow vdc dumpstate:process { sigchld };
-allow vdc dumpstate:unix_dgram_socket { read write };
-allow vdc dumpstate:unix_stream_socket { read write getattr };
 dontaudit init dumpstate:process { noatsecure };

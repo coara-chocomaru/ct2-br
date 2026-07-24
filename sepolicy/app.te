@@ -10,7 +10,6 @@ allow appdomain app_data_file:file { ioctl read write create getattr setattr loc
 allow appdomain app_data_file:lnk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow appdomain app_data_file:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow appdomain zygote_exec:file { ioctl read getattr lock execute execute_no_trans open };
-allow drmserver app_data_file:file { read write getattr };
 allow dumpstate zygote_exec:file { ioctl read getattr lock execute execute_no_trans open };
 allow healthd app_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow init app_data_file:blk_file { relabelto };
@@ -34,9 +33,7 @@ allow mediaserver app_data_file:file { ioctl read write getattr lock append open
 allow phservice app_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow platform_app app_data_file:file { execute execute_no_trans };
 allow recovery zygote_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
-allow runas app_data_file:dir { getattr search };
 allow shell zygote_exec:file { ioctl read getattr lock execute execute_no_trans open };
-allow surfaceflinger app_data_file:file { read write };
 allow system_server app_data_file:dir { read getattr search };
 allow system_server app_data_file:file { read write getattr };
 allow system_server zygote_exec:file { ioctl read getattr lock execute execute_no_trans open };

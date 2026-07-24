@@ -1,10 +1,7 @@
 attribute dev_type;
 allow domain dev_type:lnk_file { ioctl read getattr lock open };
 allow init dev_type:blk_file { ioctl read write getattr lock append open };
-allow ueventd dev_type:blk_file { create setattr unlink };
-allow ueventd dev_type:chr_file { create setattr unlink };
 allow ueventd dev_type:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
-allow ueventd dev_type:lnk_file { create unlink };
 allow unconfineddomain dev_type:dir { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
 allow unconfineddomain dev_type:fifo_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow unconfineddomain dev_type:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
