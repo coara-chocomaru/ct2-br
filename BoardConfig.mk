@@ -228,6 +228,7 @@ BOARD_SEPOLICY_UNION += \
     core_compressor.te \
     cploader.te \
     cpuctl.te \
+    codecIPC_server.te \
     ctl.te \
     data.te \
     debugfs.te \
