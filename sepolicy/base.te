@@ -1,11 +1,4 @@
-typeattribute FMRadiod domain;
-typeattribute FMRadiod_exec exec_type, file_type;
-typeattribute FMRadiod_tmpfs file_type;
-typeattribute adb_data_file data_file_type, file_type;
-typeattribute adb_device dev_type;
-typeattribute adb_keys_file data_file_type, file_type;
 typeattribute adbd domain, netdomain;
-typeattribute adbd_socket file_type;
 typeattribute at_router domain;
 typeattribute at_router_exec exec_type, file_type;
 typeattribute at_router_tmpfs file_type;
@@ -39,8 +32,6 @@ typeattribute debuggerd domain, mlstrustedsubject;
 typeattribute debuggerd_exec exec_type, file_type;
 typeattribute debuggerd_prop property_type;
 typeattribute debuggerd_tmpfs file_type;
-typeattribute dex2oat domain;
-typeattribute dex2oat_exec exec_type, file_type;
 typeattribute dhcp domain, netdomain;
 typeattribute dhcp_data_file data_file_type, file_type;
 typeattribute dhcp_exec exec_type, file_type;
@@ -432,5 +423,4 @@ type_transition smartcard tmpfs:file smartcard_tmpfs;
 type_transition teecsstdca tmpfs:file teecsstdca_tmpfs;
 type_transition touch_updater tmpfs:file touch_updater_tmpfs;
 type_transition debuggerd device:chr_file klog_device "__kmsg__";
-type_transition recovery device:chr_file klog_device "__kmsg__";
-role r types { FMRadiod adbd at_router atcmdsrv bluetooth bootanim clatd codecIPC_server core_compressor debuggerd dex2oat dhcp diag dnsmasq drmserver dumpstate eeh env gpsd hawk hci_attach healthd hostapd iml imsc init init_shell inputflinger install_recovery installd isolated_app kernel keystore kinitlog kmsg lmkd load_g_cali_data load_g_sensor log_on_boot logd marvelltel mdnsd mediaserver memsicd memsicp mlan2040coex mlaninit mned mrvl_gpsd mtp mwirelessd netd nfc nvm phservice platform_app ppp pppmodem racoon radio recovery rild root_detect run_hawk_on_boot runas sdcardd servicemanager setup_fs shared_relro shell smartcard surfaceflinger system_app system_server tee teecsstdca touch_updater ueventd uncrypt untrusted_app vdc vold watchdogd wpa zygote };
+type_transition recovery device:chr_file klog_device "__kmsg__"
