@@ -208,70 +208,9 @@ BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
-    adbd.te \
-    app.te \
-    bluetooth.te \
-    bootanim.te \
-    clatd.te \
-    debuggerd.te \
-    device.te \
-    dex2oat.te \
-    dhcp.te \
-    dnsmasq.te \
-    domain.te \
-    drmserver.te \
-    dumpstate.te \
-    file.te \
-    gpsd.te \
     genfs_contexts \
-    file_contexts \
-    hci_attach.te \
-    healthd.te \
-    hostapd.te \
-    init.te \
-    init_shell.te \
-    inputflinger.te \
-    install_recovery.te \
-    installd.te \
-    isolated_app.te \
-    kernel.te \
-    keystore.te \
-    lmkd.te \
-    logd.te \
-    mdnsd.te \
-    mediaserver.te \
-    mtp.te \
-    net.te \
-    netd.te \
-    nfc.te \
-    platform_app.te \
-    ppp.te \
-    property.te \
-    racoon.te \
-    radio.te \
-    recovery.te \
-    rild.te \
-    runas.te \
-    sdcardd.te \
-    servicemanager.te \
-    shared_relro.te \
-    shell.te \
-    su.te \
-    surfaceflinger.te \
-    system_app.te \
-    system_server.te \
-    tee.te \
-    ueventd.te \
-    unconfined.te \
-    uncrypt.te \
-    untrusted_app.te \
-    vdc.te \
-    vold.te \
-    watchdogd.te \
-    wpa.te \
-    zygote.te
-
-
+    file_contexts
+    
 BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
 TARGET_SELINUX_ENFORCE := false
 SELINUX_IGNORE_NEVERALLOWS := true
