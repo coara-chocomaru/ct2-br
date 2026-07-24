@@ -207,7 +207,7 @@ include vendor/sts/a03br/BoardConfigVendor.mk
 BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
 
-BOARD_SEPOLICY_UNION += \
+# BOARD_SEPOLICY_UNION += \
     FMRadiod.te \
     adbd.te \
     asec_apk_file.te \
