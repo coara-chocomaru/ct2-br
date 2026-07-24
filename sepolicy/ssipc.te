@@ -1,0 +1,6 @@
+type ssipc_device;
+allow at_router ssipc_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow pppmodem ssipc_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow system_server ssipc_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain ssipc_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain ssipc_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
