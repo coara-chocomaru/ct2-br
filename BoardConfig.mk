@@ -204,12 +204,14 @@ TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 include vendor/sts/a03br/BoardConfigVendor.mk
 
 # SELinux
-# BOARD_SEPOLICY_DIRS := \
+BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
 
-# BOARD_SEPOLICY_UNION += \
+BOARD_SEPOLICY_UNION += \
     genfs_contexts \
-    file_contexts
+    file_contexts \
+    property_contexts \
+    service_contexts
     
 BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
 TARGET_SELINUX_ENFORCE := false
