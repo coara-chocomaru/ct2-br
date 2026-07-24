@@ -1,6 +1,10 @@
 type hawk;
 type hawk_exec;
 type hawk_tmpfs;
+
+typeattribute hawk coredomain;
+typeattribute hawk_exec exec_type;
+
 allow debuggerd hawk:process { ptrace };
 allow hawk hawk_exec:file { read getattr execute entrypoint open };
 allow hawk hawk_tmpfs:file { read write create getattr unlink open };
