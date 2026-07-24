@@ -214,7 +214,6 @@ BOARD_SEPOLICY_UNION += \
     app.te \
     at_router.te \
     atcmdsrv.te \
-    base.te \
     batteryproperties.te \
     benesse.te \
     block.te \
