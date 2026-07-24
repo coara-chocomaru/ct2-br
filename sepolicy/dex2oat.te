@@ -1,5 +1,4 @@
-type dex2oat;
-type dex2oat_exec;
+
 allow appdomain dex2oat_exec:file { ioctl read getattr lock execute execute_no_trans open };
 allow debuggerd dex2oat:process { ptrace };
 allow dex2oat dex2oat_exec:file { read getattr execute entrypoint open };
