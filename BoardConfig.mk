@@ -210,7 +210,6 @@ BOARD_SEPOLICY_DIRS := \
 BOARD_SEPOLICY_UNION += \
     genfs_contexts \
     file_contexts \
-    property_contexts \
     service_contexts
     
 BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
