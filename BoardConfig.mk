@@ -247,6 +247,7 @@ BOARD_SEPOLICY_UNION += \
     file.te \
     file_contexts \
     fota.te \
+    FMRadiod.te \
     frp.te \
     fs_use \
     fuse.te \
