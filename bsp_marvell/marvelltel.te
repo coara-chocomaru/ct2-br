@@ -36,8 +36,6 @@ allow marvelltel sysfs_devices_system_cpu:file create_file_perms;
 allow marvelltel marvelltel_tmpfs:file getattr;
 allow marvelltel sysfs_devices_system_cpu:file create_file_perms;
 # SEC removed : allow marvelltel teecsstdca_device:chr_file create_file_perms;
-allow marvelltel dump_log_data_file:file create_file_perms;
-allow marvelltel dump_log_data_file:dir create_dir_perms;
 allow marvelltel tel_data_file:file create_file_perms;
 allow marvelltel tel_data_file:dir create_dir_perms;
 allow marvelltel fuse:dir create_dir_perms;
