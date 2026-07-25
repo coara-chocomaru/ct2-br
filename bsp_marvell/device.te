@@ -25,7 +25,9 @@ type infor_device, dev_type;
 
 # new block device
 #SEC changed : use alias, type cploader_block_device, dev_type;
-typealias mmc_block_device alias cploader_block_device;
+
+type cploader_block_device, dev_type;
+# typealias mmc_block_device alias cploader_block_device;
 ## SEC does not use marvell's block device type.
 ## SEC removed: type mrd_block_device, dev_type;
 ## SEC removed: type mrd1_block_device, dev_type;
