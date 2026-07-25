@@ -1,5 +1,3 @@
-# Marvell GPU sysfs labels.
-# Adjust the paths below if your kernel exports the node somewhere else.
 genfscon sysfs /devices/platform/galcore u:object_r:mrvlgpu_device:s0
 genfscon sysfs /class/devfreq/galcore u:object_r:mrvlgpu_device:s0
 genfscon sysfs /class/graphics/fb0/device/galcore u:object_r:mrvlgpu_device:s0
