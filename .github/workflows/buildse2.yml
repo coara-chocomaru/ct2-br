@@ -173,19 +173,18 @@ jobs:
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
           python --version
 
-      # ---- 新規追加：ビルド前に不足属性を自動補完 ----
-      - name: Fix sepolicy attributes before build
+      - name: Pre-fix sepolicy issues (missing attributes & duplicate typealias)
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
           SEPOLICY_DIR="device/sts/a03br/sepolicy"
           mkdir -p "$SEPOLICY_DIR"
           touch "$SEPOLICY_DIR/attributes"
-          # 既存の宣言済み属性を収集
+
+          # 1. 不足属性を追加
           declare -A declared
           while IFS= read -r attr; do
             declared["$attr"]=1
           done < <(grep -h -E '^\s*attribute\s+' "$SEPOLICY_DIR"/*.te 2>/dev/null | awk '{print $2}')
-          # typeattribute で使われている属性をチェック
           missing=()
           while IFS= read -r attr; do
             if [[ -z "${declared[$attr]}" ]]; then
@@ -201,7 +200,33 @@ jobs:
             echo "No missing attributes found."
           fi
 
-      # ---- 変更：ビルドをリトライ可能にする ----
+          # 2. 重複 typealias を除去（各ファイル内で同じエイリアス名が複数ある場合、最初の1行だけ残す）
+          for te in "$SEPOLICY_DIR"/*.te; do
+            [ -f "$te" ] || continue
+            tmp=$(mktemp)
+            awk '
+              BEGIN { seen_alias[""] = 0 }
+              /^[[:space:]]*typealias/ {
+                # エイリアス名を抽出 (alias の後のトークン)
+                if (match($0, /alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)/, arr)) {
+                  alias = arr[1]
+                  if (!seen_alias[alias]) {
+                    seen_alias[alias] = 1
+                    print
+                  }
+                  # 重複している場合は何も出力しない（削除）
+                } else {
+                  # パースできない行は安全のためそのまま出力
+                  print
+                }
+                next
+              }
+              { print }
+            ' "$te" > "$tmp"
+            mv "$tmp" "$te"
+          done
+          echo "Duplicate typealias lines removed (kept first occurrence per alias)."
+
       - name: Build sepolicy with retry
         id: build
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
@@ -209,6 +234,8 @@ jobs:
           set +e
           MAX_RETRIES=3
           SUCCESS=0
+          SEPOLICY_DIR="device/sts/a03br/sepolicy"
+
           for ((i=1; i<=MAX_RETRIES; i++)); do
             echo "========================================"
             echo "Build attempt $i / $MAX_RETRIES"
@@ -225,19 +252,47 @@ jobs:
               SUCCESS=1
               break
             fi
-            # エラーログから未宣言属性を抽出
+
+            # エラーログから修復可能な問題を抽出
+            # 1) 未宣言属性: "attribute X is not declared"
             missing=$(grep -oP "attribute \K[^ ]+(?= is not declared)" build.log | sort -u)
             if [ -n "$missing" ]; then
               echo "Detected missing attributes: $missing"
-              echo "Adding them to device/sts/a03br/sepolicy/attributes and retrying..."
               for attr in $missing; do
-                echo "attribute $attr;" >> device/sts/a03br/sepolicy/attributes
+                echo "attribute $attr;" >> "$SEPOLICY_DIR/attributes"
               done
-            else
-              echo "Unknown build error (no missing attribute pattern found). Cannot auto-fix."
-              break
+              echo "Added missing attributes, retrying..."
+              continue
             fi
+
+            # 2) 重複エイリアス: "duplicate declaration of alias X"
+            # エラーメッセージにはファイル名と行番号が含まれるが、ここではファイル全体から重複行を削除（事前修復で済むはず）
+            # 念のため、再度重複除去を実行
+            echo "Checking for duplicate typealias again..."
+            for te in "$SEPOLICY_DIR"/*.te; do
+              [ -f "$te" ] || continue
+              tmp=$(mktemp)
+              awk '
+                BEGIN { seen_alias[""] = 0 }
+                /^[[:space:]]*typealias/ {
+                  if (match($0, /alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)/, arr)) {
+                    alias = arr[1]
+                    if (!seen_alias[alias]) {
+                      seen_alias[alias] = 1
+                      print
+                    }
+                  } else {
+                    print
+                  }
+                  next
+                }
+                { print }
+              ' "$te" > "$tmp"
+              mv "$tmp" "$te"
+            done
+            echo "Re-checked duplicate typealias, retrying..."
           done
+
           if [ $SUCCESS -eq 1 ]; then
             echo "SUCCESS=1" >> $GITHUB_OUTPUT
             exit 0
@@ -246,7 +301,7 @@ jobs:
             exit 1
           fi
 
-      # ---- 追加：ビルドログを常にアップロード ----
+      # ---- 常に build.log をアップロード ----
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
@@ -256,6 +311,7 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
+      # ---- 成果物収集 ----
       - name: Collect sepolicy build outputs
         if: always()
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
