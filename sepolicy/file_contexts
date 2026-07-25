@@ -2,13 +2,14 @@
 /(system|vendor)/bin/hw/codecIPC_server   u:object_r:codecIPC_server_exec:s0
 /(system|vendor)/bin/phservice            u:object_r:phservice_exec:s0
 /(system|vendor)/bin/hw/phservice         u:object_r:phservice_exec:s0
-/dev/gpu_freq_2d_max		u:object_r:mrvlgpu_device:s0
-/dev/gpu_freq_2d_min		u:object_r:mrvlgpu_device:s0
-/dev/gpu_freq_3d_max		u:object_r:mrvlgpu_device:s0
-/dev/gpu_freq_3d_min		u:object_r:mrvlgpu_device:s0
-/dev/gpu_freq_sh_max		u:object_r:mrvlgpu_device:s0
-/dev/gpu_freq_sh_min		u:object_r:mrvlgpu_device:s0
-/dev/galcore            u:object_r:mrvlgpu_device:s0
-/dev/graphics/galcore   u:object_r:mrvlgpu_device:s0
 
-/NVM(/.*)? 		u:object_r:nvm_data_file:s0
+/dev/gpu_freq_2d_max                        u:object_r:mrvlgpu_device:s0
+/dev/gpu_freq_2d_min                        u:object_r:mrvlgpu_device:s0
+/dev/gpu_freq_3d_max                        u:object_r:mrvlgpu_device:s0
+/dev/gpu_freq_3d_min                        u:object_r:mrvlgpu_device:s0
+/dev/gpu_freq_sh_max                        u:object_r:mrvlgpu_device:s0
+/dev/gpu_freq_sh_min                        u:object_r:mrvlgpu_device:s0
+/dev/galcore                                u:object_r:mrvlgpu_device:s0
+/dev/graphics/galcore                       u:object_r:mrvlgpu_device:s0
+
+/NVM(/.*)?                                  u:object_r:nvm_data_file:s0
