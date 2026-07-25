@@ -4,9 +4,6 @@
 type imsc, domain;
 type imsc_exec, exec_type, file_type;
 
-# Socket type for IMS
-type imsd_socket, file_type, sock_file_type;
-
 # Grant additional permissions to imsc
 init_daemon_domain(imsc)
 
