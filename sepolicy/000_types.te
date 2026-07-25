@@ -1,4 +1,4 @@
-
+type cploader_block_device;
 type env;
 type env_exec;
 type env_tmpfs;
