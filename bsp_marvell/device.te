@@ -1,6 +1,7 @@
 # define new device type
 #SEC changed : use alias, type mediaserver_device, dev_type;
-typealias camera_device alias mediaserver_device;
+type mediaserver_device, dev_type;
+# typealias camera_device alias mediaserver_device;
 
 #SEC removed: no need, type system_app_device, dev_type;
 type nvm_device, dev_type;
@@ -14,7 +15,8 @@ type marvelltel_device, dev_type;
 #SEC removed: conflict, type i2c_device, dev_type;
 type wpa_device, dev_type;
 #SEC changed : type mrvlgpu_device, dev_type;
-typealias gpu_device alias mrvlgpu_device;
+type mrvlgpu_device, dev_type;
+#typealias gpu_device alias mrvlgpu_device;
 type mwireless_device, dev_type;
 type memsic_device, dev_type;
 type geu_device, dev_type;
