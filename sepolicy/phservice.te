@@ -20,10 +20,4 @@ allow phservice shell:fd use;
 allow phservice shell:fifo_file create_file_perms;
 allow phservice app_data_file:file create_file_perms;
 allow phservice untrusted_app:fd use;
-allow phservice fuse:file create_file_perms;
-#SEC removed: allow phservice system_server_service:service_manager { add find list};
-allow phservice dump_log_data_file:file create_file_perms;
-allow phservice dump_log_data_file:dir create_dir_perms;
-
-
 allow phservice mrvlgpu_device:chr_file { open read write ioctl getattr map lock append };
