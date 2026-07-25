@@ -12,8 +12,6 @@ allow dumpstate property_socket:sock_file create_file_perms;
 allow dumpstate system_data_file:file r_file_perms;
 
 allow dumpstate codecIPC_server:binder call;
-allow dumpstate dump_log_data_file:dir { create_dir_perms relabelfrom };
-allow dumpstate dump_log_data_file:file create_file_perms;
 allow dumpstate init:unix_stream_socket unix_stream_socket_perms;
 allow dumpstate vdc:process signal;
 
