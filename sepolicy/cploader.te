@@ -1,14 +1,5 @@
 type cploader_block_device;
 type mrvlgpu_device;
-typeattribute cploader_block_device block_device;
-# NOTE: the original source also contained
-#   typealias gpu_device alias mrvlgpu_device;
-#   typeattribute mrvlgpu_device gpu_device;
-# but mrvlgpu_device is already declared as its own type ("type mrvlgpu_device;",
-# used directly as an chr_file target throughout galcore.te / cploader.te), so
-# aliasing it to gpu_device as well is a duplicate-declaration conflict and was
-# removed. If gpu_device grouping is actually required, apply the gpu_device
-# attribute to mrvlgpu_device instead (typeattribute only, no typealias).
 
 allow marvelltel cploader_block_device:blk_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow recovery cploader_block_device:blk_file { append create getattr ioctl link lock open read rename setattr unlink write };
