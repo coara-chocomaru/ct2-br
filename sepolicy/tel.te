@@ -1,4 +1,3 @@
-type marvelltel_exec;
 
 allow init marvelltel_exec:file { execute getattr open read };
 allow marvelltel marvelltel_exec:file { entrypoint execute getattr open read };

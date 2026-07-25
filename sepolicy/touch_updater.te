@@ -1,6 +1,3 @@
-type touch_updater;
-type touch_updater_exec;
-type touch_updater_tmpfs;
 
 allow debuggerd touch_updater:process { ptrace };
 allow hawk touch_updater:dir { getattr search };

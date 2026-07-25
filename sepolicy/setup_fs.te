@@ -1,6 +1,3 @@
-type setup_fs;
-type setup_fs_exec;
-type setup_fs_tmpfs;
 
 allow debuggerd setup_fs:process { ptrace };
 allow init setup_fs:process { noatsecure rlimitinh siginh transition };

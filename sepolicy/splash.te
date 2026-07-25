@@ -1,4 +1,3 @@
-type splash_block_device;
 
 allow recovery splash_block_device:blk_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow recovery splash_block_device:dir { add_name create getattr ioctl link open read remove_name rename reparent rmdir search setattr unlink write };

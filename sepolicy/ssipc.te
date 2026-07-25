@@ -1,4 +1,3 @@
-type ssipc_device;
 
 allow at_router ssipc_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow pppmodem ssipc_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };

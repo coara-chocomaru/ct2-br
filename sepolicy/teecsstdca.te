@@ -1,7 +1,3 @@
-type teecsstdca;
-type teecsstdca_device;
-type teecsstdca_exec;
-type teecsstdca_tmpfs;
 
 allow atcmdsrv teecsstdca_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow debuggerd teecsstdca:process { ptrace };

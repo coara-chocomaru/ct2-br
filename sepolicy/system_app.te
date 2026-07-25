@@ -1,4 +1,3 @@
-type system_app_device;
 
 allow debuggerd system_app:process { ptrace };
 allow imsc system_app_data_file:dir { add_name create getattr ioctl link open read remove_name rename reparent rmdir search setattr unlink write };
