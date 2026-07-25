@@ -1,3 +1,4 @@
+typealias gpu_device alias mrvlgpu_device;
 type env;
 type env_exec;
 type env_tmpfs;
