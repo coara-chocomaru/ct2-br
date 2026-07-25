@@ -1,274 +1,315 @@
-name: sepolicy バイナリ解析
+name: LineageOS sepolicy check
 
 on:
   workflow_dispatch:
     inputs:
       sepolicy_url:
-        description: 'sepolicy バイナリの直リンク (例: https://example.com/path/to/sepolicy)'
+        description: 'sepolicy バイナリの直リンク'
         required: true
         type: string
       target_name:
-        description: '出力ファイル名の接頭辞 (デバイス名など)'
+        description: '出力ファイル名の接頭辞'
         required: false
-        default: 'unknown_device'
+        default: 'device'
         type: string
 
 env:
+  MANIFEST_URL: 'https://github.com/LineageOS/android'
+  MANIFEST_BRANCH: 'cm-12.1'
+  DEVICE_NAME: 'a03br'
+  MAKEFILE_NAME: 'cm_a03br'
   TARGET: ${{ github.event.inputs.target_name }}
+  WORKSPACE: ${{ github.workspace }}/workspace
 
 jobs:
-  parse_sepolicy:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
     runs-on: ubuntu-22.04
-    timeout-minutes: 30
+    timeout-minutes: 60
     permissions:
       contents: write
-
     steps:
-      - name: 実行パラメータの表示
+      - name: Display Run Parameters
         run: |
-          echo "::group::入力パラメータ"
+          echo "::group::User Environment Variables"
+          echo "Manifest URL: ${{ env.MANIFEST_URL }}"
+          echo "Manifest Branch: ${{ env.MANIFEST_BRANCH }}"
+          echo "Device Name: ${{ env.DEVICE_NAME }}"
+          echo "Makefile Name: ${{ env.MAKEFILE_NAME }}"
           echo "sepolicy URL: ${{ github.event.inputs.sepolicy_url }}"
-          echo "ターゲット名: ${{ env.TARGET }}"
+          echo "Target Name: ${{ env.TARGET }}"
           echo "::endgroup::"
 
-      - name: システムパッケージのインストール
+      - name: Check Out
+        uses: actions/checkout@v3
+
+      - name: Cleanup
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Prepare the environment
         run: |
           sudo apt update
-          sudo apt install -y \
-            checkpolicy \
-            python3 \
-            python3-pip \
-            wget \
-            zip \
-            unzip \
-            tree
+          sudo apt -y install \
+            gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib \
+            libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree \
+            lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache \
+            lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev \
+            libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush \
+            schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp \
+            qemu-user-static libstdc++-10-dev libncurses5 python3 libtinfo5 \
+            libssl-dev bsdmainutils zip unzip wget
 
-      - name: 作業ディレクトリの作成
+      - name: Install OpenJDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '7'
+
+      - name: Install repo
         run: |
-          mkdir -p $HOME/workspace
-          cd $HOME/workspace
-          echo "WORKSPACE=$HOME/workspace" >> $GITHUB_ENV
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          sudo ln -sf ~/bin/repo /usr/bin/repo
 
-      - name: sepolicy バイナリのダウンロード
+      - name: Initialize repo
+        id: pwd
+        run: |
+          mkdir -p ${{ env.WORKSPACE }}
+          cd ${{ env.WORKSPACE }}
+          echo "workspace-folder=$(pwd)" >> "$GITHUB_OUTPUT"
+          git config --global user.name "azwhikaru"
+          git config --global user.email "azwhikaru+37921907@github.com"
+          repo init --depth=1 -u ${{ env.MANIFEST_URL }} -b ${{ env.MANIFEST_BRANCH }}
+
+      - name: Create Local Manifest
+        run: |
+          mkdir -p ${{ env.WORKSPACE }}/.repo/local_manifests
+          cat << 'EOF' > ${{ env.WORKSPACE }}/.repo/local_manifests/roomservice.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <manifest>
+              <project name="coara-chocomaru/ct2-br" path="device/sts/a03br" remote="github" revision="main" />
+              <project name="coara-chocomaru/a03-br_vendor_blob" path="vendor/sts/a03br" remote="github" revision="main" />
+          </manifest>
+          EOF
+
+      - name: Repo Sync
         working-directory: ${{ env.WORKSPACE }}
         run: |
-          URL="${{ github.event.inputs.sepolicy_url }}"
-          echo "Downloading sepolicy from $URL"
-          wget --no-check-certificate -O sepolicy "$URL"
+          repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+
+      - name: Fetch Git LFS files for all repositories
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          repo forall -v -c git lfs pull
+
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 12
+
+      - name: Build secilc host tool
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          source build/envsetup.sh
+          lunch aosp_arm-eng || lunch full-eng || true
+          make secilc -j$(nproc)
+
+      - name: Download sepolicy binary
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          wget -O sepolicy "${{ github.event.inputs.sepolicy_url }}"
           if [ ! -s sepolicy ]; then
-            echo "ERROR: ダウンロードに失敗しました。URL が正しいか確認してください。"
+            echo "ERROR: ダウンロード失敗" >&2
             exit 1
           fi
           file sepolicy
-          ls -la sepolicy
 
-      - name: checkpolicy で .conf 形式に変換
+      - name: Convert to policy.conf and policy.cil
         working-directory: ${{ env.WORKSPACE }}
         run: |
-          # -b: バイナリ入力、-o: 出力ファイル
-          checkpolicy -b -o policy.conf sepolicy 2>&1 | tee conversion.log
-          if [ ! -s policy.conf ]; then
-            echo "ERROR: checkpolicy の変換に失敗しました。"
-            exit 1
+          checkpolicy -b -o policy.conf sepolicy
+          checkpolicy -b -C -o policy.cil sepolicy || echo "CIL 変換失敗 (checkpolicy -C 非対応)"
+
+      - name: Validate with secilc (if CIL available)
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          if [ -f policy.cil ]; then
+            out/host/linux-x86/bin/secilc -c policy.cil -o /dev/null || echo "secilc 検証エラー (無視)"
           fi
-          echo "変換完了。policy.conf の行数: $(wc -l < policy.conf)"
 
-      - name: Python 解析スクリプトの実行
+      - name: Multi-angle Python parsing
         working-directory: ${{ env.WORKSPACE }}
         run: |
-          cat > parse_sepolicy.py << 'PYEOF'
-          #!/usr/bin/env python3
-          import re
-          import os
+          python3 << 'PYEOF'
+          import re, os, sys
           from collections import defaultdict
 
-          def parse_policy_conf(conf_path):
+          def parse_cil(cil_path):
+              with open(cil_path, 'r', encoding='utf-8', errors='ignore') as f:
+                  data = f.read()
+              pattern = r'\([^()]*(?:\([^()]*\)[^()]*)*\)'
+              tokens = re.findall(pattern, data, re.DOTALL)
+              if not tokens:
+                  tokens = [line.strip() for line in data.splitlines() if line.strip() and not line.startswith('#')]
+              result = {'types':set(), 'attrs':set(), 'allow':[], 'dontaudit':[], 'auditallow':[],
+                        'type_trans':[], 'filecon':[], 'propertycon':[], 'servicecon':[]}
+              for tok in tokens:
+                  tok = tok.strip()
+                  if tok.startswith('(') and tok.endswith(')'):
+                      tok = tok[1:-1].strip()
+                  parts = tok.split(maxsplit=1)
+                  if not parts:
+                      continue
+                  kw = parts[0]
+                  args = parts[1] if len(parts)>1 else ''
+                  if kw == 'type':
+                      m = re.match(r'(\w+)', args)
+                      if m:
+                          result['types'].add(m.group(1))
+                  elif kw == 'attribute':
+                      m = re.match(r'(\w+)', args)
+                      if m:
+                          result['attrs'].add(m.group(1))
+                  elif kw in ('allow','dontaudit','auditallow'):
+                      elems = re.split(r'\s+', args)
+                      if len(elems) >= 4:
+                          src, tgt = elems[0], elems[1]
+                          cls_perm = ' '.join(elems[2:])
+                          cls_perm = re.sub(r'[()]', '', cls_perm)
+                          cp = cls_perm.split()
+                          if cp:
+                              cls = cp[0]
+                              perms = cp[1:] if len(cp)>1 else []
+                              if perms:
+                                  rule = (src, tgt, cls, ' '.join(perms))
+                                  if kw == 'allow':
+                                      result['allow'].append(rule)
+                                  elif kw == 'dontaudit':
+                                      result['dontaudit'].append(rule)
+                                  elif kw == 'auditallow':
+                                      result['auditallow'].append(rule)
+                  elif kw == 'type_transition':
+                      parts2 = args.split()
+                      if len(parts2) == 4:
+                          result['type_trans'].append(tuple(parts2))
+                  elif kw == 'filecon':
+                      m = re.search(r'^(\S+)\s+(\S+)?\s*\(([^)]+)\)', args)
+                      if m:
+                          path = m.group(1)
+                          ctx = m.group(3) if m.group(2) is None else m.group(2)
+                          result['filecon'].append((path, ctx))
+                  elif kw == 'propertycon':
+                      parts2 = args.split()
+                      if len(parts2) >= 2:
+                          result['propertycon'].append((parts2[0], parts2[1]))
+                  elif kw == 'servicecon':
+                      parts2 = args.split()
+                      if len(parts2) >= 2:
+                          result['servicecon'].append((parts2[0], parts2[1]))
+              return result
+
+          def parse_conf(conf_path):
               with open(conf_path, 'r', encoding='utf-8', errors='ignore') as f:
                   lines = f.readlines()
-
-              # 収集用
-              types = set()
-              attributes = set()
-              allow_rules = []          # (source, target, class, perms, rule_type)
-              dontaudit_rules = []
-              auditallow_rules = []
-              type_transition_rules = []
-              filecon_rules = []        # (path, context)
-              propertycon_rules = []
-              servicecon_rules = []
-
-              # 正規表現パターン
-              type_pattern = re.compile(r'^type\s+(\w+)\s*;')
-              attr_pattern = re.compile(r'^attribute\s+(\w+)\s*;')
-              allow_pattern = re.compile(r'^allow\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w\{\}]+)\s*;')
-              dontaudit_pattern = re.compile(r'^dontaudit\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w\{\}]+)\s*;')
-              auditallow_pattern = re.compile(r'^auditallow\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w\{\}]+)\s*;')
-              type_transition_pattern = re.compile(r'^type_transition\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w]+)\s*;')
-              filecon_pattern = re.compile(r'^filecon\s+([^\s]+)\s+(\w+)?\s*\(\s*([^)]+)\s*\)\s*;')
-              propertycon_pattern = re.compile(r'^propertycon\s+([^\s]+)\s+([^\s]+)\s*;')
-              servicecon_pattern = re.compile(r'^servicecon\s+([^\s]+)\s+([^\s]+)\s*;')
-
+              result = {'types':set(), 'attrs':set(), 'allow':[], 'dontaudit':[], 'auditallow':[],
+                        'type_trans':[], 'filecon':[], 'propertycon':[], 'servicecon':[]}
+              patterns = {
+                  'type': re.compile(r'^type\s+(\w+)\s*;'),
+                  'attr': re.compile(r'^attribute\s+(\w+)\s*;'),
+                  'allow': re.compile(r'^allow\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w\{\}]+)\s*;'),
+                  'dontaudit': re.compile(r'^dontaudit\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w\{\}]+)\s*;'),
+                  'auditallow': re.compile(r'^auditallow\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w\{\}]+)\s*;'),
+                  'type_trans': re.compile(r'^type_transition\s+([\w]+)\s+([\w\{\}]+)\s*:\s*(\w+)\s+([\w]+)\s*;'),
+                  'filecon': re.compile(r'^filecon\s+([^\s]+)\s+(\w+)?\s*\(\s*([^)]+)\s*\)\s*;'),
+                  'propertycon': re.compile(r'^propertycon\s+([^\s]+)\s+([^\s]+)\s*;'),
+                  'servicecon': re.compile(r'^servicecon\s+([^\s]+)\s+([^\s]+)\s*;')
+              }
               for line in lines:
                   line = line.strip()
                   if not line or line.startswith('#'):
                       continue
+                  for k, pat in patterns.items():
+                      m = pat.match(line)
+                      if m:
+                          if k == 'type':
+                              result['types'].add(m.group(1))
+                          elif k == 'attr':
+                              result['attrs'].add(m.group(1))
+                          elif k == 'allow':
+                              result['allow'].append((m.group(1), m.group(2), m.group(3), m.group(4)))
+                          elif k == 'dontaudit':
+                              result['dontaudit'].append((m.group(1), m.group(2), m.group(3), m.group(4)))
+                          elif k == 'auditallow':
+                              result['auditallow'].append((m.group(1), m.group(2), m.group(3), m.group(4)))
+                          elif k == 'type_trans':
+                              result['type_trans'].append((m.group(1), m.group(2), m.group(3), m.group(4)))
+                          elif k == 'filecon':
+                              path = m.group(1)
+                              ctx = m.group(3) if m.group(2) is None else m.group(2)
+                              result['filecon'].append((path, ctx))
+                          elif k == 'propertycon':
+                              result['propertycon'].append((m.group(1), m.group(2)))
+                          elif k == 'servicecon':
+                              result['servicecon'].append((m.group(1), m.group(2)))
+                          break
+              return result
 
-                  m = type_pattern.match(line)
-                  if m:
-                      types.add(m.group(1))
-                      continue
-
-                  m = attr_pattern.match(line)
-                  if m:
-                      attributes.add(m.group(1))
-                      continue
-
-                  m = allow_pattern.match(line)
-                  if m:
-                      allow_rules.append((m.group(1), m.group(2), m.group(3), m.group(4), 'allow'))
-                      continue
-
-                  m = dontaudit_pattern.match(line)
-                  if m:
-                      dontaudit_rules.append((m.group(1), m.group(2), m.group(3), m.group(4), 'dontaudit'))
-                      continue
-
-                  m = auditallow_pattern.match(line)
-                  if m:
-                      auditallow_rules.append((m.group(1), m.group(2), m.group(3), m.group(4), 'auditallow'))
-                      continue
-
-                  m = type_transition_pattern.match(line)
-                  if m:
-                      type_transition_rules.append((m.group(1), m.group(2), m.group(3), m.group(4)))
-                      continue
-
-                  m = filecon_pattern.match(line)
-                  if m:
-                      # 形式: filecon /path [context] (context)
-                      path = m.group(1)
-                      context = m.group(3) if m.group(2) is None else m.group(2)
-                      filecon_rules.append((path, context))
-                      continue
-
-                  m = propertycon_pattern.match(line)
-                  if m:
-                      propertycon_rules.append((m.group(1), m.group(2)))
-                      continue
-
-                  m = servicecon_pattern.match(line)
-                  if m:
-                      servicecon_rules.append((m.group(1), m.group(2)))
-                      continue
-
-              return {
-                  'types': sorted(types),
-                  'attributes': sorted(attributes),
-                  'allow_rules': allow_rules,
-                  'dontaudit_rules': dontaudit_rules,
-                  'auditallow_rules': auditallow_rules,
-                  'type_transition_rules': type_transition_rules,
-                  'filecon_rules': filecon_rules,
-                  'propertycon_rules': propertycon_rules,
-                  'servicecon_rules': servicecon_rules,
-              }
-
-          def write_te_files(data, prefix):
-              # 1. 全ての型と属性
+          def write_output(data, prefix):
               with open(f'{prefix}_types.txt', 'w') as f:
-                  for t in data['types']:
+                  for t in sorted(data['types']):
                       f.write(f'type {t};\n')
               with open(f'{prefix}_attributes.txt', 'w') as f:
-                  for a in data['attributes']:
+                  for a in sorted(data['attrs']):
                       f.write(f'attribute {a};\n')
-
-              # 2. ドメインごとに分離した .te ファイル（例: init.te, system_app.te など）
-              # ソースドメインを抽出
-              domain_rules = defaultdict(list)
-              for rule in data['allow_rules'] + data['dontaudit_rules'] + data['auditallow_rules']:
-                  src = rule[0]
-                  domain_rules[src].append(rule)
-
-              # 各ドメインに .te を出力
-              os.makedirs('te_files', exist_ok=True)
-              for domain, rules in domain_rules.items():
-                  te_path = f'te_files/{domain}.te'
-                  with open(te_path, 'w') as f:
-                      f.write(f'# ドメイン: {domain}\n')
-                      for rule in rules:
-                          rule_type = rule[4]
-                          if rule_type == 'allow':
-                              f.write(f'allow {rule[0]} {rule[1]} : {rule[2]} {{ {rule[3]} }};\n')
-                          elif rule_type == 'dontaudit':
-                              f.write(f'dontaudit {rule[0]} {rule[1]} : {rule[2]} {{ {rule[3]} }};\n')
-                          elif rule_type == 'auditallow':
-                              f.write(f'auditallow {rule[0]} {rule[1]} : {rule[2]} {{ {rule[3]} }};\n')
-
-              # 3. ファイルコンテキスト
-              with open(f'{prefix}_file_contexts', 'w') as f:
-                  for path, context in data['filecon_rules']:
-                      f.write(f'{path} {context}\n')
-
-              # 4. プロパティコンテキスト
-              with open(f'{prefix}_property_contexts', 'w') as f:
-                  for name, context in data['propertycon_rules']:
-                      f.write(f'{name} {context}\n')
-
-              # 5. サービスコンテキスト
-              with open(f'{prefix}_service_contexts', 'w') as f:
-                  for name, context in data['servicecon_rules']:
-                      f.write(f'{name} {context}\n')
-
-              # 6. 全ルール一覧（allow のみ）
               with open(f'{prefix}_all_allow_rules.txt', 'w') as f:
-                  for r in data['allow_rules']:
+                  for r in data['allow']:
                       f.write(f'allow {r[0]} {r[1]} : {r[2]} {{ {r[3]} }};\n')
-
-              # 7. タイプ遷移ルール
+              domain_rules = defaultdict(list)
+              for r in data['allow'] + data['dontaudit'] + data['auditallow']:
+                  src = r[0]
+                  domain_rules[src].append(r)
+              os.makedirs('te_files', exist_ok=True)
+              for dom, rules in domain_rules.items():
+                  with open(f'te_files/{dom}.te', 'w') as f:
+                      f.write(f'# {dom}\n')
+                      for r in rules:
+                          f.write(f'allow {r[0]} {r[1]} : {r[2]} {{ {r[3]} }};\n')
+              with open(f'{prefix}_file_contexts', 'w') as f:
+                  for path, ctx in data['filecon']:
+                      f.write(f'{path} {ctx}\n')
+              with open(f'{prefix}_property_contexts', 'w') as f:
+                  for name, ctx in data['propertycon']:
+                      f.write(f'{name} {ctx}\n')
+              with open(f'{prefix}_service_contexts', 'w') as f:
+                  for name, ctx in data['servicecon']:
+                      f.write(f'{name} {ctx}\n')
               with open(f'{prefix}_type_transitions.txt', 'w') as f:
-                  for r in data['type_transition_rules']:
+                  for r in data['type_trans']:
                       f.write(f'type_transition {r[0]} {r[1]} : {r[2]} {r[3]};\n')
 
           if __name__ == '__main__':
-              import sys
-              conf_file = sys.argv[1] if len(sys.argv) > 1 else 'policy.conf'
-              prefix = sys.argv[2] if len(sys.argv) > 2 else 'sepolicy'
-              data = parse_policy_conf(conf_file)
-              write_te_files(data, prefix)
-              print(f"解析完了。{len(data['types'])} タイプ、{len(data['allow_rules'])} allow ルールを抽出。")
-              print(f"ファイルコンテキスト: {len(data['filecon_rules'])} エントリ")
-              print(f"生成された .te ファイルは te_files/ ディレクトリに保存されました。")
+              data = {}
+              if os.path.exists('policy.cil'):
+                  data = parse_cil('policy.cil')
+                  if not data['types']:
+                      data = parse_conf('policy.conf')
+              else:
+                  data = parse_conf('policy.conf')
+              if not data['types']:
+                  print("警告: 解析結果が空です。policy.conf の内容を確認してください。")
+              write_output(data, '${{ env.TARGET }}')
+              print(f"解析完了: types={len(data['types'])}, allow={len(data['allow'])}")
           PYEOF
 
-          python3 parse_sepolicy.py policy.conf ${{ env.TARGET }}
-
-      - name: 成果物の一覧表示
+      - name: Create ZIP archive
         working-directory: ${{ env.WORKSPACE }}
         run: |
-          echo "::group::生成ファイル一覧"
-          find . -type f \( -name "*.txt" -o -name "*.te" -o -name "*.contexts" -o -name "policy.conf" \) -ls
-          echo "::endgroup::"
-          echo "=== te_files/ ディレクトリの内容 ==="
-          tree te_files/ || ls -la te_files/
-
-      - name: アーティファクトの ZIP 作成
-        working-directory: ${{ env.WORKSPACE }}
-        run: |
-          ZIP_NAME="${{ env.TARGET }}_sepolicy_analysis_$(date +%Y%m%d_%H%M%S).zip"
-          zip -r "$ZIP_NAME" \
-              policy.conf \
-              "${{ env.TARGET }}_types.txt" \
-              "${{ env.TARGET }}_attributes.txt" \
-              "${{ env.TARGET }}_all_allow_rules.txt" \
-              "${{ env.TARGET }}_type_transitions.txt" \
-              "${{ env.TARGET }}_file_contexts" \
-              "${{ env.TARGET }}_property_contexts" \
-              "${{ env.TARGET }}_service_contexts" \
-              te_files/
+          ZIP_NAME="${{ env.TARGET }}_sepolicy_analysis.zip"
+          zip -r "$ZIP_NAME" *.txt *.te *_contexts te_files/ policy.conf policy.cil 2>/dev/null || true
           echo "ZIP_FILE=$ZIP_NAME" >> $GITHUB_ENV
-          ls -la "$ZIP_NAME"
 
-      - name: 解析 ZIP のアップロード
+      - name: Upload analysis artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
