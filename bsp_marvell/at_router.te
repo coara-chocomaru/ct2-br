@@ -1,7 +1,0 @@
-# create new domain at_router
-type at_router, domain;
-type at_router_exec, exec_type, file_type;
-
-init_daemon_domain(at_router)
-
-allow at_router self:capability { setuid setgid };
