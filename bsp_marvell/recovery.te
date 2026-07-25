@@ -1,7 +1,4 @@
-# grant additional permission for recovery
-#SEC added:
-recovery_only(`
-#write_klog(recovery)
+
 type_transition recovery device:chr_file klog_device "__kmsg__";
 allow recovery klog_device:chr_file { create open write unlink };
 allow recovery device:dir { write add_name remove_name };
@@ -166,6 +163,4 @@ allow recovery phservice_exec:file relabelto;
 allow recovery servicemanager_exec:file relabelto;
 allow recovery cache_file:dir mounton;
 allow recovery rootfs:dir mounton;
-#SEC added:
-')
 
