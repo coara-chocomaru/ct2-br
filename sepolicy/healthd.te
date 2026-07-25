@@ -1,9 +1,9 @@
 allow hawk healthd:dir { getattr search };
-allow hawk healthd:file { read open };
-allow init healthd:process { transition noatsecure siginh rlimitinh };
-allow marvelltel healthd:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
-allow marvelltel healthd:file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow marvelltel healthd:lnk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow hawk healthd:file { open read };
+allow init healthd:process { noatsecure rlimitinh siginh transition };
+allow marvelltel healthd:dir { add_name create getattr ioctl link open read remove_name rename reparent rmdir search setattr unlink write };
+allow marvelltel healthd:file { append create getattr ioctl link lock open read rename setattr unlink write };
+allow marvelltel healthd:lnk_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow servicemanager healthd:dir { search };
 allow servicemanager healthd:process { getattr };
 allow system_server healthd:binder { transfer };

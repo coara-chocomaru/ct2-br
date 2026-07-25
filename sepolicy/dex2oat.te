@@ -1,10 +1,10 @@
-allow appdomain dex2oat_exec:file { ioctl read getattr lock execute execute_no_trans open };
+allow appdomain dex2oat_exec:file { execute execute_no_trans getattr ioctl lock open read };
 allow debuggerd dex2oat:process { ptrace };
-allow dex2oat dex2oat_exec:file { read getattr execute entrypoint open };
+allow dex2oat dex2oat_exec:file { entrypoint execute getattr open read };
 allow init dex2oat:process { noatsecure };
-allow installd dex2oat:process { transition noatsecure siginh rlimitinh };
-allow installd dex2oat_exec:file { read getattr execute open };
-allow recovery dex2oat_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow installd dex2oat:process { noatsecure rlimitinh siginh transition };
+allow installd dex2oat_exec:file { execute getattr open read };
+allow recovery dex2oat_exec:file { append create getattr ioctl link lock open read relabelfrom relabelto rename setattr unlink write };
 allow unconfineddomain dex2oat:binder { call set_context_mgr transfer };
-allow zygote dex2oat_exec:file { ioctl read getattr lock execute execute_no_trans open };
+allow zygote dex2oat_exec:file { execute execute_no_trans getattr ioctl lock open read };
 dontaudit installd dex2oat:process { noatsecure };
