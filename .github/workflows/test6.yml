@@ -1,4 +1,4 @@
-name: LineageOS sepolicy check
+name: sepolicy CIL解析 (AOSPツール活用)
 
 on:
   workflow_dispatch:
@@ -22,16 +22,17 @@ env:
   WORKSPACE: ${{ github.workspace }}/workspace
 
 jobs:
-  build:
+  parse:
     if: github.event.repository.owner.id == github.event.sender.id
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     permissions:
       contents: write
+
     steps:
-      - name: Display Run Parameters
+      - name: 実行パラメータ表示
         run: |
-          echo "::group::User Environment Variables"
+          echo "::group::Input Parameters"
           echo "Manifest URL: ${{ env.MANIFEST_URL }}"
           echo "Manifest Branch: ${{ env.MANIFEST_BRANCH }}"
           echo "Device Name: ${{ env.DEVICE_NAME }}"
@@ -46,7 +47,7 @@ jobs:
       - name: Cleanup
         uses: rokibhasansagar/slimhub_actions@main
 
-      - name: Prepare the environment
+      - name: Prepare environment
         run: |
           sudo apt update
           sudo apt -y install \
@@ -98,29 +99,55 @@ jobs:
         run: |
           repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
-      - name: Fetch Git LFS files for all repositories
+      - name: Fetch Git LFS files
         working-directory: ${{ env.WORKSPACE }}
         run: |
           repo forall -v -c git lfs pull
+
+      - name: Patch Java version detection in build/core/main.mk
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          python3 - << 'PYEOF'
+          path = "build/core/main.mk"
+          with open(path, "r") as f:
+              content = f.read()
+          old_17 = r"""java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.7[\. "$$]')"""
+          new_17 = r"""java_version := $(shell echo '$(java_version_str)' | grep -i '[ "]1\.7[\. "$$]')"""
+          old_16 = r"""java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.6[\. "$$]')"""
+          new_16 = r"""java_version := $(shell echo '$(java_version_str)' | grep -i '[ "]1\.6[\. "$$]')"""
+          if old_17 not in content or old_16 not in content:
+              raise SystemExit("ERROR: expected java_version patterns not found")
+          content = content.replace(old_17, new_17)
+          content = content.replace(old_16, new_16)
+          with open(path, "w") as f:
+              f.write(content)
+          print("Patched java_version detection")
+          PYEOF
 
       - name: Set Swap Space
         uses: pierotofy/set-swap-space@master
         with:
           swap-size-gb: 12
 
+      - name: Switch to Python 2 (for AOSP build tools)
+        run: |
+          sudo apt -y install python2
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+          python --version
+
       - name: Build secilc host tool
         working-directory: ${{ env.WORKSPACE }}
         run: |
           source build/envsetup.sh
-          lunch aosp_arm-eng || lunch full-eng || true
-          make secilc -j$(nproc)
+          lunch ${{ env.MAKEFILE_NAME }}-eng
+          make secilc -j$(nproc --all)
 
       - name: Download sepolicy binary
         working-directory: ${{ env.WORKSPACE }}
         run: |
           wget -O sepolicy "${{ github.event.inputs.sepolicy_url }}"
           if [ ! -s sepolicy ]; then
-            echo "ERROR: ダウンロード失敗" >&2
+            echo "ERROR: download failed" >&2
             exit 1
           fi
           file sepolicy
@@ -129,20 +156,20 @@ jobs:
         working-directory: ${{ env.WORKSPACE }}
         run: |
           checkpolicy -b -o policy.conf sepolicy
-          checkpolicy -b -C -o policy.cil sepolicy || echo "CIL 変換失敗 (checkpolicy -C 非対応)"
+          checkpolicy -b -C -o policy.cil sepolicy || echo "CIL conversion failed (checkpolicy -C not supported)"
 
       - name: Validate with secilc (if CIL available)
         working-directory: ${{ env.WORKSPACE }}
         run: |
           if [ -f policy.cil ]; then
-            out/host/linux-x86/bin/secilc -c policy.cil -o /dev/null || echo "secilc 検証エラー (無視)"
+            out/host/linux-x86/bin/secilc -c policy.cil -o /dev/null || echo "secilc validation error (ignored)"
           fi
 
       - name: Multi-angle Python parsing
         working-directory: ${{ env.WORKSPACE }}
         run: |
           python3 << 'PYEOF'
-          import re, os, sys
+          import re, os
           from collections import defaultdict
 
           def parse_cil(cil_path):
@@ -297,9 +324,9 @@ jobs:
               else:
                   data = parse_conf('policy.conf')
               if not data['types']:
-                  print("警告: 解析結果が空です。policy.conf の内容を確認してください。")
+                  print("Warning: no types extracted")
               write_output(data, '${{ env.TARGET }}')
-              print(f"解析完了: types={len(data['types'])}, allow={len(data['allow'])}")
+              print(f"Parsed: types={len(data['types'])}, allow={len(data['allow'])}")
           PYEOF
 
       - name: Create ZIP archive
