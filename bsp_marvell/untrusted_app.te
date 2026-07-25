@@ -66,7 +66,6 @@ allow untrusted_app FMRadiod:binder call;
 allow untrusted_app fuse_device:chr_file getattr;
 allow untrusted_app fscklogs:dir getattr;
 allow untrusted_app full_device:chr_file { read getattr };
-allow untrusted_app fuse_device:chr_file getattr;
 allow untrusted_app fwmarkd_socket:sock_file getattr;
 
 allow untrusted_app graphics_device:dir search;
@@ -153,7 +152,6 @@ allow untrusted_app nvm_exec:file { read open };
 allow untrusted_app nvm_data_file:dir getattr;
 allow untrusted_app netd_socket:sock_file getattr;
 allow untrusted_app nvm_data_file:dir open;
-allow untrusted_app nvm_data_file:file getattr;
 allow untrusted_app nvm_device:chr_file { read getattr };
 
 allow untrusted_app ppp_exec:file { getattr execute };
@@ -187,7 +185,6 @@ allow untrusted_app sysfs_wake_lock:file getattr;
 allow untrusted_app self:shm { write unix_read unix_write associate read create };
 allow untrusted_app shell_data_file:dir { write add_name remove_name };
 allow untrusted_app system_app_data_file:dir getattr;
-allow untrusted_app su_exec:file getattr;
 allow untrusted_app serial_device:chr_file getattr;
 allow untrusted_app socket_device:sock_file getattr;
 allow untrusted_app sysfs_lowmemorykiller:file open;
@@ -226,14 +223,12 @@ allow untrusted_app wpa_exec:file { getattr execute };
 allow untrusted_app wireless_data_file:file getattr;
 allow untrusted_app wpa_exec:file { read open };
 allow untrusted_app watchdog_device:chr_file getattr;
-allow untrusted_app wireless_data_file:file getattr;
 allow untrusted_app wpa_device:chr_file getattr;
 allow untrusted_app wpa_socket:sock_file getattr;
 allow untrusted_app zygote:unix_dgram_socket getattr;
 allow untrusted_app zygote_socket:sock_file getattr;
 
 # do not give it more permission to access teesst
-allow untrusted_app teesst_data_file:dir getattr;
 allow untrusted_app boot_block_device:dir getattr;
 
 allow untrusted_app bootloader_block_device:blk_file getattr;

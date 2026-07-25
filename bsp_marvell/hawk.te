@@ -1,6 +1,8 @@
 # create the new domain hawk
 type hawk, domain;
 type hawk_exec, exec_type, file_type;
+# NOTE: added - referenced by hawk_tmpfs rule but never declared
+type hawk_tmpfs, file_type;
 
 init_daemon_domain(hawk)
 

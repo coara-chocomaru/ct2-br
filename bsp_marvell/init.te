@@ -1,5 +1,7 @@
 # for init
 #SEC removed: permissive init;
+# NOTE: added - referenced by eeh.te (allow eeh init_tmpfs:file create_file_perms;) but never declared
+type init_tmpfs, file_type;
 allow init self:capability sys_module;
 allow init self:process execmem;
 allow init self:tcp_socket create_socket_perms;
@@ -15,6 +17,5 @@ allow init fuse:file create_file_perms;
 #allow init hostapd_exec:file x_file_perms;
 allow init hostapd_exec:file { getattr execute };
 
-allow init self:packet_socket create_socket_perms;
 allow init kernel:system syslog_read;
 

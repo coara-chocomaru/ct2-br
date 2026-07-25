@@ -28,10 +28,11 @@ allow mediaserver system_data_file:file r_file_perms;
 allow mediaserver debugfs:file create_file_perms;
 allow mediaserver FMRadiod:binder transfer;
 #SEC removed: allow mediaserver nvm_block_device:blk_file create_file_perms;
-allow mediaserver debugfs:file create_file_perms;
 allow mediaserver dump_log_data_file:dir create_dir_perms;
 allow mediaserver dump_log_data_file:file create_file_perms;
 
 # Streaming.Media
-allow mediaserver mediaserver_service:service_manager add;
+# NOTE: "allow mediaserver mediaserver_service:service_manager add;" removed here.
+# AOSP 5.1.1_r28's own mediaserver.te already grants this exact rule, so redeclaring
+# it here was pure duplication.
 

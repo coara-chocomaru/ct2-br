@@ -1,6 +1,8 @@
 # create new domain atcmdsrv
 type atcmdsrv, domain;
 type atcmdsrv_exec, exec_type, file_type;
+# NOTE: added - referenced by atcmdsrv_tmpfs rules but never declared
+type atcmdsrv_tmpfs, file_type;
 
 # process atcmdsrv is for phone, atcmdsrv-aponly is for tablet
 # both these two processes will be labeled to atcmdsrv.

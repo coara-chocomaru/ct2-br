@@ -1,6 +1,8 @@
 # create the new domain kmsg
 type kmsg, domain;
 type kmsg_exec, exec_type, file_type;
+# NOTE: added - referenced by kmsg_tmpfs rules but never declared
+type kmsg_tmpfs, file_type;
 
 init_daemon_domain(kmsg)
 

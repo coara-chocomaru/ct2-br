@@ -25,8 +25,6 @@ allow system_server init:unix_dgram_socket rw_socket_perms;
 allow system_server gps_data_file:dir create_dir_perms;
 allow system_server gps_data_file:sock_file create_file_perms;
 allow system_server mrvl_gpsd:unix_dgram_socket unix_dgram_socket_perms;
-allow system_server atcmdsrv:unix_stream_socket unix_stream_socket_perms;
-allow system_server mwirelessd:unix_stream_socket unix_stream_socket_perms;
 allow system_server dump_log_data_file:dir create_dir_perms;
 allow system_server dump_log_data_file:file create_file_perms;
 allow system_server ctl_dumpstate_prop:property_service set;

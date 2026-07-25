@@ -1,6 +1,8 @@
 # create new domain marvelltel
 type marvelltel, domain;
 type marvelltel_exec, exec_type, file_type;
+# NOTE: added - referenced by marvelltel_tmpfs rules but never declared
+type marvelltel_tmpfs, file_type;
 
 init_daemon_domain(marvelltel)
 
@@ -22,7 +24,6 @@ allow marvelltel marvelltel_tmpfs:file create_file_perms;
 allow marvelltel ctl_rildaemon_prop:property_service set;
 # SEC removed : allow marvelltel block_device:dir create_dir_perms;
 # SEC removed : allow marvelltel boot_block_device:blk_file create_file_perms;
-allow marvelltel marvelltel_tmpfs:file create_file_perms;
 allow marvelltel self:process execmem;
 allow marvelltel nvm_data_file:dir create_dir_perms;
 allow marvelltel nvm_data_file:file create_file_perms;
@@ -34,7 +35,6 @@ allow marvelltel sysfs_devices_system_cpu:file create_file_perms;
 #SEC removed: allow marvelltel teecsstdca_device:chr_file create_file_perms;
 #SEC removed : allow marvelltel boot_block_device:blk_file create_file_perms;
 allow marvelltel marvelltel_tmpfs:file getattr;
-allow marvelltel sysfs_devices_system_cpu:file create_file_perms;
 # SEC removed : allow marvelltel teecsstdca_device:chr_file create_file_perms;
 allow marvelltel tel_data_file:file create_file_perms;
 allow marvelltel tel_data_file:dir create_dir_perms;
