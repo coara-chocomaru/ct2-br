@@ -1,0 +1,8 @@
+# phservice domain
+type phservice, domain;
+type phservice_exec, exec_type, file_type, vendor_file_type;
+
+init_daemon_domain(phservice)
+
+# Minimal binder access used by daemon-style services that query servicemanager.
+allow phservice servicemanager:binder { call transfer };

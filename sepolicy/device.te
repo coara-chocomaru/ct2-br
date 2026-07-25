@@ -1,3 +1,7 @@
+# PXA1928 / Marvell device-specific type declarations.
+# Keep this file minimal and focused on type definitions that are commonly
+# referenced by vendor device-node labeling.
+
 type mediaserver_device, dev_type;
 type nvm_device, dev_type;
 type atcmdsrv_device, dev_type;
