@@ -1,7 +1,0 @@
-allow domain dev_type:lnk_file { getattr ioctl lock open read };
-allow init dev_type:blk_file { append getattr ioctl lock open read write };
-allow ueventd dev_type:dir { add_name create getattr ioctl link open read remove_name rename reparent rmdir search setattr unlink write };
-allow unconfineddomain dev_type:dir { add_name append audit_access create execmod execute getattr ioctl link lock mounton open quotaon read relabelfrom remove_name rename reparent rmdir search setattr swapon unlink write };
-allow unconfineddomain dev_type:fifo_file { append audit_access create execmod execute getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };
-allow unconfineddomain dev_type:lnk_file { append audit_access create execmod execute getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };
-allow unconfineddomain dev_type:sock_file { append audit_access create execmod execute getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };

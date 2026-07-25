@@ -1,2 +1,0 @@
-allow unconfineddomain root_block_device:chr_file { append audit_access create getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };
-allow unconfineddomain root_block_device:file { append audit_access create getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };

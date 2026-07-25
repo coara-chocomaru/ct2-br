@@ -1,7 +1,0 @@
-allow log_on_boot su_exec:file { execute execute_no_trans getattr open read };
-allow marvelltel su_exec:file { execute execute_no_trans getattr open read };
-allow mrvl_gpsd su_exec:dir { getattr };
-allow mrvl_gpsd su_exec:file { getattr };
-allow recovery su_exec:file { append create getattr ioctl link lock open read relabelfrom relabelto rename setattr unlink write };
-allow root_detect su_exec:file { getattr };
-allow untrusted_app su_exec:file { getattr };

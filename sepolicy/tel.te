@@ -1,6 +1,0 @@
-
-allow init marvelltel_exec:file { execute getattr open read };
-allow marvelltel marvelltel_exec:file { entrypoint execute getattr open read };
-allow recovery marvelltel_exec:file { append create getattr ioctl link lock open read relabelfrom relabelto rename setattr unlink write };
-allow shell marvelltel_exec:file { getattr open read };
-allow untrusted_app marvelltel_exec:file { execute getattr open read };

@@ -1,9 +1,0 @@
-allow appdomain runas_exec:file { getattr };
-allow debuggerd runas:process { ptrace };
-allow init runas:process { noatsecure };
-allow recovery runas_exec:file { append create getattr ioctl link lock open read relabelfrom relabelto rename setattr unlink write };
-allow runas runas_exec:file { entrypoint execute getattr open read };
-allow shell runas:process { rlimitinh siginh transition };
-allow shell runas_exec:file { execute getattr open read };
-allow unconfineddomain runas:binder { call set_context_mgr transfer };
-dontaudit shell runas:process { noatsecure };

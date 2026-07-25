@@ -1,1 +1,0 @@
-allow mediaserver mediaserver_service:service_manager { add };

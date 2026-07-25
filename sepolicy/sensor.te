@@ -1,4 +1,0 @@
-
-allow system_server sensor_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
-allow unconfineddomain sensor_device:chr_file { append audit_access create getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };
-allow unconfineddomain sensor_device:file { append audit_access create getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };

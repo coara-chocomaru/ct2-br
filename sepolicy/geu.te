@@ -1,5 +1,0 @@
-
-allow drmserver geu_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
-allow marvelltel geu_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
-allow unconfineddomain geu_device:chr_file { append audit_access create getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };
-allow unconfineddomain geu_device:file { append audit_access create getattr ioctl link lock mounton open quotaon read relabelfrom rename setattr swapon unlink write };
