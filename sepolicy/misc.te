@@ -1,13 +1,3 @@
-type codecIPC_server_tmpfs;
-type dump_log_data_file;
-type load_g_sensor;
-type load_g_sensor_exec;
-type load_g_sensor_tmpfs;
-type misc_block_device;
-type smartcard;
-type smartcard_data_file;
-type smartcard_tmpfs;
-type wpa_device;
 
 allow FMRadiod FMRadiod_exec:file { entrypoint execute getattr open read };
 allow FMRadiod FMRadiod_tmpfs:file { append create getattr ioctl link lock open read rename setattr unlink write };
