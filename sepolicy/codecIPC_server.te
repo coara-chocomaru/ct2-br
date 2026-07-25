@@ -17,8 +17,6 @@ allow codecIPC_server dumpstate:unix_stream_socket { read write getattr getopt s
 #allow codecIPC_server system_data_file:file create_file_perms;
 allow codecIPC_server system_data_file:file r_file_perms;
 
-allow codecIPC_server dump_log_data_file:file create_file_perms;
-allow codecIPC_server dump_log_data_file:dir create_dir_perms;
 allow codecIPC_server shell:fd use;
 allow codecIPC_server fuse:file create_file_perms;
 
