@@ -1,7 +1,3 @@
-type eeh;
-type eeh_device;
-type eeh_exec;
-type eeh_tmpfs;
 
 allow atcmdsrv eeh_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow debuggerd eeh:process { ptrace };

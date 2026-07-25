@@ -1,6 +1,3 @@
-type mlan2040coex;
-type mlan2040coex_exec;
-type mlan2040coex_tmpfs;
 
 allow debuggerd mlan2040coex:process { ptrace };
 allow init mlan2040coex:process { noatsecure rlimitinh siginh transition };

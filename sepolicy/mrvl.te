@@ -1,4 +1,3 @@
-type tel_data_file;
 
 allow diag tel_data_file:dir { add_name create getattr ioctl link open read remove_name rename reparent rmdir search setattr unlink write };
 allow diag tel_data_file:fifo_file { append create getattr ioctl link lock open read rename setattr unlink write };

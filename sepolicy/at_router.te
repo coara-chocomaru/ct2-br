@@ -1,6 +1,3 @@
-type at_router;
-type at_router_exec;
-type at_router_tmpfs;
 
 allow at_router at_router_exec:file { entrypoint execute getattr open read };
 allow at_router at_router_tmpfs:file { read write };

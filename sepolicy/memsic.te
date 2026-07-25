@@ -1,4 +1,3 @@
-type memsic_device;
 
 allow memsicd memsic_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow memsicp memsic_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };

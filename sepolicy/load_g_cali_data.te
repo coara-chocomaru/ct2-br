@@ -1,6 +1,3 @@
-type load_g_cali_data;
-type load_g_cali_data_exec;
-type load_g_cali_data_tmpfs;
 
 allow debuggerd load_g_cali_data:process { ptrace };
 allow init load_g_cali_data:process { noatsecure rlimitinh siginh transition };

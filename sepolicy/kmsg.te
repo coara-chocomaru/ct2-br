@@ -1,6 +1,3 @@
-type kmsg;
-type kmsg_exec;
-type kmsg_tmpfs;
 
 allow debuggerd kmsg:process { ptrace };
 allow hawk kmsg:dir { getattr search };

@@ -1,4 +1,3 @@
-type ipc_device;
 
 allow mrvl_gpsd ipc_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow shell ipc_device:chr_file { getattr };

@@ -1,5 +1,3 @@
-type imsc;
-type imsc_tmpfs;
 
 allow debuggerd imsc:process { ptrace };
 allow hawk imsc:dir { getattr search };

@@ -1,6 +1,3 @@
-type marvelltel;
-type marvelltel_device;
-type marvelltel_tmpfs;
 
 allow debuggerd marvelltel:process { ptrace };
 allow eeh marvelltel_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };

@@ -1,9 +1,3 @@
-type nvm;
-type nvm_block_device;
-type nvm_data_file;
-type nvm_device;
-type nvm_exec;
-type nvm_tmpfs;
 
 allow adbd nvm_block_device:blk_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow adbd nvm_block_device:dir { add_name create getattr ioctl link open read remove_name rename reparent rmdir search setattr unlink write };

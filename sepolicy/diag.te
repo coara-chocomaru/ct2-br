@@ -1,7 +1,3 @@
-type diag;
-type diag_device;
-type diag_exec;
-type diag_tmpfs;
 
 allow atcmdsrv diag:unix_dgram_socket { accept append bind connect create getattr getopt ioctl listen lock name_bind read recv_msg recvfrom send_msg sendto setattr setopt shutdown write };
 allow debuggerd diag:process { ptrace };

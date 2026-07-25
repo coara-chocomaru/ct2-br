@@ -1,6 +1,3 @@
-type root_detect;
-type root_detect_exec;
-type root_detect_tmpfs;
 
 allow debuggerd root_detect:process { ptrace };
 allow init root_detect:process { noatsecure rlimitinh siginh transition };

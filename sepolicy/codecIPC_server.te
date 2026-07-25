@@ -1,6 +1,4 @@
 # create new domain codecIPC_server
-type codecIPC_server, domain;
-type codecIPC_server_exec, exec_type, file_type;
 init_daemon_domain(codecIPC_server)
 #neverallow Google CTS-android-m-preview:
 #neverallow { domain -servicemanager } *:binder set_context_mgr

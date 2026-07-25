@@ -1,6 +1,3 @@
-type run_hawk_on_boot;
-type run_hawk_on_boot_exec;
-type run_hawk_on_boot_tmpfs;
 
 allow debuggerd run_hawk_on_boot:process { ptrace };
 allow hawk run_hawk_on_boot:dir { getattr search };

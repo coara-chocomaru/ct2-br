@@ -1,4 +1,3 @@
-type recovery_block_device;
 
 allow debuggerd recovery:process { ptrace };
 allow init recovery:process { noatsecure rlimitinh siginh transition };

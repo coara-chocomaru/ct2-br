@@ -1,6 +1,3 @@
-type mwirelessd;
-type mwirelessd_exec;
-type mwirelessd_tmpfs;
 
 allow FMRadiod mwirelessd:unix_stream_socket { accept acceptfrom append bind connect connectto create getattr getopt ioctl listen lock name_bind newconn read recv_msg recvfrom send_msg sendto setattr setopt shutdown write };
 allow bluetooth mwirelessd:unix_stream_socket { accept acceptfrom append bind connect connectto create getattr getopt ioctl listen lock name_bind newconn read recv_msg recvfrom send_msg sendto setattr setopt shutdown write };

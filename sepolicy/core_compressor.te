@@ -1,5 +1,3 @@
-type core_compressor;
-type core_compressor_exec;
 
 allow core_compressor core_compressor_exec:file { entrypoint execute getattr open read };
 allow debuggerd core_compressor:process { ptrace };

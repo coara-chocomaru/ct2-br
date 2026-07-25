@@ -1,6 +1,3 @@
-type log_on_boot;
-type log_on_boot_exec;
-type log_on_boot_tmpfs;
 
 allow debuggerd log_on_boot:process { ptrace };
 allow init log_on_boot:process { noatsecure rlimitinh siginh transition };

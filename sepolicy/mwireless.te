@@ -1,4 +1,3 @@
-type mwireless_device;
 
 allow FMRadiod mwireless_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };
 allow mlan2040coex mwireless_device:chr_file { append create getattr ioctl link lock open read rename setattr unlink write };

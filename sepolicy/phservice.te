@@ -1,6 +1,4 @@
 # create the new domain phservice
-type phservice, domain;
-type phservice_exec, exec_type, file_type;
 init_daemon_domain(phservice)
 #allow phservice system_data_file:file create_file_perms;
 #SEC removed: allow phservice system_server_service:service_manager { add find list};

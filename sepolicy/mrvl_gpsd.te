@@ -1,6 +1,3 @@
-type mrvl_gpsd;
-type mrvl_gpsd_exec;
-type mrvl_gpsd_tmpfs;
 
 allow debuggerd mrvl_gpsd:process { ptrace };
 allow init mrvl_gpsd:process { noatsecure rlimitinh siginh transition };

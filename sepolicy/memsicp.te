@@ -1,6 +1,3 @@
-type memsicp;
-type memsicp_exec;
-type memsicp_tmpfs;
 
 allow debuggerd memsicp:process { ptrace };
 allow init memsicp:process { noatsecure rlimitinh siginh transition };

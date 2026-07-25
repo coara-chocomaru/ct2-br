@@ -1,7 +1,3 @@
-type pppmodem;
-type pppmodem_device;
-type pppmodem_exec;
-type pppmodem_tmpfs;
 
 allow debuggerd pppmodem:process { ptrace };
 allow hawk pppmodem:dir { getattr search };
