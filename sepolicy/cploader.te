@@ -1,6 +1,5 @@
 type cploader_block_device;
 type mrvlgpu_device;
-typealias block_device alias cploader_block_device;
 typeattribute cploader_block_device block_device;
 # NOTE: the original source also contained
 #   typealias gpu_device alias mrvlgpu_device;
