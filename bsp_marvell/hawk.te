@@ -15,8 +15,6 @@ allow hawk bootanim:dir { getattr search };
 allow hawk bootanim:file { read open };
 allow hawk debuggerd:dir { getattr search };
 allow hawk debuggerd:file { read open };
-allow hawk diag:dir { getattr search };
-allow hawk diag:file { read open };
 allow hawk drmserver:dir { getattr search };
 allow hawk drmserver:file { read open };
 allow hawk dumpstate:dir { getattr search };
