@@ -173,14 +173,15 @@ jobs:
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
           python --version
 
-      - name: Pre-fix sepolicy issues (missing attributes & duplicate typealias)
+      # ---- 事前修復：不足属性 + グローバルな重複 typealias 除去 ----
+      - name: Pre-fix sepolicy issues (missing attributes & global duplicate typealias)
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
           SEPOLICY_DIR="device/sts/a03br/sepolicy"
           mkdir -p "$SEPOLICY_DIR"
           touch "$SEPOLICY_DIR/attributes"
 
-          # 1. 不足属性を追加
+          # 1) 不足属性を追加
           declare -A declared
           while IFS= read -r attr; do
             declared["$attr"]=1
@@ -200,33 +201,30 @@ jobs:
             echo "No missing attributes found."
           fi
 
-          # 2. 重複 typealias を除去（各ファイル内で同じエイリアス名が複数ある場合、最初の1行だけ残す）
+          # 2) 全ファイルにわたる typealias の重複を除去（最初の出現のみ保持）
+          # 各 .te ファイルを一時ファイルに書き換え
+          declare -A seen_alias
           for te in "$SEPOLICY_DIR"/*.te; do
             [ -f "$te" ] || continue
             tmp=$(mktemp)
-            awk '
-              BEGIN { seen_alias[""] = 0 }
-              /^[[:space:]]*typealias/ {
-                # エイリアス名を抽出 (alias の後のトークン)
-                if (match($0, /alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)/, arr)) {
-                  alias = arr[1]
-                  if (!seen_alias[alias]) {
-                    seen_alias[alias] = 1
-                    print
-                  }
-                  # 重複している場合は何も出力しない（削除）
-                } else {
-                  # パースできない行は安全のためそのまま出力
-                  print
-                }
-                next
-              }
-              { print }
-            ' "$te" > "$tmp"
+            while IFS= read -r line; do
+              # typealias 行か判定
+              if [[ "$line" =~ ^[[:space:]]*typealias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*) ]]; then
+                alias="${BASH_REMATCH[2]}"
+                if [[ -z "${seen_alias[$alias]}" ]]; then
+                  seen_alias["$alias"]=1
+                  echo "$line" >> "$tmp"
+                fi
+                # 重複の場合は何も出力しない（削除）
+              else
+                echo "$line" >> "$tmp"
+              fi
+            done < "$te"
             mv "$tmp" "$te"
           done
-          echo "Duplicate typealias lines removed (kept first occurrence per alias)."
+          echo "Global duplicate typealias lines removed (kept first occurrence per alias)."
 
+      # ---- ビルド＋リトライ（動的修復） ----
       - name: Build sepolicy with retry
         id: build
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
@@ -253,8 +251,7 @@ jobs:
               break
             fi
 
-            # エラーログから修復可能な問題を抽出
-            # 1) 未宣言属性: "attribute X is not declared"
+            # エラー解析：未宣言属性
             missing=$(grep -oP "attribute \K[^ ]+(?= is not declared)" build.log | sort -u)
             if [ -n "$missing" ]; then
               echo "Detected missing attributes: $missing"
@@ -265,32 +262,33 @@ jobs:
               continue
             fi
 
-            # 2) 重複エイリアス: "duplicate declaration of alias X"
-            # エラーメッセージにはファイル名と行番号が含まれるが、ここではファイル全体から重複行を削除（事前修復で済むはず）
-            # 念のため、再度重複除去を実行
-            echo "Checking for duplicate typealias again..."
-            for te in "$SEPOLICY_DIR"/*.te; do
-              [ -f "$te" ] || continue
-              tmp=$(mktemp)
-              awk '
-                BEGIN { seen_alias[""] = 0 }
-                /^[[:space:]]*typealias/ {
-                  if (match($0, /alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)/, arr)) {
-                    alias = arr[1]
-                    if (!seen_alias[alias]) {
-                      seen_alias[alias] = 1
-                      print
-                    }
-                  } else {
-                    print
-                  }
-                  next
-                }
-                { print }
-              ' "$te" > "$tmp"
-              mv "$tmp" "$te"
-            done
-            echo "Re-checked duplicate typealias, retrying..."
+            # エラー解析：重複エイリアス（グローバルに再除去）
+            if grep -q "duplicate declaration of alias" build.log; then
+              echo "Detected duplicate typealias, removing duplicates globally again..."
+              declare -A seen_alias
+              for te in "$SEPOLICY_DIR"/*.te; do
+                [ -f "$te" ] || continue
+                tmp=$(mktemp)
+                while IFS= read -r line; do
+                  if [[ "$line" =~ ^[[:space:]]*typealias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*) ]]; then
+                    alias="${BASH_REMATCH[2]}"
+                    if [[ -z "${seen_alias[$alias]}" ]]; then
+                      seen_alias["$alias"]=1
+                      echo "$line" >> "$tmp"
+                    fi
+                  else
+                    echo "$line" >> "$tmp"
+                  fi
+                done < "$te"
+                mv "$tmp" "$te"
+              done
+              echo "Retrying after alias deduplication..."
+              continue
+            fi
+
+            # その他の原因不明のエラー
+            echo "Unknown build error, cannot auto-fix."
+            break
           done
 
           if [ $SUCCESS -eq 1 ]; then
