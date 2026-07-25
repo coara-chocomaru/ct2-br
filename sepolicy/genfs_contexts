@@ -1,2 +1,2 @@
-genfscon sysfs /devices/platform/soc/axi@d4200000/gpu u:object_r:mrvlgpu_device:s0
-genfscon sysfs /devices/platform/soc/axi@d4200000/gpu2d u:object_r:mrvlgpu_device:s0
+genfscon sysfs "/devices/platform/soc/axi@d4200000/gpu" u:object_r:mrvlgpu_device:s0 - s0
+genfscon sysfs "/devices/platform/soc/axi@d4200000/gpu2d" u:object_r:mrvlgpu_device:s0 - s0
