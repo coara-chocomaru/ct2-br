@@ -10,4 +10,3 @@ FMRadioService		u:object_r:system_server_service:s0
 codecIPCservice		u:object_r:system_server_service:s0
 pen_calibration		u:object_r:system_server_service:s0
 benesse_extension   u:object_r:system_server_service:s0
-

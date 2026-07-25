@@ -7,7 +7,6 @@ allow adbd shell_exec:file { execute getattr open read };
 allow adbd shell_prop:property_service { set };
 allow appdomain shell:process { sigchld };
 allow appdomain shell_exec:file { execute execute_no_trans getattr ioctl lock open read };
-allow binderservicedomain shell_data_file:file { getattr write };
 allow bootanim shell_exec:file { execute execute_no_trans getattr };
 allow codecIPC_server shell:fd { use };
 allow debuggerd shell:process { ptrace };
