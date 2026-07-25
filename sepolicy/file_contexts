@@ -1,48 +1,14 @@
 #line 1 "external/sepolicy/file_contexts"
-###########################################
-# Root
 
-# Data files
 
-# Executables
 
-# Empty directories
 
-# SELinux policy files
 
-##########################
-# Devices
-#
-#############################
-# System files
-#
-# patchoat executable has (essentially) the same requirements as dex2oat.
 
-#############################
-# Vendor files
-#
-#############################
-# Data files
-#
 
-# Misc data
 
-# coredump directory for userdebug/eng devices
 
-# Wallpaper file for other users
-#############################
-# efs files
-#
-#############################
-# Cache files
-#
-# LocalTransport (backup) uses this directory
-#############################
-# sysfs files
-#
 
-#############################
-# asec containers
 #line 1 "device/sanyots/ma05/sepolicy/file_contexts"
 # relabel to debug_device
 

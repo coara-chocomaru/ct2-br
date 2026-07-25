@@ -1,6 +1,5 @@
 allow appdomain cache_backup_file:dir { getattr };
 allow domain cache_file:dir { getattr ioctl open read search };
-allow domain cache_file:file { getattr read };
 allow domain cache_file:lnk_file { getattr ioctl lock open read };
 allow init cache_backup_file:blk_file { relabelto };
 allow init cache_backup_file:chr_file { relabelto };
