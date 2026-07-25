@@ -1,6 +1,6 @@
 # create new domain mrvl_gpsd
 #SEC changed : type mrvl_gpsd, domain;
-typealias gpsd alias mrvl_gpsd;
+type mrvl_gpsd, domain; 
 type mrvl_gpsd_exec, exec_type, file_type;
 
 #SEC changed : init_daemon_domain(mrvl_gpsd)
