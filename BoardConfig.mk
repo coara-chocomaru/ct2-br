@@ -253,7 +253,6 @@ BOARD_SEPOLICY_UNION += \
     fs_use \
     fuse.te \
     galcore.te \
-    genfs_contexts \
     geu.te \
     gps.te \
     hawk.te \
