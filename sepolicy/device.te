@@ -1,0 +1,17 @@
+type mediaserver_device, dev_type;
+type nvm_device, dev_type;
+type atcmdsrv_device, dev_type;
+type eeh_device, dev_type;
+type pppmodem_device, dev_type;
+type marvelltel_device, dev_type;
+type teecsstdca_device, dev_type;
+type wpa_device, dev_type;
+type mrvlgpu_device, dev_type;
+type mwireless_device, dev_type;
+type memsic_device, dev_type;
+type geu_device, dev_type;
+type ipc_device, dev_type;
+type vpu_device, dev_type;
+type infor_device, dev_type;
+
+type cploader_block_device, dev_type;
