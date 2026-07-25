@@ -3,9 +3,6 @@ type codecIPC_server, domain;
 type codecIPC_server_exec, exec_type, file_type;
 init_daemon_domain(codecIPC_server)
 
-#neverallow Google CTS-android-m-preview: 
-#neverallow { domain -servicemanager } *:binder set_context_mgr
-#allow codecIPC_server servicemanager:binder { transfer call impersonate set_context_mgr };
 allow codecIPC_server servicemanager:binder { transfer call impersonate };
 
 #SEC removed: allow codecIPC_server system_server_service:service_manager add;
@@ -17,9 +14,6 @@ allow codecIPC_server dumpstate:unix_stream_socket unix_stream_socket_perms;
 #allow codecIPC_server system_data_file:file create_file_perms;
 allow codecIPC_server system_data_file:file r_file_perms;
 
-allow codecIPC_server dump_log_data_file:file create_file_perms;
-allow codecIPC_server dump_log_data_file:dir create_dir_perms;
 allow codecIPC_server shell:fd use;
-allow codecIPC_server fuse:file create_file_perms;
 
 allow codecIPC_server mrvlgpu_device:chr_file { open read write ioctl getattr map lock append };
