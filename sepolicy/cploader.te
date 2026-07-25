@@ -1,5 +1,3 @@
-
-
 type cploader_block_device;
 type mrvlgpu_device;
 typealias block_device alias cploader_block_device;
