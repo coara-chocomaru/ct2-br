@@ -1,4 +1,4 @@
-typealias gpu_device alias mrvlgpu_device;
+
 type env;
 type env_exec;
 type env_tmpfs;
@@ -16,8 +16,6 @@ type nvm_data_file;
 type nvm_device;
 type nvm_exec;
 type nvm_tmpfs;
-type cploader_block_device;
-type mrvlgpu_device;
 type diag;
 type diag_device;
 type diag_exec;
