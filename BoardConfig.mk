@@ -206,13 +206,14 @@ include vendor/sts/a03br/BoardConfigVendor.mk
 # SELinux
 
 BOARD_SEPOLICY_DIRS := \
-	$(DEVICE_PATH)/bsp_marvell
+	$(DEVICE_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
+    device.te \
 	codecIPC_server.te \
 	file_contexts \
 	phservice.te \
-    device.te
+    genfs_contexts
 	
 # BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
