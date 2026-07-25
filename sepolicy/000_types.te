@@ -1,7 +1,3 @@
-# Auto-generated central type declarations to satisfy policy parse order.
-# Moved from per-file .te declarations so types are visible before use.
-
-type env;
 type env_exec;
 type env_tmpfs;
 type iml;
