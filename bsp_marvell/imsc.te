@@ -2,9 +2,8 @@
 #type imsc, domain;
 #type imsc_exec, exec_type, file_type;
 
-#SEC removed : conflict
-typealias imsd alias imsc;
-typealias imsd_exec alias imsc_exec;
+type imsc, domain;
+type imsc_exec, exec_type, file_type;
 
 #init_daemon_domain(imsc)
 
