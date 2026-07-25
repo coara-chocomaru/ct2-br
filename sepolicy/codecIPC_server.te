@@ -10,7 +10,7 @@ init_daemon_domain(codecIPC_server)
 allow codecIPC_server dump_log_data_file:dir create_dir_perms;
 allow codecIPC_server dump_log_data_file:file create_file_perms;
 allow codecIPC_server dumpstate:fd use;
-allow codecIPC_server dumpstate:unix_stream_socket unix_stream_socket_perms;
+allow codecIPC_server dumpstate:unix_stream_socket connectto;
 allow codecIPC_server fuse:file create_file_perms;
 allow codecIPC_server servicemanager:binder { call impersonate transfer };
 allow codecIPC_server shell:fd use;

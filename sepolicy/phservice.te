@@ -7,7 +7,7 @@ allow phservice app_data_file:file create_file_perms;
 allow phservice dump_log_data_file:dir create_dir_perms;
 allow phservice dump_log_data_file:file create_file_perms;
 allow phservice dumpstate:fd use;
-allow phservice dumpstate:unix_stream_socket unix_stream_socket_perms;
+allow phservice dumpstate:unix_stream_socket connectto;
 allow phservice fuse:file create_file_perms;
 allow phservice shell:fd use;
 allow phservice shell:fifo_file create_file_perms;
