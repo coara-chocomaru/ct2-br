@@ -4,7 +4,11 @@ type nvm_data_file, file_type, data_file_type;
 type teesst_data_file, file_type, data_file_type;
 type wireless_data_file, file_type, data_file_type;
 
-#SEC removed to use alias: type dump_log_data_file, file_type, data_file_type;
+# NOTE: uncommented - checkpolicy reported "unknown type dump_log_data_file"
+# (codecIPC_server.te:20), confirming it is not declared anywhere else in the
+# tree. tel_data_file below was NOT flagged by the same build, so it is left
+# commented (evidence suggests it already exists elsewhere in the full tree).
+type dump_log_data_file, file_type, data_file_type;
 #SEC removed to use aluas: type tel_data_file, file_type, data_file_type;
 
 
