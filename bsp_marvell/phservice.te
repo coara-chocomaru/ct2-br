@@ -1,7 +1,6 @@
 # create the new domain phservice
 type phservice, domain;
 type phservice_exec, exec_type, file_type;
-type phservice, service_manager_type;
 init_daemon_domain(phservice)
 
 allow phservice servicemanager:binder { transfer call };
