@@ -41,7 +41,7 @@ type phservice_exec, exec_type, file_type;
 type memsicp;
 type memsicp_exec;
 type memsicp_tmpfs;
-type memsic_device, dev_type;
+type memsic_device;
 type mrd_block_device;
 type kinitlog;
 type kinitlog_exec;
