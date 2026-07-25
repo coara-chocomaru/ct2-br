@@ -228,7 +228,6 @@ BOARD_SEPOLICY_UNION += \
 	file.te \
 	file_contexts \
 	FMRadiod.te \
-	global_macros \
 	hawk.te \
 	hdcp.te \
 	healthd.te \
