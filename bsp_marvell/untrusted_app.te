@@ -33,7 +33,6 @@ allow untrusted_app console_device:chr_file getattr;
 
 allow untrusted_app debuggerd_exec:file { read open };
 allow untrusted_app dhcp_exec:file { read open };
-allow untrusted_app diag_exec:file { read open };
 allow untrusted_app dnsmasq_exec:file { read open };
 allow untrusted_app drmserver_exec:file { read open };
 allow untrusted_app dumpstate_exec:file { read open };
@@ -270,7 +269,5 @@ allow untrusted_app audio_device:dir create_dir_perms;
 # The debugfs is supposed not to be read because of information leaky
 # check /externel/sepolicy/untrusted.te, 86 line
 # allow untrusted_app debugfs:file read;
-allow untrusted_app dump_log_data_file:dir create_dir_perms;
-allow untrusted_app dump_log_data_file:file create_file_perms;
 allow untrusted_app input_device:dir create_dir_perms;
 allow untrusted_app mwireless_device:chr_file create_file_perms;
