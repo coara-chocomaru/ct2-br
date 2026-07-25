@@ -1,5 +1,3 @@
-# grant additonal permission for shell
-nouse_userdebug_or_eng(`
 allow shell device:dir { read open };
 allow shell mediaserver_device:chr_file getattr;
 allow shell serial_device:chr_file { read write getattr ioctl };
@@ -72,4 +70,3 @@ allow shell system_block_device:blk_file getattr;
 allow shell userdata_block_device:blk_file getattr;
 allow shell vpu_device:chr_file getattr;
 allow shell codecIPC_server:binder call;
-')
