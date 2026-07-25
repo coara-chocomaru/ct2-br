@@ -1,3 +1,5 @@
+
+type env;
 type env_exec;
 type env_tmpfs;
 type iml;
@@ -94,7 +96,6 @@ type ts_device;
 type touch_updater;
 type touch_updater_exec;
 type touch_updater_tmpfs;
-type codecIPC_server_tmpfs;
 type dump_log_data_file;
 type load_g_sensor;
 type load_g_sensor_exec;
