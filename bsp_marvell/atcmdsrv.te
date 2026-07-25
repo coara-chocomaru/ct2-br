@@ -18,6 +18,3 @@ allow atcmdsrv tmpfs:dir create_dir_perms;
 allow atcmdsrv tmpfs:sock_file create_file_perms;
 allow atcmdsrv self:process execmem;
 allow atcmdsrv eeh_device:chr_file create_file_perms;
-allow atcmdsrv dump_log_data_file:file create_file_perms;
-allow atcmdsrv dump_log_data_file:dir create_dir_perms;
-
