@@ -23,5 +23,5 @@ allow servicemanager property_socket:sock_file create_file_perms;
 allow servicemanager codecIPC_server:dir create_dir_perms;
 allow servicemanager codecIPC_server:file create_file_perms;
 allow servicemanager codecIPC_server:process getattr;
-allow servicemanager dump_log_data_file:file create_file_perms;
-allow servicemanager dump_log_data_file:dir create_dir_perms;
+# allow servicemanager dump_log_data_file:file create_file_perms;
+# allow servicemanager dump_log_data_file:dir create_dir_perms;
