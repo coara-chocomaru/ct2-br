@@ -1,12 +1,10 @@
 # create new domain diag
-# NOTE: uncommented - the rest of this file uses "diag" as a live domain and
-# transitions into it, so these declarations must not be disabled.
-type diag, domain;
-type diag_exec, exec_type, file_type;
+#SEC removed: type diag, domain;
+#SEC removed: type diag_exec, exec_type, file_type;
 
 # process diag is for phone, diag-aponly is for tablet
 # both these two processes will be labeled to diag.
-init_daemon_domain(diag)
+#SEC removed: init_daemon_domain(diag)
 
 allow diag diag_device:chr_file create_file_perms;
 allow diag self:capability { setuid setgid dac_override };

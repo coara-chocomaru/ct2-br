@@ -1,8 +1,8 @@
 # create new domain eeh
 type eeh, domain;
 type eeh_exec, exec_type, file_type;
-# NOTE: added - referenced by eeh_tmpfs rules but never declared
-type eeh_tmpfs, file_type;
+# NOTE: eeh_tmpfs is used below but is declared elsewhere in the full
+# device tree (outside this bsp_marvell directory) - do not redeclare here.
 
 init_daemon_domain(eeh)
 

@@ -2,8 +2,8 @@
 type FMRadiod, domain;
 type FMRadiod_exec, exec_type, file_type;
 type FMRadiod_service, service_manager_type;
-# NOTE: added - referenced by "allow FMRadiod FMRadiod_tmpfs:file create_file_perms;" but never declared
-type FMRadiod_tmpfs, file_type;
+# NOTE: FMRadiod_tmpfs is used below but is declared elsewhere in the full
+# device tree (outside this bsp_marvell directory) - do not redeclare here.
 
 init_daemon_domain(FMRadiod)
 

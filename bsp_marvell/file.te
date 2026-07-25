@@ -4,12 +4,11 @@ type nvm_data_file, file_type, data_file_type;
 type teesst_data_file, file_type, data_file_type;
 type wireless_data_file, file_type, data_file_type;
 
-# NOTE: uncommented - referenced by diag.te / codecIPC_server.te (dump_log_data_file, tel_data_file)
-type dump_log_data_file, file_type, data_file_type;
-type tel_data_file, file_type, data_file_type;
+#SEC removed to use alias: type dump_log_data_file, file_type, data_file_type;
+#SEC removed to use aluas: type tel_data_file, file_type, data_file_type;
+
 
 # new socket type
-# NOTE: uncommented - referenced by system_app.te (imsd_socket)
-type imsd_socket, file_type;
+#SEC removed:type imsd_socket, file_type;
 type embmsd_socket, file_type;
 

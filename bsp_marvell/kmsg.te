@@ -1,8 +1,8 @@
 # create the new domain kmsg
 type kmsg, domain;
 type kmsg_exec, exec_type, file_type;
-# NOTE: added - referenced by kmsg_tmpfs rules but never declared
-type kmsg_tmpfs, file_type;
+# NOTE: kmsg_tmpfs is used below but is declared elsewhere in the full
+# device tree (outside this bsp_marvell directory) - do not redeclare here.
 
 init_daemon_domain(kmsg)
 

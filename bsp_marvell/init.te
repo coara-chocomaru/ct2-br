@@ -1,7 +1,7 @@
 # for init
 #SEC removed: permissive init;
-# NOTE: added - referenced by eeh.te (allow eeh init_tmpfs:file create_file_perms;) but never declared
-type init_tmpfs, file_type;
+# NOTE: init_tmpfs is referenced by eeh.te but is declared elsewhere in the
+# full device tree (outside this bsp_marvell directory) - do not redeclare here.
 allow init self:capability sys_module;
 allow init self:process execmem;
 allow init self:tcp_socket create_socket_perms;

@@ -3,21 +3,16 @@
 type mediaserver_device, dev_type;
 # typealias camera_device alias mediaserver_device;
 
-# NOTE: uncommented - referenced by shell.te (allow shell system_app_device:chr_file getattr;)
-type system_app_device, dev_type;
+#SEC removed: no need, type system_app_device, dev_type;
 type nvm_device, dev_type;
-# NOTE: uncommented - referenced by diag.te / shell.te (diag_device)
-type diag_device, dev_type;
+#SEC removed: conflict, type diag_device, dev_type;
 type atcmdsrv_device, dev_type;
 type eeh_device, dev_type;
 type pppmodem_device, dev_type;
 type marvelltel_device, dev_type;
-# NOTE: uncommented - referenced by diag.te / shell.te (teecsstdca_device)
-type teecsstdca_device, dev_type;
-# NOTE: uncommented - referenced by mwirelessd.te / shell.te (bluetooth_device)
-type bluetooth_device, dev_type;
-# NOTE: uncommented - referenced by shell.te (i2c_device)
-type i2c_device, dev_type;
+#SEC changed : conflict, use tz_device type teecsstdca_device, dev_type;
+#SEC removed: conflict, type bluetooth_device, dev_type;
+#SEC removed: conflict, type i2c_device, dev_type;
 type wpa_device, dev_type;
 #SEC changed : type mrvlgpu_device, dev_type;
 type mrvlgpu_device, dev_type;
@@ -28,8 +23,7 @@ type geu_device, dev_type;
 type ipc_device, dev_type;
 type vpu_device, dev_type;
 type infor_device, dev_type;
-# NOTE: uncommented - referenced by pppmodem.te (ssipc_device)
-type ssipc_device, dev_type;
+#SEC_SELinux conflict: type ssipc_device, dev_type;
 
 # new block device
 #SEC changed : use alias, type cploader_block_device, dev_type;
@@ -37,22 +31,20 @@ type ssipc_device, dev_type;
 type cploader_block_device, dev_type;
 # typealias mmc_block_device alias cploader_block_device;
 ## SEC does not use marvell's block device type.
-# NOTE: the following block_device types ARE referenced by shell.te (getattr-only
-# probing rules), so they were uncommented; two remain unused (splash/fota) and stay removed.
-type mrd_block_device, dev_type;
-type mrd1_block_device, dev_type;
-type mep2_block_device, dev_type;
-type dtim_block_device, dev_type;
-type recovery_block_device, dev_type;
-type bootloader_block_device, dev_type;
-type boot_block_device, dev_type;
-type system_block_device, dev_type;
-type misc_block_device, dev_type;
-type radio_block_device, dev_type;
-type nvm_block_device, dev_type;
-type cache_block_device, dev_type;
-type userdata_block_device, dev_type;
-type security_block_device, dev_type;
-## SEC removed: type splash_block_device, dev_type; (unused in this BSP)
-## SEC removed: type fota_block_device, dev_type; (unused in this BSP)
+## SEC removed: type mrd_block_device, dev_type;
+## SEC removed: type mrd1_block_device, dev_type;
+## SEC removed: type mep2_block_device, dev_type;
+## SEC removed: type dtim_block_device, dev_type;
+## SEC removed: type recovery_block_device, dev_type;
+## SEC removed: type bootloader_block_device, dev_type;
+## SEC removed: type boot_block_device, dev_type;
+## SEC removed: type system_block_device, dev_type;
+## SEC removed: type misc_block_device, dev_type;
+## SEC removed: type radio_block_device, dev_type;
+## SEC removed: type nvm_block_device, dev_type;
+## SEC removed: type cache_block_device, dev_type;
+## SEC removed: type userdata_block_device, dev_type;
+## SEC removed: type security_block_device, dev_type;
+## SEC removed: type splash_block_device, dev_type;
+## SEC removed: type fota_block_device, dev_type;
 

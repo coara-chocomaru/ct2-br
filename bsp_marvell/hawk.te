@@ -1,8 +1,8 @@
 # create the new domain hawk
 type hawk, domain;
 type hawk_exec, exec_type, file_type;
-# NOTE: added - referenced by hawk_tmpfs rule but never declared
-type hawk_tmpfs, file_type;
+# NOTE: hawk_tmpfs is used below but is declared elsewhere in the full
+# device tree (outside this bsp_marvell directory) - do not redeclare here.
 
 init_daemon_domain(hawk)
 
