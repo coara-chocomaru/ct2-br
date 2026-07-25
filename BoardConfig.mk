@@ -208,6 +208,7 @@ BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
+    000_types.te \
     acipc.te \
     adbd.te \
     alarm.te \
