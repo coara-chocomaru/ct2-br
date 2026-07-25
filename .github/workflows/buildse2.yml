@@ -173,8 +173,8 @@ jobs:
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
           python --version
 
-      # ---- 事前修復：不足属性 + グローバルな重複 typealias 除去 ----
-      - name: Pre-fix sepolicy issues (missing attributes & global duplicate typealias)
+      # ---- 事前修復：不足属性 + 重複typealias + typeattribute→typealias変換 ----
+      - name: Pre-fix sepolicy issues
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
           SEPOLICY_DIR="device/sts/a03br/sepolicy"
@@ -201,28 +201,53 @@ jobs:
             echo "No missing attributes found."
           fi
 
-          # 2) 全ファイルにわたる typealias の重複を除去（最初の出現のみ保持）
-          # 各 .te ファイルを一時ファイルに書き換え
+          # 2) type 宣言を収集（attributeではないもの）
+          declare -A types
+          while IFS= read -r t; do
+            types["$t"]=1
+          done < <(grep -h -E '^\s*type\s+' "$SEPOLICY_DIR"/*.te 2>/dev/null | awk '{print $2}')
+
+          # 3) typeattribute 行を走査し、第二引数が type なら typealias に変換
+          for te in "$SEPOLICY_DIR"/*.te; do
+            [ -f "$te" ] || continue
+            tmp=$(mktemp)
+            while IFS= read -r line; do
+              # typeattribute <type> <attr>;
+              if [[ "$line" =~ ^[[:space:]]*typeattribute[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*\; ]]; then
+                type="${BASH_REMATCH[1]}"
+                attr="${BASH_REMATCH[2]}"
+                # attr が type として宣言されている場合（attributes にはない）
+                if [[ -n "${types[$attr]}" && -z "${declared[$attr]}" ]]; then
+                  # typeattribute を typealias に変換
+                  echo "Converting: $line"
+                  echo "typealias $attr alias $type;" >> "$tmp"
+                  continue
+                fi
+              fi
+              echo "$line" >> "$tmp"
+            done < "$te"
+            mv "$tmp" "$te"
+          done
+
+          # 4) 全ファイルにわたる typealias の重複を除去（最初の出現のみ保持）
           declare -A seen_alias
           for te in "$SEPOLICY_DIR"/*.te; do
             [ -f "$te" ] || continue
             tmp=$(mktemp)
             while IFS= read -r line; do
-              # typealias 行か判定
               if [[ "$line" =~ ^[[:space:]]*typealias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*) ]]; then
                 alias="${BASH_REMATCH[2]}"
                 if [[ -z "${seen_alias[$alias]}" ]]; then
                   seen_alias["$alias"]=1
                   echo "$line" >> "$tmp"
                 fi
-                # 重複の場合は何も出力しない（削除）
               else
                 echo "$line" >> "$tmp"
               fi
             done < "$te"
             mv "$tmp" "$te"
           done
-          echo "Global duplicate typealias lines removed (kept first occurrence per alias)."
+          echo "Pre-fix completed: missing attributes added, typeattribute→typealias converted, duplicate aliases removed."
 
       # ---- ビルド＋リトライ（動的修復） ----
       - name: Build sepolicy with retry
@@ -262,7 +287,58 @@ jobs:
               continue
             fi
 
-            # エラー解析：重複エイリアス（グローバルに再除去）
+            # エラー解析：typeattribute で type を属性として使っている
+            if grep -q "is a type, not an attribute" build.log; then
+              echo "Detected typeattribute misuse: converting typeattribute to typealias..."
+              # 事前修復と同じ変換を再実行（簡易版）
+              # type 宣言を収集
+              declare -A types
+              while IFS= read -r t; do
+                types["$t"]=1
+              done < <(grep -h -E '^\s*type\s+' "$SEPOLICY_DIR"/*.te 2>/dev/null | awk '{print $2}')
+              declare -A declared
+              while IFS= read -r attr; do
+                declared["$attr"]=1
+              done < <(grep -h -E '^\s*attribute\s+' "$SEPOLICY_DIR"/*.te 2>/dev/null | awk '{print $2}')
+              for te in "$SEPOLICY_DIR"/*.te; do
+                [ -f "$te" ] || continue
+                tmp=$(mktemp)
+                while IFS= read -r line; do
+                  if [[ "$line" =~ ^[[:space:]]*typeattribute[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]*\; ]]; then
+                    type="${BASH_REMATCH[1]}"
+                    attr="${BASH_REMATCH[2]}"
+                    if [[ -n "${types[$attr]}" && -z "${declared[$attr]}" ]]; then
+                      echo "typealias $attr alias $type;" >> "$tmp"
+                      continue
+                    fi
+                  fi
+                  echo "$line" >> "$tmp"
+                done < "$te"
+                mv "$tmp" "$te"
+              done
+              # 重複 alias を再度除去
+              declare -A seen_alias
+              for te in "$SEPOLICY_DIR"/*.te; do
+                [ -f "$te" ] || continue
+                tmp=$(mktemp)
+                while IFS= read -r line; do
+                  if [[ "$line" =~ ^[[:space:]]*typealias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*)[[:space:]]+alias[[:space:]]+([a-zA-Z_][a-zA-Z0-9_]*) ]]; then
+                    alias="${BASH_REMATCH[2]}"
+                    if [[ -z "${seen_alias[$alias]}" ]]; then
+                      seen_alias["$alias"]=1
+                      echo "$line" >> "$tmp"
+                    fi
+                  else
+                    echo "$line" >> "$tmp"
+                  fi
+                done < "$te"
+                mv "$tmp" "$te"
+              done
+              echo "Fixed typeattribute misuse, retrying..."
+              continue
+            fi
+
+            # エラー解析：重複エイリアス（念のため）
             if grep -q "duplicate declaration of alias" build.log; then
               echo "Detected duplicate typealias, removing duplicates globally again..."
               declare -A seen_alias
