@@ -1,0 +1,3 @@
+allow binderservicedomain surfaceflinger:binder { transfer };
+allow bootanim surfaceflinger:binder { call transfer };
+allow bootanim surfaceflinger:fd { use };
