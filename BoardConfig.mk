@@ -223,6 +223,7 @@ BOARD_SEPOLICY_UNION += \
     bootanim.te \
 	phservice.te \
     i2c.te \
+    surfaceflinger.te \
     init.te
 	
 # BOARD_SEPOLICY_DIRS := \
