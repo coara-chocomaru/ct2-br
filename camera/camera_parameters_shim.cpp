@@ -1,5 +1,4 @@
 #define LOG_TAG "CameraParamsShim"
-
 #include <utils/Log.h>
 
 namespace android {
