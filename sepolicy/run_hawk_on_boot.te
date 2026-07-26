@@ -11,4 +11,3 @@ allow run_hawk_on_boot system_file:file execute_no_trans;
 allow run_hawk_on_boot kernel:system syslog_mod;
 allow run_hawk_on_boot proc:file create_file_perms;
 allow run_hawk_on_boot self:capability2 syslog;
-allow run_hawk_on_boot property_socket:sock_file create_file_perms;
