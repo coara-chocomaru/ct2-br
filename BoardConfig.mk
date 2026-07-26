@@ -212,8 +212,7 @@ BOARD_SEPOLICY_UNION += \
     device.te \
 	codecIPC_server.te \
 	file_contexts \
-	phservice.te \
-    genfs_contexts
+	phservice.te
 	
 # BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
