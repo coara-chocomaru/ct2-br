@@ -1,0 +1,4 @@
+allow bootanim mrvlgpu_device:chr_file rw_file_perms;
+allow bootanim graphics_device:dir r_dir_perms;
+allow bootanim sysfs:file rw_file_perms;
+allow bootanim property_socket:sock_file rw_file_perms;
