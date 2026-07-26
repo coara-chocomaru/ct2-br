@@ -1,6 +1,16 @@
 /system/bin/codecIPC_server	u:object_r:codecIPC_server_exec:s0
 /system/bin/phservice	u:object_r:phservice_exec:s0
 
+
+/dev/cpu_freq_b_max     u:object_r:cpuctl_device:s0
+/dev/cpu_freq_b_min	u:object_r:cpuctl_device:s0
+/dev/cpu_freq_l_max	u:object_r:cpuctl_device:s0
+/dev/cpu_freq_l_min	u:object_r:cpuctl_device:s0
+/dev/cpu_freq_max	u:object_r:cpuctl_device:s0
+/dev/cpu_freq_min	u:object_r:cpuctl_device:s0
+/dev/cpu_num_max	u:object_r:cpuctl_device:s0
+/dev/cpu_num_min	u:object_r:cpuctl_device:s0
+/dev/cpuidle_block	u:object_r:cpuctl_device:s0
 /dev/gpu_freq_2d_max                        u:object_r:mrvlgpu_device:s0
 /dev/gpu_freq_2d_min                        u:object_r:mrvlgpu_device:s0
 /dev/gpu_freq_3d_max                        u:object_r:mrvlgpu_device:s0
@@ -11,3 +21,7 @@
 /dev/graphics/galcore                       u:object_r:mrvlgpu_device:s0
 
 /NVM(/.*)?                                  u:object_r:nvm_data_file:s0
+
+
+/system/bin/run_hawk_on_boot\.sh	u:object_r:run_hawk_on_boot_exec:s0
+/system/bin/hawk		u:object_r:hawk_exec:s0
