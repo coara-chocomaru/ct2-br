@@ -220,6 +220,8 @@ BOARD_SEPOLICY_UNION += \
 	codecIPC_server.te \
 	file_contexts \
     galcore.te \
+    run_hawk_on_boot.te \
+    init.te \
 	phservice.te
 	
 # BOARD_SEPOLICY_DIRS := \
