@@ -222,6 +222,7 @@ BOARD_SEPOLICY_UNION += \
     touch_updater.te \
     bootanim.te \
 	phservice.te \
+    i2c.te \
     init.te
 	
 # BOARD_SEPOLICY_DIRS := \
