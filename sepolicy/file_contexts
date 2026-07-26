@@ -11,34 +11,11 @@
 # SELinux policy files
 
 ##########################
-# Devices
-#
-#############################
-# System files
-#
-# patchoat executable has (essentially) the same requirements as dex2oat.
-
-#############################
-# Vendor files
-#
-#############################
-# Data files
-#
-
+# 
 # Misc data
 
 # coredump directory for userdebug/eng devices
 
-# Wallpaper file for other users
-#############################
-# efs files
-#
-#############################
-# Cache files
-#
-# LocalTransport (backup) uses this directory
-#############################
-# sysfs files
 #
 
 #############################
