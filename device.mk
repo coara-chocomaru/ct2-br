@@ -19,6 +19,8 @@ LOCAL_PATH := device/sts/a03br
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.adb.secure=0 \
+    ro.boot.selinux=disabled \
+    ro.zygote.disable_gl_preload=true \
     ro.secure=0 \
     ro.debuggable=1 \
     ro.boot.wificountrycode=JP \
