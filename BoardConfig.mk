@@ -219,6 +219,7 @@ BOARD_SEPOLICY_UNION += \
     device.te \
 	codecIPC_server.te \
 	file_contexts \
+    galcore.te \
 	phservice.te
 	
 # BOARD_SEPOLICY_DIRS := \
