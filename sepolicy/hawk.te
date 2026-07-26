@@ -1,0 +1,10 @@
+type hawk, domain;
+type hawk_exec, exec_type, file_type;
+
+init_daemon_domain(hawk)
+
+allow hawk bootanim:dir { getattr search };
+allow hawk surfaceflinger:dir { getattr search };
+allow hawk surfaceflinger:file { read open };
+allow hawk system_server:file { read open };
+allow hawk untrusted_app:dir { getattr search };
