@@ -1,0 +1,16 @@
+type mrvlgpu_device;
+
+allow adbd mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow bluetooth mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow bootanim mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow isolated_app mrvlgpu_device:chr_file { ioctl read write getattr lock append open };
+allow mediaserver mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow platform_app mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow shell mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow surfaceflinger mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow system_app mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow system_server mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain mrvlgpu_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app mrvlgpu_device:chr_file { ioctl read write getattr lock append open };
+allow zygote mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
