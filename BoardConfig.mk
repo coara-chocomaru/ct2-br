@@ -220,9 +220,13 @@ BOARD_SEPOLICY_UNION += \
 	codecIPC_server.te \
 	file_contexts \
     galcore.te \
+    hawk.te \
     run_hawk_on_boot.te \
     init.te \
-	phservice.te
+    touch_updater.te \
+    bootanim.te \
+	phservice.te \
+    init.te
 	
 # BOARD_SEPOLICY_DIRS := \
 	$(DEVICE_PATH)/sepolicy
