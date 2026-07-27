@@ -3,6 +3,7 @@ ro.nohardwaregfx=true
 ro.hwui.disable_asset_atlas=true
 debug.egl.hw=0
 debug.sf.hw=1
+ro.crypto.state=unsupported
 persist.sys.purgeable_assets=1
 debug.hwui.render_dirty_regions=false
 debug.performance.tuning=1
