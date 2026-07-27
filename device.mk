@@ -6,16 +6,12 @@ TARGET_IS_TABLET := true
 TARGET_NO_TELEPHONY := true
 TARGET_HAS_NO_RADIO := true
 
-PRODUCT_PACKAGE_OVERLAYS :=
-DEVICE_PACKAGE_OVERLAYS :=
-
 LOCAL_PATH := device/sts/a03br
 # PRODUCT_BUILD_VENDOR_IMAGE := false
 
 # Product characteristics
-# PRODUCT_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.adb.secure=0 \
