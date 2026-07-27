@@ -260,6 +260,7 @@ allow setup_fs FMRadiod_exec:file { read getattr execute entrypoint open };
 allow shell FMRadiod_exec:file { getattr };
 allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
+type mwirelessd;
 type mwirelessd_exec, exec_type;
 
 type mlan2040coex;
