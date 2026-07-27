@@ -363,6 +363,5 @@ BOARD_SEPOLICY_UNION += \
     wireless.te \
     zygote.te
     
-BOARD_SECCOMP_POLICY += $(DEVICE_PATH)/seccomp_policy
 TARGET_SELINUX_ENFORCE := false
 SELINUX_IGNORE_NEVERALLOWS := true
