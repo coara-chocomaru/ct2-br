@@ -30,7 +30,6 @@
 /NVM(/.*)? 		u:object_r:nvm_data_file:s0
 
 
-/teesst(/.*)? 		u:object_r:teesst_data_file:s0
 
 # dev
 /dev/media[0-9]+	u:object_r:mediaserver_device:s0
