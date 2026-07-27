@@ -296,7 +296,19 @@ type teecsstdca_exec, exec_type;
 
 
 type system_app_device, dev_type;
+allow shell system_app_device:chr_file { getattr };
+allow system_app system_app_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain system_app_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain system_app_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app system_app_device:chr_file { read getattr };
+
+
 type nvm_device, dev_type;
+
+allow unconfineddomain nvm_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain nvm_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app nvm_device:chr_file { read getattr };
+
 type diag_device, dev_type;
 type teecsstdca_device, dev_type;
 type bluetooth_device, dev_type;
