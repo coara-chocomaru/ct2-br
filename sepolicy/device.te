@@ -4,7 +4,6 @@ type mediaserver_device, dev_type;
 # typealias camera_device alias mediaserver_device;
 type i2c_device, dev_type;
 #SEC removed: no need, type system_app_device, dev_type;
-type nvm_device, dev_type;
 #SEC removed: conflict, type diag_device, dev_type;
 type atcmdsrv_device, dev_type;
 type eeh_device, dev_type;
