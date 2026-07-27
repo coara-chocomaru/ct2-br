@@ -22,6 +22,8 @@ type geu_device, dev_type;
 type ipc_device, dev_type;
 type vpu_device, dev_type;
 type infor_device, dev_type;
+attribute socket_type;
+
 #SEC_SELinux conflict: type ssipc_device, dev_type;
 
 # new block device
