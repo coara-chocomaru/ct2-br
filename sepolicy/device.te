@@ -262,6 +262,13 @@ allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
 type mwirelessd;
 type mwirelessd_exec, exec_type;
+allow init mwirelessd:process { transition noatsecure siginh rlimitinh };
+allow init mwirelessd_exec:file { read getattr execute open };
+allow mwirelessd mwirelessd_exec:file { read getattr execute entrypoint open };
+allow recovery mwirelessd_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow shell mwirelessd_exec:file { getattr };
+allow unconfineddomain mwirelessd:binder { call set_context_mgr transfer };
+allow untrusted_app mwirelessd_exec:file { read getattr execute open };
 
 type mlan2040coex;
 type mlan2040coex_exec, exec_type;
