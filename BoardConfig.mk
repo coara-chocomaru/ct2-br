@@ -138,7 +138,6 @@ TARGET_USES_ION := true
 BACKLIGHT_PATH := /sys/devices/platform/panel_vx5b1d.19/backlight/lcd-bl/brightness
 BOARD_USE_BGRA_8888 := true
 BOARD_EGL_NEEDS_HANDLE_VALUE := true
-BOARD_ENABLE_OVERLAY := false
 BOARD_HAVE_PIXEL_FORMAT_INFO := true
 USE_HWC2 := false
 TARGET_USES_HWC2 := false
