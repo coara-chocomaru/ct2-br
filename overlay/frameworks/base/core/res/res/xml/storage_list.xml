@@ -38,11 +38,11 @@
              android:primary="true"
              android:emulated="true" />
 
-    <storage android:mountPoint="/storage/sdcard1"
+    <storage android:mountPoint="/storage/external"
              android:storageDescription="@string/storage_sd_card"
              android:removable="true"/>
 
-    <storage android:mountPoint="/storage/usbotg"
+    <storage android:mountPoint="/storage/usb"
              android:storageDescription="@string/storage_usb"
              android:removable="true"/>
 </StorageList>
