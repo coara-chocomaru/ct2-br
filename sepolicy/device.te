@@ -155,6 +155,131 @@ allow unconfineddomain nvm_block_device:file { ioctl read write create getattr s
 allow untrusted_app nvm_block_device:blk_file { getattr };
 allow untrusted_app nvm_block_device:dir { getattr };
 
+# --- Sockets ---
+type imsd_socket, socket_type;
+
+allow init imsd_socket:blk_file { relabelto };
+allow init imsd_socket:chr_file { relabelto };
+allow init imsd_socket:dir { relabelto };
+allow init imsd_socket:fifo_file { relabelto };
+allow init imsd_socket:file { relabelto };
+allow init imsd_socket:lnk_file { relabelto };
+allow init imsd_socket:sock_file { relabelto };
+allow system_app imsd_socket:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain imsd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain imsd_socket:dir { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow unconfineddomain imsd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain imsd_socket:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain imsd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain imsd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow untrusted_app imsd_socket:sock_file { getattr };
+
+type embmsd_socket, socket_type;
+
+allow init embmsd_socket:blk_file { relabelto };
+allow init embmsd_socket:chr_file { relabelto };
+allow init embmsd_socket:dir { relabelto };
+allow init embmsd_socket:fifo_file { relabelto };
+allow init embmsd_socket:file { relabelto };
+allow init embmsd_socket:lnk_file { relabelto };
+allow init embmsd_socket:sock_file { relabelto };
+allow unconfineddomain embmsd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain embmsd_socket:dir { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow unconfineddomain embmsd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain embmsd_socket:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain embmsd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain embmsd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow untrusted_app embmsd_socket:sock_file { getattr };
+
+# --- Exec Types ---
+type nvm_exec, exec_type;
+allow init nvm_exec:file { read getattr execute open };
+allow recovery nvm_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs nvm_exec:file { read getattr execute entrypoint open };
+allow shell nvm_exec:file { getattr };
+allow untrusted_app nvm_exec:file { read getattr execute open };
+
+
+type setup_fs_exec, exec_type;
+allow init setup_fs_exec:file { read getattr execute open };
+allow recovery setup_fs_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs setup_fs_exec:file { read getattr execute entrypoint open };
+allow shell setup_fs_exec:file { getattr };
+allow untrusted_app setup_fs_exec:file { read getattr execute open };
+
+
+type pppmodem_exec, exec_type;
+
+allow init pppmodem_exec:file { read getattr execute open };
+allow recovery pppmodem_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs pppmodem_exec:file { read getattr execute entrypoint open };
+allow shell pppmodem_exec:file { getattr };
+allow untrusted_app pppmodem_exec:file { read getattr execute open };
+
+
+type eeh_exec, exec_type;
+
+allow init eeh_exec:file { read getattr execute open };
+allow recovery eeh_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs eeh_exec:file { read getattr execute entrypoint open };
+allow shell eeh_exec:file { getattr };
+allow untrusted_app eeh_exec:file { read getattr execute open };
+
+
+type diag_exec, exec_type;
+
+allow init diag_exec:file { read getattr execute open };
+allow recovery diag_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs diag_exec:file { read getattr execute entrypoint open };
+allow shell diag_exec:file { getattr };
+allow untrusted_app diag_exec:file { read getattr execute open };
+
+
+type atcmdsrv_exec, exec_type;
+allow init atcmdsrv_exec:file { read getattr execute open };
+allow recovery atcmdsrv_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs atcmdsrv_exec:file { read getattr execute entrypoint open };
+allow shell atcmdsrv_exec:file { getattr };
+allow untrusted_app atcmdsrv_exec:file { read getattr execute open };
+
+
+
+type marvelltel_exec, exec_type;
+allow init marvelltel_exec:file { read getattr execute open };
+allow recovery marvelltel_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs marvelltel_exec:file { read getattr execute entrypoint open };
+allow shell marvelltel_exec:file { getattr };
+allow untrusted_app marvelltel_exec:file { read getattr execute open };
+
+
+type FMRadiod_exec, exec_type;
+allow init FMRadiod_exec:file { read getattr execute open };
+allow recovery FMRadiod_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow setup_fs FMRadiod_exec:file { read getattr execute entrypoint open };
+allow shell FMRadiod_exec:file { getattr };
+allow untrusted_app FMRadiod_exec:file { read getattr execute open };
+
+type mwirelessd_exec, exec_type;
+type mlan2040coex_exec, exec_type;
+type mlaninit_exec, exec_type;
+type iml_exec, exec_type;
+type log_on_boot_exec, exec_type;
+type imsc_exec, exec_type;
+type mned_exec, exec_type;
+type kmsg_exec, exec_type;
+type root_detect_exec, exec_type;
+type load_g_cali_data_exec, exec_type;
+type memsicd_exec, exec_type;
+type memsicp_exec, exec_type;
+type mrvl_gpsd_exec, exec_type;
+type core_compressor_exec, exec_type;
+type at_router_exec, exec_type;
+type env_exec, exec_type;
+type kinitlog_exec, exec_type;
+type teecsstdca_exec, exec_type;
+
+
+
 # NVM storage label
 type nvm_data_file, file_type;
 
