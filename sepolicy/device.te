@@ -1,4 +1,3 @@
-# define new device type
 #SEC changed : use alias, type mediaserver_device, dev_type;
 type mediaserver_device, dev_type;
 # typealias camera_device alias mediaserver_device;
