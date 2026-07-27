@@ -201,11 +201,10 @@ allow setup_fs nvm_exec:file { read getattr execute entrypoint open };
 allow shell nvm_exec:file { getattr };
 allow untrusted_app nvm_exec:file { read getattr execute open };
 
-
+type setup_fs;
 type setup_fs_exec, exec_type;
 allow init setup_fs_exec:file { read getattr execute open };
 allow recovery setup_fs_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
-allow setup_fs setup_fs_exec:file { read getattr execute entrypoint open };
 allow shell setup_fs_exec:file { getattr };
 allow untrusted_app setup_fs_exec:file { read getattr execute open };
 
