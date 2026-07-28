@@ -94,7 +94,6 @@ type setup_fs;
 type mwirelessd, domain;
 type mlan2040coex;
 type mlaninit;
-type dhcp, domain;
 
 # =========================================================================
 # Section allow
@@ -354,14 +353,6 @@ allow init mlaninit_exec:file { read getattr execute open };
 allow mlaninit mlaninit_exec:file { read getattr execute entrypoint open };
 allow recovery mlaninit_exec:file { write setattr open };
 allow unconfineddomain mlaninit:binder { call set_context_mgr transfer };
-
-# --- Domain: dhcp ---
-net_domain(dhcp)
-allow dhcp self:global_capability_class_set { setgid setuid net_admin net_raw net_bind_service };
-allow dhcp self:packet_socket create_socket_perms_no_ioctl;
-allow dhcp self:netlink_route_socket nlmsg_write;
-allow dhcp shell_exec:file rx_file_perms;
-allow dhcp system_file:file rx_file_perms;
 
 # --- system_app_device ---
 allow shell system_app_device:chr_file { getattr };
