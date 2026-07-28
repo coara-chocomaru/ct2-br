@@ -12,13 +12,13 @@ include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := libhardware_legacy
-LOCAL_OVERRIDES_MODULES := libhardware_legacy
 LOCAL_SRC_FILES := wrapper.cpp
-LOCAL_CPPFLAGS := -Wall -Werror -fvisibility=hidden
-LOCAL_LDFLAGS := -Wl,-z,defs -Wl,--exclude-libs,ALL
+LOCAL_CPPFLAGS := -Wall -Werror
+LOCAL_LDFLAGS := -Wl,--exclude-libs,ALL -Wl,--unresolved-symbols=ignore-in-shared-libs
 LOCAL_SHARED_LIBRARIES := libdl liblog
 LOCAL_MODULE_TAGS := optional
 LOCAL_MULTILIB := both
+LOCAL_OVERRIDES_MODULES := libhardware_legacy
 LOCAL_MODULE_PATH_64 := $(TARGET_OUT_SHARED_LIBRARIES)
 LOCAL_MODULE_PATH_32 := $(TARGET_OUT_SHARED_LIBRARIES)
 include $(BUILD_SHARED_LIBRARY)
