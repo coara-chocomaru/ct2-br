@@ -410,4 +410,8 @@ type nvm_data_file, file_type;
 allow { domain -appdomain -isolated_app -untrusted_app -platform_app -system_app } mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow shell mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow dumpstate mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
+allow vold kernel:system module_request;
+
 allow init mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
+allow zygote mrvlgpu_device:chr_file rw_file_perms;
+allow zygote graphics_device:dir r_dir_perms;
