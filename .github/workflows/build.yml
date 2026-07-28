@@ -3,7 +3,7 @@ name: LineageOS
 on:
   push:
     branches:
-      - main
+      - main5 
   workflow_dispatch:
 
 env:
