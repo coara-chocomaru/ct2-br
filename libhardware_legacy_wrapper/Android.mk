@@ -1,0 +1,23 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libhardware_legacy_real
+LOCAL_SRC_FILES := prebuilt/$(TARGET_ARCH)/libhardware_legacy.so
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH_64 := $(TARGET_OUT_SHARED_LIBRARIES)
+LOCAL_MODULE_PATH_32 := $(TARGET_OUT_SHARED_LIBRARIES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libhardware_legacy
+LOCAL_SRC_FILES := wrapper.cpp
+LOCAL_CPPFLAGS := -Wall -Werror -fvisibility=hidden
+LOCAL_LDFLAGS := -Wl,-z,defs -Wl,--exclude-libs,ALL
+LOCAL_SHARED_LIBRARIES := libdl liblog
+LOCAL_MODULE_TAGS := optional
+LOCAL_MULTILIB := both
+LOCAL_MODULE_PATH_64 := $(TARGET_OUT_SHARED_LIBRARIES)
+LOCAL_MODULE_PATH_32 := $(TARGET_OUT_SHARED_LIBRARIES)
+include $(BUILD_SHARED_LIBRARY)
