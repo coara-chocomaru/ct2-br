@@ -193,6 +193,7 @@
 /data/log(/.*)?		u:object_r:dump_log_data_file:s0
 /data/misc/phone/mrvl_tel_diag.cfg	u:object_r:tel_data_file:s0
 /data/misc/phone/mrvl_tel_iml.cfg	u:object_r:tel_data_file:s0
+/data/misc/wireless/socket_daemon           u:object_r:mwirelessd_socket:s0
 
 # for tz
 /system/bin/teec_sstd_ca	u:object_r:teecsstdca_exec:s0
