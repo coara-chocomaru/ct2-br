@@ -407,6 +407,8 @@ type nvm_data_file, file_type;
 allow mediaserver nvm_data_file:file create_file_perms;
 allow mediaserver nvm_data_file:dir create_dir_perms;
 allow mediaserver phservice:binder call;
+allow bluetooth mrvlgpu_device:chr_file rw_file_perms;
+allow bluetooth graphics_device:dir r_dir_perms;
 
 # Broad Marvell GPU access for bring-up.
 # Keep app domains out to avoid the most common neverallow failures.
