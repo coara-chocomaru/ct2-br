@@ -341,6 +341,12 @@ allow system_app system_app_device:chr_file { ioctl read write create getattr se
 allow unconfineddomain system_app_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain system_app_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app system_app_device:chr_file { read getattr };
+allow system_app phservice:binder call;
+allow system_app mrvlgpu_device:chr_file rw_file_perms;
+allow system_app graphics_device:dir r_dir_perms;
+allow system_app nvm_data_file:dir create_dir_perms;
+allow system_app nvm_data_file:file create_file_perms;
+allow platform_app phservice:binder call;
 
 
 type nvm_device, dev_type;
