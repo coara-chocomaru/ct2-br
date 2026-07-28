@@ -1,3 +1,6 @@
+# =========================================================================
+# dev_type
+# =========================================================================
 type mediaserver_device, dev_type;
 type i2c_device, dev_type;
 type atcmdsrv_device, dev_type;
@@ -14,7 +17,90 @@ type mwireless_device, dev_type;
 type infor_device, dev_type;
 
 type cploader_block_device, dev_type;
+type ssipc_device, dev_type;
+type mrd_block_device, dev_type;
+type mrd1_block_device, dev_type;
+type mep2_block_device, dev_type;
+type dtim_block_device, dev_type;
+type recovery_block_device, dev_type;
+type bootloader_block_device, dev_type;
+type boot_block_device, dev_type;
+type system_block_device, dev_type;
+type misc_block_device, dev_type;
+type radio_block_device, dev_type;
+type nvm_block_device, dev_type;
+type factory_block_device, dev_type;
+type security_block_device, dev_type;
+type boardinfo_block_device, dev_type;
+type recoveryldr_block_device, dev_type;
 
+type system_app_device, dev_type;
+type nvm_device, dev_type;
+type diag_device, dev_type;
+type teecsstdca_device, dev_type;
+type bluetooth_device, dev_type;
+type sensor_device, dev_type;
+type ts_device, dev_type;
+
+# =========================================================================
+# file_type
+# =========================================================================
+type imsd_socket, file_type;
+type embmsd_socket, file_type;
+type mwirelessd_socket, file_type;
+
+type wireless_data_file, file_type;
+type dump_log_data_file, file_type;
+type tel_data_file, file_type;
+type nvm_data_file, file_type;
+
+# =========================================================================
+# exec_type
+# =========================================================================
+type nvm_exec, exec_type;
+type setup_fs_exec, exec_type;
+type pppmodem_exec, exec_type;
+type eeh_exec, exec_type;
+type diag_exec, exec_type;
+type atcmdsrv_exec, exec_type;
+type marvelltel_exec, exec_type;
+type FMRadiod_exec, exec_type;
+type mwirelessd_exec, exec_type, file_type;
+type mlan2040coex_exec, exec_type;
+type mlaninit_exec, exec_type;
+
+type iml_exec, exec_type;
+type log_on_boot_exec, exec_type;
+type imsc_exec, exec_type;
+type mned_exec, exec_type;
+type kmsg_exec, exec_type;
+type root_detect_exec, exec_type;
+type load_g_cali_data_exec, exec_type;
+type memsicd_exec, exec_type;
+type memsicp_exec, exec_type;
+type mrvl_gpsd_exec, exec_type;
+type core_compressor_exec, exec_type;
+type at_router_exec, exec_type;
+type env_exec, exec_type;
+type kinitlog_exec, exec_type;
+type teecsstdca_exec, exec_type;
+
+type dhcp_exec, system_file_type, exec_type, file_type;
+
+# =========================================================================
+# Section domain
+# =========================================================================
+type setup_fs;
+type mwirelessd, domain;
+type mlan2040coex;
+type mlaninit;
+type dhcp, domain;
+
+# =========================================================================
+# Section allow
+# =========================================================================
+
+# --- cploader_block_device ---
 allow recovery cploader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery cploader_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell cploader_block_device:blk_file { getattr };
@@ -22,15 +108,12 @@ allow unconfineddomain cploader_block_device:chr_file { ioctl read write create 
 allow unconfineddomain cploader_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app cploader_block_device:blk_file { getattr };
 
-
-type ssipc_device, dev_type;
-
+# --- ssipc_device ---
 allow system_server ssipc_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow unconfineddomain ssipc_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain ssipc_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 
-type mrd_block_device, dev_type;
-
+# --- mrd_block_device ---
 allow recovery mrd_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery mrd_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell mrd_block_device:blk_file { getattr };
@@ -38,8 +121,7 @@ allow unconfineddomain mrd_block_device:chr_file { ioctl read write create getat
 allow unconfineddomain mrd_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app mrd_block_device:blk_file { getattr };
 
-type mrd1_block_device, dev_type;
-
+# --- mrd1_block_device ---
 allow recovery mrd1_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery mrd1_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell mrd1_block_device:blk_file { getattr };
@@ -47,8 +129,7 @@ allow unconfineddomain mrd1_block_device:chr_file { ioctl read write create geta
 allow unconfineddomain mrd1_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app mrd1_block_device:blk_file { getattr };
 
-type mep2_block_device, dev_type;
-
+# --- mep2_block_device ---
 allow recovery mep2_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery mep2_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell mep2_block_device:blk_file { getattr };
@@ -56,8 +137,7 @@ allow unconfineddomain mep2_block_device:chr_file { ioctl read write create geta
 allow unconfineddomain mep2_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app mep2_block_device:blk_file { getattr };
 
-type dtim_block_device, dev_type;
-
+# --- dtim_block_device ---
 allow recovery dtim_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery dtim_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell dtim_block_device:blk_file { getattr };
@@ -65,10 +145,7 @@ allow unconfineddomain dtim_block_device:chr_file { ioctl read write create geta
 allow unconfineddomain dtim_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app dtim_block_device:blk_file { getattr };
 
-
-
-type recovery_block_device, dev_type;
-
+# --- recovery_block_device ---
 allow init recovery:process { transition noatsecure siginh rlimitinh };
 allow recovery recovery_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery recovery_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
@@ -78,9 +155,7 @@ allow unconfineddomain recovery_block_device:chr_file { ioctl read write create 
 allow unconfineddomain recovery_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app recovery_block_device:blk_file { getattr };
 
-
-type bootloader_block_device, dev_type;
-
+# --- bootloader_block_device ---
 allow recovery bootloader_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery bootloader_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell bootloader_block_device:blk_file { getattr };
@@ -88,8 +163,7 @@ allow unconfineddomain bootloader_block_device:chr_file { ioctl read write creat
 allow unconfineddomain bootloader_block_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app bootloader_block_device:blk_file { getattr };
 
-type boot_block_device, dev_type;
-
+# --- boot_block_device ---
 allow recovery boot_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery boot_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell boot_block_device:blk_file { getattr };
@@ -98,10 +172,7 @@ allow unconfineddomain boot_block_device:file { ioctl read write create getattr 
 allow untrusted_app boot_block_device:blk_file { getattr };
 allow untrusted_app boot_block_device:dir { getattr };
 
-
-type system_block_device, dev_type;
-
-
+# --- system_block_device ---
 allow recovery system_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery system_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell system_block_device:blk_file { getattr };
@@ -110,8 +181,7 @@ allow unconfineddomain system_block_device:file { ioctl read write create getatt
 allow untrusted_app system_block_device:blk_file { getattr };
 allow untrusted_app system_block_device:dir { getattr };
 
-type misc_block_device, dev_type;
-
+# --- misc_block_device ---
 allow recovery misc_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery misc_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell misc_block_device:blk_file { getattr };
@@ -120,8 +190,7 @@ allow unconfineddomain misc_block_device:file { ioctl read write create getattr 
 allow untrusted_app misc_block_device:blk_file { getattr };
 allow untrusted_app misc_block_device:dir { getattr };
 
-type radio_block_device, dev_type;
-
+# --- radio_block_device ---
 allow recovery radio_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery radio_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell radio_block_device:blk_file { getattr };
@@ -130,9 +199,7 @@ allow unconfineddomain radio_block_device:file { ioctl read write create getattr
 allow untrusted_app radio_block_device:blk_file { getattr };
 allow untrusted_app radio_block_device:dir { getattr };
 
-
-type nvm_block_device, dev_type;
-
+# --- nvm_block_device ---
 allow recovery nvm_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery nvm_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell nvm_block_device:blk_file { getattr };
@@ -141,8 +208,7 @@ allow unconfineddomain nvm_block_device:file { ioctl read write create getattr s
 allow untrusted_app nvm_block_device:blk_file { getattr };
 allow untrusted_app nvm_block_device:dir { getattr };
 
-type factory_block_device, dev_type;
-
+# --- factory_block_device ---
 allow recovery factory_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery factory_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell factory_block_device:blk_file { getattr };
@@ -151,31 +217,22 @@ allow unconfineddomain factory_block_device:file { ioctl read write create getat
 allow untrusted_app factory_block_device:blk_file { getattr };
 allow untrusted_app factory_block_device:dir { getattr };
 
-type security_block_device, dev_type;
-
+# --- security_block_device ---
 allow recovery security_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery security_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell security_block_device:blk_file { getattr };
 
-type boardinfo_block_device, dev_type;
-
+# --- boardinfo_block_device ---
 allow recovery boardinfo_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery boardinfo_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell boardinfo_block_device:blk_file { getattr };
 
-type recoveryldr_block_device, dev_type;
-
+# --- recoveryldr_block_device ---
 allow recovery recoveryldr_block_device:blk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow recovery recoveryldr_block_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow shell recoveryldr_block_device:blk_file { getattr };
 
-
-
-
-
-# --- Sockets ---
-type imsd_socket, file_type;
-
+# --- Sockets: imsd_socket ---
 allow init imsd_socket:blk_file { relabelto };
 allow init imsd_socket:chr_file { relabelto };
 allow init imsd_socket:dir { relabelto };
@@ -192,8 +249,7 @@ allow unconfineddomain imsd_socket:lnk_file { ioctl read write create getattr se
 allow unconfineddomain imsd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app imsd_socket:sock_file { getattr };
 
-type embmsd_socket, file_type;
-
+# --- Sockets: embmsd_socket ---
 allow init embmsd_socket:blk_file { relabelto };
 allow init embmsd_socket:chr_file { relabelto };
 allow init embmsd_socket:dir { relabelto };
@@ -209,78 +265,62 @@ allow unconfineddomain embmsd_socket:lnk_file { ioctl read write create getattr 
 allow unconfineddomain embmsd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app embmsd_socket:sock_file { getattr };
 
-# --- Exec Types ---
-type nvm_exec, exec_type;
+# --- Exec: nvm_exec ---
 allow init nvm_exec:file { read getattr execute open };
 allow recovery nvm_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs nvm_exec:file { read getattr execute entrypoint open };
 allow shell nvm_exec:file { getattr };
 allow untrusted_app nvm_exec:file { read getattr execute open };
 
-type setup_fs;
-type setup_fs_exec, exec_type;
+# --- Exec: setup_fs_exec ---
 allow init setup_fs_exec:file { read getattr execute open };
 allow recovery setup_fs_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow shell setup_fs_exec:file { getattr };
 allow untrusted_app setup_fs_exec:file { read getattr execute open };
 
-
-type pppmodem_exec, exec_type;
-
+# --- Exec: pppmodem_exec ---
 allow init pppmodem_exec:file { read getattr execute open };
 allow recovery pppmodem_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs pppmodem_exec:file { read getattr execute entrypoint open };
 allow shell pppmodem_exec:file { getattr };
 allow untrusted_app pppmodem_exec:file { read getattr execute open };
 
-
-type eeh_exec, exec_type;
-
+# --- Exec: eeh_exec ---
 allow init eeh_exec:file { read getattr execute open };
 allow recovery eeh_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs eeh_exec:file { read getattr execute entrypoint open };
 allow shell eeh_exec:file { getattr };
 allow untrusted_app eeh_exec:file { read getattr execute open };
 
-
-type diag_exec, exec_type;
-
+# --- Exec: diag_exec ---
 allow init diag_exec:file { read getattr execute open };
 allow recovery diag_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs diag_exec:file { read getattr execute entrypoint open };
 allow shell diag_exec:file { getattr };
 allow untrusted_app diag_exec:file { read getattr execute open };
 
-
-type atcmdsrv_exec, exec_type;
+# --- Exec: atcmdsrv_exec ---
 allow init atcmdsrv_exec:file { read getattr execute open };
 allow recovery atcmdsrv_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs atcmdsrv_exec:file { read getattr execute entrypoint open };
 allow shell atcmdsrv_exec:file { getattr };
 allow untrusted_app atcmdsrv_exec:file { read getattr execute open };
 
-
-
-type marvelltel_exec, exec_type;
+# --- Exec: marvelltel_exec ---
 allow init marvelltel_exec:file { read getattr execute open };
 allow recovery marvelltel_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs marvelltel_exec:file { read getattr execute entrypoint open };
 allow shell marvelltel_exec:file { getattr };
 allow untrusted_app marvelltel_exec:file { read getattr execute open };
 
-
-type FMRadiod_exec, exec_type;
+# --- Exec: FMRadiod_exec ---
 allow init FMRadiod_exec:file { read getattr execute open };
 allow recovery FMRadiod_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs FMRadiod_exec:file { read getattr execute entrypoint open };
 allow shell FMRadiod_exec:file { getattr };
 allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
-
-type mwirelessd, domain;
-type mwirelessd_exec, exec_type, file_type;
-type mwirelessd_socket, file_type;
-
+# --- Domain: mwirelessd ---
 init_daemon_domain(mwirelessd)
 
 allow mwirelessd init:unix_stream_socket { connectto newconn acceptfrom };
@@ -301,42 +341,21 @@ dontaudit mwirelessd property_socket:sock_file create_file_perms;
 dontaudit mwirelessd sysfs_devices_system_cpu:dir r_dir_perms;
 dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 
-
-type mlan2040coex;
-type mlan2040coex_exec, exec_type;
+# --- Domain: mlan2040coex ---
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex_exec:file { read getattr execute open };
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow recovery mlan2040coex_exec:file { write setattr open };
 allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
 
-type mlaninit;
-type mlaninit_exec, exec_type;
+# --- Domain: mlaninit ---
 allow init mlaninit:process { transition noatsecure siginh rlimitinh };
 allow init mlaninit_exec:file { read getattr execute open };
 allow mlaninit mlaninit_exec:file { read getattr execute entrypoint open };
 allow recovery mlaninit_exec:file { write setattr open };
 allow unconfineddomain mlaninit:binder { call set_context_mgr transfer };
 
-type iml_exec, exec_type;
-type log_on_boot_exec, exec_type;
-type imsc_exec, exec_type;
-type mned_exec, exec_type;
-type kmsg_exec, exec_type;
-type root_detect_exec, exec_type;
-type load_g_cali_data_exec, exec_type;
-type memsicd_exec, exec_type;
-type memsicp_exec, exec_type;
-type mrvl_gpsd_exec, exec_type;
-type core_compressor_exec, exec_type;
-type at_router_exec, exec_type;
-type env_exec, exec_type;
-type kinitlog_exec, exec_type;
-type teecsstdca_exec, exec_type;
-
-type dhcp, domain;
-type dhcp_exec, system_file_type, exec_type, file_type;
-
+# --- Domain: dhcp ---
 net_domain(dhcp)
 allow dhcp self:global_capability_class_set { setgid setuid net_admin net_raw net_bind_service };
 allow dhcp self:packet_socket create_socket_perms_no_ioctl;
@@ -344,8 +363,7 @@ allow dhcp self:netlink_route_socket nlmsg_write;
 allow dhcp shell_exec:file rx_file_perms;
 allow dhcp system_file:file rx_file_perms;
 
-
-type system_app_device, dev_type;
+# --- system_app_device ---
 allow shell system_app_device:chr_file { getattr };
 allow system_app system_app_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow unconfineddomain system_app_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
@@ -358,28 +376,22 @@ allow system_app nvm_data_file:dir create_dir_perms;
 allow system_app nvm_data_file:file create_file_perms;
 allow platform_app phservice:binder call;
 
-
-type nvm_device, dev_type;
-
+# --- nvm_device ---
 allow unconfineddomain nvm_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain nvm_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app nvm_device:chr_file { read getattr };
 
-type diag_device, dev_type;
-type teecsstdca_device, dev_type;
-type bluetooth_device, dev_type;
-
-type sensor_device, dev_type;
+# --- sensor_device ---
 allow system_server sensor_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow unconfineddomain sensor_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain sensor_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 
-type ts_device, dev_type;
+# --- ts_device ---
 allow system_app ts_device:chr_file { ioctl read write getattr lock append open };
 allow unconfineddomain ts_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain ts_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 
-type wireless_data_file, file_type;
+# --- wireless_data_file ---
 allow bluetooth wireless_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow bluetooth wireless_data_file:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow init wireless_data_file:blk_file { relabelto };
@@ -410,24 +422,16 @@ allow unconfineddomain wireless_data_file:lnk_file { ioctl read write create get
 allow unconfineddomain wireless_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app wireless_data_file:dir { search };
 allow untrusted_app wireless_data_file:file { getattr };
-
-
-type dump_log_data_file, file_type;
-type tel_data_file, file_type;
-
 allow ueventd wireless_data_file:dir create_dir_perms;
 allow ueventd wireless_data_file:file create_file_perms;
 
-# NVM storage label
-type nvm_data_file, file_type;
+# --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
 allow mediaserver nvm_data_file:dir create_dir_perms;
 allow mediaserver phservice:binder call;
 allow bluetooth mrvlgpu_device:chr_file rw_file_perms;
 allow bluetooth graphics_device:dir r_dir_perms;
 
-# Broad Marvell GPU access for bring-up.
-# Keep app domains out to avoid the most common neverallow failures.
 allow { domain -appdomain -isolated_app -untrusted_app -platform_app -system_app } mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow shell mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow dumpstate mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
