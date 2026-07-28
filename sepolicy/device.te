@@ -85,8 +85,6 @@ type env_exec, exec_type;
 type kinitlog_exec, exec_type;
 type teecsstdca_exec, exec_type;
 
-type dhcp_exec, system_file_type, exec_type, file_type;
-
 # =========================================================================
 # Section domain
 # =========================================================================
