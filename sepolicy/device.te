@@ -404,6 +404,9 @@ allow ueventd wireless_data_file:file create_file_perms;
 
 # NVM storage label
 type nvm_data_file, file_type;
+allow mediaserver nvm_data_file:file create_file_perms;
+allow mediaserver nvm_data_file:dir create_dir_perms;
+allow mediaserver phservice:binder call;
 
 # Broad Marvell GPU access for bring-up.
 # Keep app domains out to avoid the most common neverallow failures.
