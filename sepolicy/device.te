@@ -259,15 +259,31 @@ allow setup_fs FMRadiod_exec:file { read getattr execute entrypoint open };
 allow shell FMRadiod_exec:file { getattr };
 allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
-type mwirelessd;
-type mwirelessd_exec, exec_type;
-allow init mwirelessd:process { transition noatsecure siginh rlimitinh };
-allow init mwirelessd_exec:file { read getattr execute open };
-allow mwirelessd mwirelessd_exec:file { read getattr execute entrypoint open };
-allow recovery mwirelessd_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
-allow shell mwirelessd_exec:file { getattr };
-allow unconfineddomain mwirelessd:binder { call set_context_mgr transfer };
-allow untrusted_app mwirelessd_exec:file { read getattr execute open };
+
+type mwirelessd, domain;
+type mwirelessd_exec, exec_type, file_type;
+type mwirelessd_socket, file_type;
+
+init_daemon_domain(mwirelessd)
+
+allow mwirelessd init:unix_stream_socket { connectto newconn acceptfrom };
+allow mwirelessd shell_exec:file rx_file_perms;
+allow mwirelessd sysfs:file rw_file_perms;
+allow mwirelessd sysfs:dir  r_dir_perms;
+allow mwirelessd sysfs:lnk_file read;
+allow mwirelessd proc:file r_file_perms;
+allow mwirelessd system_data_file:dir create_dir_perms;
+allow mwirelessd system_data_file:sock_file create_file_perms;
+allow mwirelessd system_data_file:file r_file_perms;
+allow mwirelessd wireless_data_file:dir create_dir_perms;
+allow mwirelessd wireless_data_file:file create_file_perms;
+allow mwirelessd wireless_data_file:sock_file create_file_perms;
+allow mwirelessd self:capability { setuid setgid sys_module };
+allow mwirelessd mwirelessd_socket:sock_file unlink;
+dontaudit mwirelessd property_socket:sock_file create_file_perms;
+dontaudit mwirelessd sysfs_devices_system_cpu:dir r_dir_perms;
+dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
+
 
 type mlan2040coex;
 type mlan2040coex_exec, exec_type;
@@ -366,6 +382,8 @@ allow untrusted_app wireless_data_file:file { getattr };
 type dump_log_data_file, file_type;
 type tel_data_file, file_type;
 
+allow ueventd wireless_data_file:dir create_dir_perms;
+allow ueventd wireless_data_file:file create_file_perms;
 
 # NVM storage label
 type nvm_data_file, file_type;
