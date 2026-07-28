@@ -6,15 +6,12 @@ type pppmodem_device, dev_type;
 type marvelltel_device, dev_type;
 type wpa_device, dev_type;
 type mrvlgpu_device, dev_type;
-type mwireless_device, dev_type;
 type memsic_device, dev_type;
 type geu_device, dev_type;
 type ipc_device, dev_type;
 type vpu_device, dev_type;
 type mwireless_device, dev_type;
 type infor_device, dev_type;
-attribute socket_type;
-
 
 type cploader_block_device, dev_type;
 
@@ -145,7 +142,7 @@ allow untrusted_app nvm_block_device:blk_file { getattr };
 allow untrusted_app nvm_block_device:dir { getattr };
 
 # --- Sockets ---
-type imsd_socket, socket_type;
+type imsd_socket, file_type;
 
 allow init imsd_socket:blk_file { relabelto };
 allow init imsd_socket:chr_file { relabelto };
@@ -163,7 +160,7 @@ allow unconfineddomain imsd_socket:lnk_file { ioctl read write create getattr se
 allow unconfineddomain imsd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app imsd_socket:sock_file { getattr };
 
-type embmsd_socket, socket_type;
+type embmsd_socket, file_type;
 
 allow init embmsd_socket:blk_file { relabelto };
 allow init embmsd_socket:chr_file { relabelto };
