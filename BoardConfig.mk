@@ -166,10 +166,7 @@ TARGET_USES_MKE2FS := true
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
 
-BOARD_KERNEL_CMDLINE := \
-androidboot.selinux=permissive \
-enforcing=0　\
-selinux=0
+BOARD_KERNEL_CMDLINE := enforcing=0
 
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_RAMDISK_OFFSET := 0x01000000
