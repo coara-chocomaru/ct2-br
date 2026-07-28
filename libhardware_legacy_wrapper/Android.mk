@@ -12,6 +12,7 @@ include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := libhardware_legacy
+LOCAL_OVERRIDES_MODULES := libhardware_legacy
 LOCAL_SRC_FILES := wrapper.cpp
 LOCAL_CPPFLAGS := -Wall -Werror -fvisibility=hidden
 LOCAL_LDFLAGS := -Wl,-z,defs -Wl,--exclude-libs,ALL
