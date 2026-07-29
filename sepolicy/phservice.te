@@ -5,8 +5,8 @@ init_daemon_domain(phservice)
 
 allow phservice servicemanager:binder { transfer call };
 allow phservice shell_exec:file { read execute open execute_no_trans };
-allow phservice sysfs:file create_file_perms;
-allow phservice sysfs_devices_system_cpu:file create_file_perms;
+allow phservice sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow phservice sysfs_devices_system_cpu:file { ioctl read write create getattr setattr lock append unlink link rename open };;
 allow phservice dumpstate:fd use;
 
 #neverallow Google CTS-android-m-preview:
