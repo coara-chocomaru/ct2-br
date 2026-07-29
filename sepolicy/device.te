@@ -58,7 +58,7 @@ type tel_data_file, file_type;
 type nvm_data_file, file_type;
 
 
-#
+# test
 type_transition init mlan2040coex_exec:process mlan2040coex;
 # =========================================================================
 # exec_type
@@ -626,6 +626,17 @@ allow unconfineddomain camera_data_file:lnk_file { ioctl read write create getat
 allow unconfineddomain camera_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow unconfineddomain camera_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain camera_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+
+# dex2oat
+allow init dex2oat:process { noatsecure };
+allow installd dex2oat:process { transition noatsecure siginh rlimitinh };
+allow unconfineddomain dex2oat:binder { call set_context_mgr transfer };
+allow appdomain dex2oat_exec:file { ioctl read getattr lock execute execute_no_trans open };
+allow dex2oat dex2oat_exec:file { read getattr execute entrypoint open };
+allow installd dex2oat_exec:file { read getattr execute open };
+allow recovery dex2oat_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow zygote dex2oat_exec:file { ioctl read getattr lock execute execute_no_trans open };
+
 
 # --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
