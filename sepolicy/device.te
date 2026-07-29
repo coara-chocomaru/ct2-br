@@ -57,6 +57,9 @@ type dump_log_data_file, file_type;
 type tel_data_file, file_type;
 type nvm_data_file, file_type;
 
+
+#
+type_transition init mlan2040coex_exec:process mlan2040coex;
 # =========================================================================
 # exec_type
 # =========================================================================
