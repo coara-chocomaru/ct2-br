@@ -71,8 +71,6 @@ type FMRadiod_exec, exec_type;
 type mwirelessd_exec, exec_type, file_type;
 type mlan2040coex_exec, exec_type;
 type mlaninit_exec, exec_type;
-type console_device, dev_type;
-
 
 type iml_exec, exec_type;
 type log_on_boot_exec, exec_type;
