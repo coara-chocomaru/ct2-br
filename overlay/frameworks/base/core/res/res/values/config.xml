@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="config_voice_capable">false</bool>
+    <bool name="config_sms_capable">false</bool>
+    <bool name="config_built_in_sip_phone">false</bool>
+    <bool name="config_use_sim_language_file">false</bool>
+    <bool name="config_use_sim_country_code_file">false</bool>
+    <bool name="config_show_phone_icon">false</bool>
+    <bool name="config_volte_available">false</bool>
+    <bool name="config_voice_volte_available">false</bool>
+    <bool name="config_multiple_sim">false</bool>
+    <bool name="config_enableNetworkLocationOverlay">false</bool>
+    <bool name="config_nfc_enabled">false</bool>
+    <bool name="config_show_carrier_in_statusbar">false</bool>
     <bool name="config_showNavigationBar">true</bool>
-
-  
+    <bool name="config_desk_dock_enabled">false</bool>
+    <bool name="config_car_dock_enabled">false</bool>
+    <bool name="config_allowAllRotations">true</bool>
 </resources>
