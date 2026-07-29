@@ -378,6 +378,35 @@ jobs:
           fix_webkit_grammar_headers "third_party_WebKit_Source_core_webcore_generated_gyp" "obj"
           fix_webkit_grammar_headers "third_party_WebKit_Source_core_webcore_generated_gyp_32" "obj_arm"
 
+
+
+      - name: Pre-build javax.btobex.jar for Bluetooth
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          source build/envsetup.sh
+          lunch ${{ env.MAKEFILE_NAME }}-userdebug
+
+          echo "Building javax.obex to provide javax.btobex.jar..."
+          make javax.obex -j$(nproc --all)
+
+          TARGET_DIR="out/target/product/${{ env.DEVICE_NAME }}/system/framework"
+          mkdir -p "${TARGET_DIR}"
+
+          if [ -f "${TARGET_DIR}/javax.obex.jar" ]; then
+            cp -v "${TARGET_DIR}/javax.obex.jar" "${TARGET_DIR}/javax.btobex.jar"
+          else
+            JAR=$(find out/ -name "javax.obex.jar" | head -n1)
+            if [ -n "${JAR}" ]; then
+              cp -v "${JAR}" "${TARGET_DIR}/javax.btobex.jar"
+            else
+              echo "ERROR: javax.obex.jar not found! Cannot create javax.btobex.jar."
+              exit 1
+            fi
+          fi
+
+          echo "javax.btobex.jar placed in system/framework:"
+          ls -la "${TARGET_DIR}/javax.btobex.jar"
+
       - name: Building LineageOS
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
