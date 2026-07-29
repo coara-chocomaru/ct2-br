@@ -95,6 +95,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
+PRODUCT_PACKAGES += libhardware_legacy_shim
+
 PRODUCT_PACKAGES += \
     e2fsck \
     fsck.f2fs \
