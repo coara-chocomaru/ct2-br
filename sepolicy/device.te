@@ -61,7 +61,7 @@ type nvm_data_file, file_type;
 # exec_type
 # =========================================================================
 type nvm_exec, exec_type;
-type setup_fs_exec, exec_type;
+type setup_fs_exec, exec_type, file_type;
 type pppmodem_exec, exec_type;
 type eeh_exec, exec_type;
 type diag_exec, exec_type;
@@ -69,8 +69,8 @@ type atcmdsrv_exec, exec_type;
 type marvelltel_exec, exec_type;
 type FMRadiod_exec, exec_type;
 type mwirelessd_exec, exec_type, file_type;
-type mlan2040coex_exec, exec_type;
-type mlaninit_exec, exec_type;
+type mlan2040coex_exec, exec_type, file_type;
+type mlaninit_exec, exec_type, file_type;
 
 type iml_exec, exec_type;
 type log_on_boot_exec, exec_type;
@@ -90,10 +90,10 @@ type teecsstdca_exec, exec_type;
 # =========================================================================
 # Section domain
 # =========================================================================
-type setup_fs;
+type setup_fs, domain;
 type mwirelessd, domain;
-type mlan2040coex;
-type mlaninit;
+type mlan2040coex, domain;
+type mlaninit, domain;
 
 # =========================================================================
 # Section allow
