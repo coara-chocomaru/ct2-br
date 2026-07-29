@@ -224,6 +224,7 @@ BOARD_SEPOLICY_UNION += \
     bootanim.te \
 	phservice.te \
     i2c.te \
+    core_compressor.te \
     surfaceflinger.te \
     init.te
 	
