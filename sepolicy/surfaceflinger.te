@@ -1,3 +1,5 @@
 allow binderservicedomain surfaceflinger:binder { transfer };
 allow bootanim surfaceflinger:binder { call transfer };
 allow bootanim surfaceflinger:fd { use };
+allow surfaceflinger sysfs:file write;
+allow surfaceflinger sysfs:dir search;
