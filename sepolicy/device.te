@@ -324,6 +324,7 @@ allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
 # --- mwirelessd
 allow mwirelessd init:unix_stream_socket { connectto newconn acceptfrom };
+allow mwirelessd system_server:unix_stream_socket connectto;
 allow mwirelessd shell_exec:file rx_file_perms;
 allow mwirelessd sysfs:file rw_file_perms;
 allow mwirelessd sysfs:dir  r_dir_perms;
@@ -629,3 +630,7 @@ allow system_server self:capability { net_admin net_raw };
 allow system_server self:socket { create connect };
 allow mediaserver uio_device:chr_file { read write open ioctl };
 allow system_server fuse:dir search;
+allow mediaserver camera_prop:property_service set;
+allow bluetoothd bluetooth_prop:property_service set;
+
+
