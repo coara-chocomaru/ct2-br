@@ -1,6 +1,5 @@
-allow graphics_device:dir sysfs:dir search;
-allow graphics_device:dir sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
-
+allow graphics_device sysfs:dir search;
+allow graphics_device sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow adbd graphics_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow bluetooth graphics_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow bootanim graphics_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
