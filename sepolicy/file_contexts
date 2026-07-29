@@ -159,7 +159,7 @@
 /dev/socket/rild-debug[0-9]+ u:object_r:rild_debug_socket:s0
 
 # shim
-/system/lib(64)?/libhardware_legacy_shim\.so u:object_r:system_file:s0
+/system/lib(64)?/libhardware_legacx\.so u:object_r:system_file:s0
 /system/lib(64)?/libcamera_parameters_shim\.so u:object_r:system_file:s0
 
 # system/bin
