@@ -344,7 +344,7 @@ dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 # --- Domain: mlan2040coex ---
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow mlan2040coex sysfs:file { write };
-allow init mlan2040coex_exec:file { read getattr execute open };
+allow init mlan2040coex_exec:file { read getattr execute execute_no_trans open };
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow recovery mlan2040coex_exec:file { write setattr open };
 allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
@@ -525,6 +525,7 @@ allow untrusted_app mediaserver_device:chr_file { getattr };
 allow untrusted_app mediaserver_exec:file { read getattr execute open };
 allow mediaserver audio_device:chr_file { read write open };
 allow mediaserver self:capability { sys_nice };
+
 # fuse
 allow appdomain fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow appdomain fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
