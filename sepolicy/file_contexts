@@ -160,7 +160,7 @@
 
 # shim
 /system/lib(64)?/libhardware_legacy_shim\.so u:object_r:system_file:s0
-
+/system/lib(64)?/libcamera_parameters_shim\.so u:object_r:system_file:s0
 
 # system/bin
 /system/bin/nvm		u:object_r:nvm_exec:s0
