@@ -581,7 +581,6 @@ allow dumpstate mrvlgpu_device:chr_file { open read write ioctl getattr lock app
 allow vold kernel:system module_request;
 allow dhcp kernel:system module_request;
 
-
 allow init_shell self:tcp_socket { create ioctl };
 allow init mlan2040coex_exec:file { execute_no_trans };
 allow init mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
@@ -589,7 +588,5 @@ allow zygote mrvlgpu_device:chr_file rw_file_perms;
 allow shell serial_device:chr_file { read write getattr ioctl };
 allow system_server mwirelessd:unix_stream_socket connectto;
 allow system_server self:capability { net_admin net_raw };
-allow system_server sysfs_net:file { read write };
-allow system_server sysfs_net:dir { search };
 allow system_server self:socket { create connect };
 allow mediaserver uio_device:chr_file { read write open ioctl };
