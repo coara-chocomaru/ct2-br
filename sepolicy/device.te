@@ -477,7 +477,6 @@ allow untrusted_app vpu_device:chr_file { getattr };
 
 # bluetooth
 allow bluetooth self:capability { net_admin net_raw };
-allow bluetooth sysfs_bt:file { read write };
 allow bluetooth bluetooth_device:chr_file { read write open };
 allow bluetooth rfkill_device:chr_file { read write };
 
