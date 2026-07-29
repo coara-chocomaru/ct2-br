@@ -1,6 +1,6 @@
-#include <stddef.h>
 #include <dlfcn.h>
 #include <android/log.h>
+#include <stddef.h>
 
 #define LOG_TAG "HwLegacyShim"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
