@@ -322,9 +322,7 @@ allow setup_fs FMRadiod_exec:file { read getattr execute entrypoint open };
 allow shell FMRadiod_exec:file { getattr };
 allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
-# --- Domain: mwirelessd ---
-init_daemon_domain(mwirelessd)
-
+# --- mwirelessd
 allow mwirelessd init:unix_stream_socket { connectto newconn acceptfrom };
 allow mwirelessd shell_exec:file rx_file_perms;
 allow mwirelessd sysfs:file rw_file_perms;
