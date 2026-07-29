@@ -590,3 +590,4 @@ allow system_server mwirelessd:unix_stream_socket connectto;
 allow system_server self:capability { net_admin net_raw };
 allow system_server self:socket { create connect };
 allow mediaserver uio_device:chr_file { read write open ioctl };
+allow system_server fuse:dir search;
