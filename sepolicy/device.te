@@ -16,6 +16,8 @@ type vpu_device, dev_type;
 type mwireless_device, dev_type;
 type infor_device, dev_type;
 type hw_random_device, dev_type;
+type input_device, dev_type;
+
 
 type cploader_block_device, dev_type;
 type ssipc_device, dev_type;
@@ -385,6 +387,21 @@ allow unconfineddomain ts_device:file { ioctl read write create getattr setattr 
 allow system_server hw_random_device:chr_file { ioctl read getattr lock open };
 allow unconfineddomain hw_random_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain hw_random_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+
+# --- input_device ---
+allow healthd input_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow healthd input_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow inputflinger inputflinger_service:service_manager { add };
+allow recovery input_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow recovery input_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow shell input_device:chr_file { ioctl read write getattr lock append open };
+allow shell input_device:dir { ioctl read getattr search open };
+allow system_server input_device:chr_file { ioctl read write getattr lock append open };
+allow system_server input_device:dir { ioctl read getattr search open };
+allow unconfineddomain input_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain input_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app input_device:chr_file { getattr };
+allow untrusted_app input_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 
 
 # --- wireless_data_file ---
