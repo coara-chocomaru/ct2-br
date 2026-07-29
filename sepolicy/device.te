@@ -475,7 +475,11 @@ allow unconfineddomain vpu_device:file { ioctl read write create getattr setattr
 allow untrusted_app vpu_device:chr_file { getattr };
 
 
-
+# bluetooth
+allow bluetooth self:capability { net_admin net_raw };
+allow bluetooth sysfs_bt:file { read write };
+allow bluetooth bluetooth_device:chr_file { read write open };
+allow bluetooth rfkill_device:chr_file { read write };
 
 # mediaserver
 allow appdomain mediaserver:binder { transfer };
@@ -519,7 +523,8 @@ allow unconfineddomain mediaserver_tmpfs:lnk_file { ioctl read write create geta
 allow unconfineddomain mediaserver_tmpfs:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app mediaserver_device:chr_file { getattr };
 allow untrusted_app mediaserver_exec:file { read getattr execute open };
-
+allow mediaserver audio_device:chr_file { read write open };
+allow mediaserver self:capability { sys_nice };
 # fuse
 allow appdomain fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow appdomain fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
