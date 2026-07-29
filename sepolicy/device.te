@@ -466,6 +466,23 @@ allow untrusted_app wireless_data_file:file { getattr };
 allow ueventd wireless_data_file:dir create_dir_perms;
 allow ueventd wireless_data_file:file create_file_perms;
 
+# fuse
+allow appdomain fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow appdomain fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow codecIPC_server fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow healthd fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow init fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow init fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow init_shell fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow init_shell fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow phservice fuse:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow sdcardd fuse_device:chr_file { ioctl read write getattr lock append open };
+allow shell fuse_device:chr_file { getattr };
+allow unconfineddomain fuse_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain fuse_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app fuse_device:chr_file { getattr };
+
+
 # --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
 allow mediaserver nvm_data_file:dir create_dir_perms;
