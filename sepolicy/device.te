@@ -343,6 +343,7 @@ dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 
 # --- Domain: mlan2040coex ---
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
+allow mlan2040coex sysfs:file { write };
 allow init mlan2040coex_exec:file { read getattr execute open };
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow recovery mlan2040coex_exec:file { write setattr open };
@@ -350,6 +351,7 @@ allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
 
 # --- Domain: mlaninit ---
 allow init mlaninit:process { transition noatsecure siginh rlimitinh };
+allow mlaninit sysfs:file { write };
 allow init mlaninit_exec:file { read getattr execute open };
 allow mlaninit mlaninit_exec:file { read getattr execute entrypoint open };
 allow recovery mlaninit_exec:file { write setattr open };
