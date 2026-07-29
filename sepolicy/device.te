@@ -368,6 +368,8 @@ allow system_app graphics_device:dir r_dir_perms;
 allow system_app nvm_data_file:dir create_dir_perms;
 allow system_app nvm_data_file:file create_file_perms;
 allow platform_app phservice:binder call;
+allow system_app system_app_data_file:lnk_file read;
+
 
 # --- nvm_device ---
 allow unconfineddomain nvm_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
@@ -563,6 +565,7 @@ allow wpa wifi_data_file:file { ioctl read write create getattr setattr lock app
 allow mediaserver nvm_data_file:file create_file_perms;
 allow mediaserver nvm_data_file:dir create_dir_perms;
 allow mediaserver phservice:binder call;
+allow mediaserver uio_device:chr_file { read write open ioctl };
 allow bluetooth mrvlgpu_device:chr_file rw_file_perms;
 allow bluetooth graphics_device:dir r_dir_perms;
 
@@ -572,6 +575,15 @@ allow dumpstate mrvlgpu_device:chr_file { open read write ioctl getattr lock app
 allow vold kernel:system module_request;
 allow dhcp kernel:system module_request;
 
+
+allow init_shell self:tcp_socket { create ioctl };
+allow init mlan2040coex_exec:file { execute_no_trans };
 allow init mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow zygote mrvlgpu_device:chr_file rw_file_perms;
 allow shell serial_device:chr_file { read write getattr ioctl };
+allow system_server mwirelessd:unix_stream_socket connectto;
+allow system_server self:capability { net_admin net_raw };
+allow system_server sysfs_net:file { read write };
+allow system_server sysfs_net:dir { search };
+allow system_server self:socket { create connect };
+allow mediaserver uio_device:chr_file { read write open ioctl };
