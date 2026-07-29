@@ -3,12 +3,18 @@ type phservice, domain;
 type phservice_exec, exec_type, file_type;
 init_daemon_domain(phservice)
 
+allow servicemanager phservice:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow servicemanager phservice:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow servicemanager phservice:process { getattr };
 allow phservice servicemanager:binder { transfer call };
 allow phservice shell_exec:file { read execute open execute_no_trans };
 allow phservice sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow phservice sysfs_devices_system_cpu:file { ioctl read write create getattr setattr lock append unlink link rename open };;
 allow phservice dumpstate:fd use;
-
+allow shell phservice:binder { call };
+allow shell phservice_exec:file { getattr };
+allow system_app phservice:binder { call };
+allow system_server phservice:binder { call };
 #neverallow Google CTS-android-m-preview:
 #neverallow { domain -system_server -system_app -init -installd } system_data_file:file { append create link unlink relabelfrom rename setattr write }
 #allow phservice system_data_file:file create_file_perms;
