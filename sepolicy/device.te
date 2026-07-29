@@ -18,6 +18,7 @@ type infor_device, dev_type;
 # type hw_random_device, dev_type;
 # type input_device, dev_type;
 # type cpuctl_device, dev_type;
+type sysfs_vsync, fs_type, sysfs_type;
 
 type cploader_block_device, dev_type;
 type ssipc_device, dev_type;
@@ -371,7 +372,7 @@ allow system_app nvm_data_file:file create_file_perms;
 allow platform_app phservice:binder call;
 allow system_app sysfs:file { read write open getattr };
 allow system_app sysfs:dir search;
-
+allow system_app sysfs_vsync:file { read write open getattr };
 
 # --- nvm_device ---
 allow unconfineddomain nvm_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
@@ -474,6 +475,9 @@ allow shell vpu_device:chr_file { getattr };
 allow unconfineddomain vpu_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain vpu_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app vpu_device:chr_file { getattr };
+
+
+
 
 # mediaserver
 allow appdomain mediaserver:binder { transfer };
