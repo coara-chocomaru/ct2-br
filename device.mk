@@ -97,8 +97,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += libhardware_legacx
 TARGET_LD_SHIM_LIBS += \
-    /system/lib/libwifi-service.so|libhardware_legacy_shim.so \
-    /system/lib64/libwifi-service.so|libhardware_legacy_shim.so
+    /system/lib/libwifi-service.so|libhardware_legacx.so \
+    /system/lib64/libwifi-service.so|libhardware_legacx.so
 
 PRODUCT_PACKAGES += \
     e2fsck \
