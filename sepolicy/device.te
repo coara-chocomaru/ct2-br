@@ -371,7 +371,6 @@ allow system_app nvm_data_file:file create_file_perms;
 allow platform_app phservice:binder call;
 allow system_app system_app_data_file:lnk_file read;
 
-
 # --- nvm_device ---
 allow unconfineddomain nvm_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain nvm_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
@@ -560,6 +559,9 @@ allow untrusted_app mediaserver_device:chr_file { getattr };
 allow untrusted_app mediaserver_exec:file { read getattr execute open };
 allow mediaserver audio_device:chr_file { read write open };
 allow mediaserver self:capability { sys_nice };
+allow mediaserver system_prop:property_service set;
+
+
 
 # fuse
 allow appdomain fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
