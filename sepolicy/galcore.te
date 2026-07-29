@@ -1,6 +1,5 @@
-allow mrvlgpu_device:dir sysfs:dir search;
-allow mrvlgpu_device:dir sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
-
+allow mrvlgpu_device sysfs:dir { search open };
+allow mrvlgpu_device sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow adbd mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow bluetooth mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow bootanim mrvlgpu_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
