@@ -196,6 +196,11 @@
 /system/bin/env.sh   u:object_r:env_exec:s0
 /system/bin/kinitlog.sh   u:object_r:kinitlog_exec:s0
 
+# vsync
+/sys/class/graphics/fb0/device/vsync    u:object_r:sysfs_vsync:s0
+
+
+
 # nfc data
 /data/nfc(/.*)?		u:object_r:nfc_data_file:s0
 /data/misc/wireless(/.*)?	u:object_r:wireless_data_file:s0
