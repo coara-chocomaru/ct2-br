@@ -16,7 +16,7 @@ type vpu_device, dev_type;
 type mwireless_device, dev_type;
 type infor_device, dev_type;
 # type hw_random_device, dev_type;
-type input_device, dev_type;
+# type input_device, dev_type;
 type cpuctl_device, dev_type;
 
 type cploader_block_device, dev_type;
