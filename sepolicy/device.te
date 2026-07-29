@@ -430,3 +430,5 @@ allow dhcp kernel:system module_request;
 allow init mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow zygote mrvlgpu_device:chr_file rw_file_perms;
 allow zygote graphics_device:dir r_dir_perms;
+allow surfaceflinger sysfs:file write;
+allow surfaceflinger sysfs:dir search;
