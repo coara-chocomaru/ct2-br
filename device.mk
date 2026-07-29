@@ -96,6 +96,9 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
 PRODUCT_PACKAGES += libhardware_legacy_shim
+TARGET_LD_SHIM_LIBS += \
+    /system/lib/libwifi-service.so|libhardware_legacy_shim.so \
+    /system/lib64/libwifi-service.so|libhardware_legacy_shim.so
 
 PRODUCT_PACKAGES += \
     e2fsck \
