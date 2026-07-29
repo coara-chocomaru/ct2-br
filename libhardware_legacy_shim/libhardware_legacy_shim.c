@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <dlfcn.h>
 #include <android/log.h>
 
