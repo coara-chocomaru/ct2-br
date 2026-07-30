@@ -58,8 +58,6 @@ type tel_data_file, file_type;
 type nvm_data_file, file_type;
 
 
-# test
-type_transition init mlan2040coex_exec:process mlan2040coex;
 # =========================================================================
 # exec_type
 # =========================================================================
@@ -323,6 +321,11 @@ allow shell FMRadiod_exec:file { getattr };
 allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
 # --- mwirelessd
+init_daemon_domain(mwirelessd)
+allow init mwirelessd:process { transition noatsecure siginh rlimitinh };
+allow init mwirelessd_exec:file { read getattr execute open };
+allow mwirelessd mwirelessd_exec:file { read getattr execute entrypoint open };
+type_transition init mwirelessd_exec:process mwirelessd;
 allow mwirelessd init:unix_stream_socket { connectto newconn acceptfrom };
 allow mwirelessd system_server:unix_stream_socket connectto;
 allow mwirelessd shell_exec:file rx_file_perms;
@@ -349,6 +352,8 @@ allow init mlan2040coex_exec:file { read getattr execute execute_no_trans open }
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow recovery mlan2040coex_exec:file { write setattr open };
 allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
+type_transition init mlan2040coex_exec:process mlan2040coex;
+
 
 # --- Domain: mlaninit ---
 allow init mlaninit:process { transition noatsecure siginh rlimitinh };
@@ -701,7 +706,6 @@ allow vold kernel:system module_request;
 allow dhcp kernel:system module_request;
 
 allow init_shell self:tcp_socket { create ioctl };
-allow init mlan2040coex_exec:file { execute_no_trans };
 allow init mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
 allow zygote mrvlgpu_device:chr_file rw_file_perms;
 allow shell serial_device:chr_file { read write getattr ioctl };
