@@ -717,6 +717,53 @@ allow shell iptables_exec:file { read getattr execute open };
 allow netd iptables_exec:file { read getattr execute open };
 allow system_server iptables_exec:file { read getattr execute open };
 
+# dalvikcache
+allow appdomain dalvikcache_data_file:file { execute };
+allow appdomain dalvikcache_data_file:lnk_file { ioctl read getattr lock open };
+allow appdomain dalvikcache_profiles_data_file:dir { getattr search };
+allow appdomain dalvikcache_profiles_data_file:file { ioctl read write getattr lock append open };
+allow dex2oat dalvikcache_data_file:file { write };
+allow dex2oat dalvikcache_data_file:lnk_file { read };
+allow domain dalvikcache_data_file:dir { getattr search };
+allow domain dalvikcache_data_file:file { ioctl read getattr lock open };
+allow dumpstate dalvikcache_data_file:file { execute };
+allow init dalvikcache_data_file:blk_file { relabelto };
+allow init dalvikcache_data_file:chr_file { relabelto };
+allow init dalvikcache_data_file:dir { relabelto };
+allow init dalvikcache_data_file:fifo_file { relabelto };
+allow init dalvikcache_data_file:file { relabelto };
+allow init dalvikcache_data_file:lnk_file { relabelto };
+allow init dalvikcache_data_file:sock_file { relabelto };
+allow init dalvikcache_profiles_data_file:blk_file { relabelto };
+allow init dalvikcache_profiles_data_file:chr_file { relabelto };
+allow init dalvikcache_profiles_data_file:dir { relabelto };
+allow init dalvikcache_profiles_data_file:fifo_file { relabelto };
+allow init dalvikcache_profiles_data_file:file { relabelto };
+allow init dalvikcache_profiles_data_file:lnk_file { relabelto };
+allow init dalvikcache_profiles_data_file:sock_file { relabelto };
+allow installd dalvikcache_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow installd dalvikcache_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow installd dalvikcache_profiles_data_file:dir { ioctl read write getattr add_name remove_name search open };
+allow installd dalvikcache_profiles_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow system_server dalvikcache_data_file:file { execute };
+allow system_server dalvikcache_profiles_data_file:dir { ioctl read write getattr add_name remove_name search open };
+allow system_server dalvikcache_profiles_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain dalvikcache_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain dalvikcache_data_file:dir { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow unconfineddomain dalvikcache_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain dalvikcache_data_file:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain dalvikcache_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain dalvikcache_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain dalvikcache_profiles_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain dalvikcache_profiles_data_file:dir { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow unconfineddomain dalvikcache_profiles_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain dalvikcache_profiles_data_file:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain dalvikcache_profiles_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow unconfineddomain dalvikcache_profiles_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
+allow zygote dalvikcache_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow zygote dalvikcache_data_file:file { ioctl read write create getattr setattr lock append unlink link rename execute open };
+allow zygote dalvikcache_data_file:lnk_file { ioctl read write create getattr setattr lock append unlink link rename open };
+
 
 # --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
