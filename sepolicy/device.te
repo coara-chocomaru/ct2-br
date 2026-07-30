@@ -690,6 +690,18 @@ allow unconfineddomain wpa_device:file { ioctl read write create getattr setattr
 allow untrusted_app wpa_device:chr_file { getattr };
 allow wpa wpa_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 
+#hci
+allow bluetooth hci_attach_dev:chr_file { ioctl read write getattr lock append open };
+allow hci_attach hci_attach_dev:chr_file { ioctl read write getattr lock append open };
+allow hci_attach hci_attach_exec:file { read getattr execute entrypoint open };
+allow hci_attach hci_attach_tmpfs:file { read write };
+allow init hci_attach:process { transition noatsecure siginh rlimitinh };
+allow init hci_attach_exec:file { read getattr execute open };
+allow recovery hci_attach_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow unconfineddomain hci_attach:binder { call set_context_mgr transfer };
+allow unconfineddomain hci_attach_dev:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain hci_attach_dev:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+
 
 #uio
 allow mediaserver uio_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
