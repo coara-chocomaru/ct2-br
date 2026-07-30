@@ -320,6 +320,14 @@ allow setup_fs FMRadiod_exec:file { read getattr execute entrypoint open };
 allow shell FMRadiod_exec:file { getattr };
 allow untrusted_app FMRadiod_exec:file { read getattr execute open };
 
+# --- mwireless_device
+allow mlan2040coex mwireless_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow mlaninit mwireless_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow mwirelessd mwireless_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain mwireless_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain mwireless_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app mwireless_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+
 # --- mwirelessd
 init_daemon_domain(mwirelessd)
 allow init mwirelessd:process { transition noatsecure siginh rlimitinh };
