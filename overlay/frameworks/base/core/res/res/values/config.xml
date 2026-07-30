@@ -5,6 +5,4 @@
     <bool name="config_built_in_sip_phone">false</bool>
     <bool name="config_showNavigationBar">true</bool>
     <bool name="config_allowAllRotations">true</bool>
-    <bool name="config_deskDockKeepsScreenOn">false</bool>
-    <bool name="config_deskDockEnablesAccelerometer">false</bool>
 </resources>
