@@ -58,8 +58,8 @@ type tel_data_file, file_type;
 type nvm_data_file, file_type, data_file_type;
 
 type nvm tmpfs:file nvm_tmpfs;
-type memsicd_tmpfs file_type;
-type memsicp_tmpfs file_type;
+type memsicd tmpfs:file memsicd_tmpfs;
+type memsicp tmpfs:file memsicp_tmpfs;
 # =========================================================================
 # exec_type
 # =========================================================================
