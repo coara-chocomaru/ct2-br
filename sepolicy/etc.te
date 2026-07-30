@@ -53,8 +53,7 @@ allow mwirelessd marvell_data_file:dir create_dir_perms;
 
 # system_server
 allow system_server wlan_device:chr_file { ioctl read write getattr lock open };
-allow system_server marvellwirelessd:unix_stream_socket connectto;
 
 # init / recovery
-allow init marvellWirelessDaemon_exec:file { read getattr execute open };
-allow recovery marvellWirelessDaemon_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow init mwirelessd_exec:file { read getattr execute open };
+allow recovery mwirelessd_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
