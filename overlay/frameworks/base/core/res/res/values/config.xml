@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<bool name="config_voice_capable">false</bool>
-<bool name="config_sms_capable">false</bool>
-<bool name="config_built_in_sip_phone">false</bool>
-<bool name="config_showNavigationBar">true</bool>
-<bool name="config_allowAllRotations">true</bool>
-<bool name="config_desk_dock_enabled">false</bool>
-<bool name="config_car_dock_enabled">false</bool>
+    <bool name="config_voice_capable">false</bool>
+    <bool name="config_sms_capable">false</bool>
+    <bool name="config_built_in_sip_phone">false</bool>
+    <bool name="config_showNavigationBar">true</bool>
+    <bool name="config_allowAllRotations">true</bool>
+    <bool name="config_deskDockKeepsScreenOn">false</bool>
+    <bool name="config_deskDockEnablesAccelerometer">false</bool>
+    <bool name="config_carDockKeepsScreenOn">false</bool>
+    <bool name="config_carDockEnablesAccelerometer">false</bool>
 </resources>
