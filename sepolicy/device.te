@@ -576,7 +576,7 @@ allow untrusted_app mediaserver_exec:file { read getattr execute open };
 allow mediaserver audio_device:chr_file { read write open };
 allow mediaserver self:capability { sys_nice };
 allow mediaserver system_prop:property_service set;
-
+allow mediaserver camera_data_file:file { write create };
 
 
 # fuse
@@ -776,6 +776,9 @@ allow system_server wifi_data_file:dir { ioctl read write create getattr setattr
 allow system_server wifi_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow system_server wifi_data_file:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow untrusted_app wifi_data_file:dir { getattr };
+allow netd wpa_socket:sock_file { write getattr };
+allow netd wpa_socket:dir { search };
+
 
 # hostapd
 allow hostapd wifi_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
@@ -823,3 +826,5 @@ allow mediaserver uio_device:chr_file { read write open ioctl };
 allow system_server fuse:dir search;
 allow system_server default_prop:property_service set;
 allow system_server mediaserver:binder { call transfer };
+allow system_server wpa_socket:sock_file { read getattr };
+allow system_server wpa:unix_stream_socket { connectto };
