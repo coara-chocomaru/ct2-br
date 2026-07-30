@@ -69,7 +69,7 @@ type memsicp_tmpfs, file_type, fs_type;
 # =========================================================================
 # exec_type
 # =========================================================================
-type nvm_exec exec_type, file_type;
+type nvm_exec, exec_type, file_type;
 type setup_fs_exec, exec_type, file_type;
 type pppmodem_exec, exec_type;
 type eeh_exec, exec_type;
