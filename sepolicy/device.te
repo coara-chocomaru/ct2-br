@@ -360,6 +360,7 @@ allow init mlan2040coex_exec:file { read getattr execute execute_no_trans open }
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow recovery mlan2040coex_exec:file { write setattr open };
 allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
+allow init mlan2040coex_exec:file execute_no_trans;
 type_transition init mlan2040coex_exec:process mlan2040coex;
 
 
