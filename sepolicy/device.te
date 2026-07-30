@@ -13,6 +13,7 @@ type memsic_device, dev_type;
 type geu_device, dev_type;
 type ipc_device, dev_type;
 type vpu_device, dev_type;
+type marvellwifi_device, dev_type;
 type mwireless_device, dev_type;
 type infor_device, dev_type;
 type iptables_exec, exec_type, file_type;
