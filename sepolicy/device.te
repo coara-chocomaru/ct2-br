@@ -769,6 +769,34 @@ allow zygote dalvikcache_data_file:dir { ioctl read write create getattr setattr
 allow zygote dalvikcache_data_file:file { ioctl read write create getattr setattr lock append unlink link rename execute open };
 allow zygote dalvikcache_data_file:lnk_file { ioctl read write create getattr setattr lock append unlink link rename open };
 
+# netd
+allow netd wifi_data_file:dir { ioctl read write getattr add_name remove_name search open };
+allow netd wifi_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow system_server wifi_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow system_server wifi_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow system_server wifi_data_file:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow untrusted_app wifi_data_file:dir { getattr };
+
+# hostapd
+allow hostapd wifi_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow hostapd wifi_data_file:file { ioctl read write getattr lock append open };
+allow hostapd wpa_socket:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow hostapd wpa_socket:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow hostapd self:capability { setgid setuid net_admin net_raw };
+allow hostapd self:dir { ioctl read getattr search open };
+allow hostapd self:fd { use };
+allow hostapd self:fifo_file { ioctl read write getattr lock append open };
+allow hostapd self:file { ioctl read write getattr lock append open };
+allow hostapd self:lnk_file { ioctl read getattr lock open };
+allow hostapd self:netlink_route_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown nlmsg_read nlmsg_write };
+allow hostapd self:netlink_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow hostapd self:packet_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow hostapd self:process { fork sigchld sigkill sigstop signull signal getsched setsched getsession getpgid setpgid getcap setcap getattr setrlimit };
+allow hostapd self:rawip_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow hostapd self:tcp_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown };
+allow hostapd self:udp_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow hostapd self:unix_dgram_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown sendto };
+allow hostapd self:unix_stream_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown connectto };
 
 # --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
