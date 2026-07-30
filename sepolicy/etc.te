@@ -45,3 +45,16 @@ allow marvellwirelessd system_prop:property_service set;
 allow recovery wlan_device:blk_file { getattr };
 allow shell wlan_device:chr_file { getattr };
 allow untrusted_app wlan_device:chr_file { getattr };
+
+# mwirelessd
+allow mwirelessd wlan_data_file:dir create_dir_perms;
+allow mwirelessd wlan_data_file:file create_file_perms;
+allow mwirelessd marvell_data_file:dir create_dir_perms;
+
+# system_server
+allow system_server wlan_device:chr_file { ioctl read write getattr lock open };
+allow system_server marvellwirelessd:unix_stream_socket connectto;
+
+# init / recovery
+allow init marvellWirelessDaemon_exec:file { read getattr execute open };
+allow recovery marvellWirelessDaemon_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
