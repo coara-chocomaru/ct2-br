@@ -102,6 +102,12 @@ $(TARGET_OUT)/framework/javax.btobex.jar: $(TARGET_OUT)/framework/javax.obex.jar
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
+PRODUCT_PACKAGES += \
+   iptables \
+   ip6tables \
+   ip \
+   netd
+
 PRODUCT_PACKAGES += libhardware_legacx
 TARGET_LD_SHIM_LIBS += \
     /system/lib/libwifi-service.so|libhardware_legacx.so \
