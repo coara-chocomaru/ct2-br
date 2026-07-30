@@ -29,7 +29,7 @@ allow init hostapd_exec:file { read getattr execute open };
 allow system_server wpa_supplicant:unix_stream_socket connectto;
 allow bluetooth bt_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow bluetooth hci_device:chr_file { ioctl read write getattr lock append open };
-allow bluetooth mrvlgpu_device:chr_file rw_file_perms;  # 既存に追加
+allow bluetooth mrvlgpu_device:chr_file rw_file_perms;
 
 allow unconfineddomain bt_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename open };
 allow hci_attach hci_device:chr_file { ioctl read write getattr lock append open };
