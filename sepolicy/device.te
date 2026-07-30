@@ -711,6 +711,11 @@ allow unconfineddomain uio_device:chr_file { ioctl read write create getattr set
 allow unconfineddomain uio_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app uio_device:chr_file { getattr };
 
+# iptable
+allow shell iptables_exec:file { read getattr execute open };
+allow netd iptables_exec:file { read getattr execute open };
+allow system_server iptables_exec:file { read getattr execute open };
+
 
 # --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
