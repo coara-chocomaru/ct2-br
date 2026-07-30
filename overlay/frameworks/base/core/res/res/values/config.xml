@@ -7,6 +7,4 @@
     <bool name="config_allowAllRotations">true</bool>
     <bool name="config_deskDockKeepsScreenOn">false</bool>
     <bool name="config_deskDockEnablesAccelerometer">false</bool>
-    <bool name="config_carDockKeepsScreenOn">false</bool>
-    <bool name="config_carDockEnablesAccelerometer">false</bool>
 </resources>
