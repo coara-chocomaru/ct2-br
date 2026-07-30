@@ -212,6 +212,7 @@ BOARD_SEPOLICY_DIRS := \
 
 BOARD_SEPOLICY_UNION += \
     device.te \
+    etc.te \
 	codecIPC_server.te \
     graphics.te \
 	file_contexts \
