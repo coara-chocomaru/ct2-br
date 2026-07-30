@@ -21,3 +21,11 @@ allow codecIPC_server shell:fd use;
 allow codecIPC_server fuse:file create_file_perms;
 
 allow codecIPC_server mrvlgpu_device:chr_file { open read write ioctl getattr lock append };
+
+
+#ipc
+allow shell ipc_device:chr_file { getattr };
+allow system_server ipc_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain ipc_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain ipc_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app ipc_device:chr_file { getattr };
