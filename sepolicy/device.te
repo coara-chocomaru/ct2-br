@@ -830,3 +830,5 @@ allow system_server mediaserver:binder { call transfer };
 allow system_server wpa_socket:sock_file { read getattr };
 allow system_server wpa:unix_stream_socket { connectto };
 allow shell self:capability { sys_module };
+allow mwirelessd ctl_default_prop:property_service { set };
+allow netd ctl_mdnsd_prop:property_service { set };
