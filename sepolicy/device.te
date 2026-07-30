@@ -670,6 +670,21 @@ allow installd dex2oat_exec:file { read getattr execute open };
 allow recovery dex2oat_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow zygote dex2oat_exec:file { ioctl read getattr lock execute execute_no_trans open };
 
+# wpa
+allow shell wpa_device:chr_file { getattr };
+allow unconfineddomain wpa_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain wpa_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app wpa_device:chr_file { getattr };
+allow wpa wpa_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+
+
+#uio
+allow mediaserver uio_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow shell uio_device:chr_file { getattr };
+allow unconfineddomain uio_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain uio_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app uio_device:chr_file { getattr };
+
 
 # --- nvm_data_file (NVM storage label) ---
 allow mediaserver nvm_data_file:file create_file_perms;
