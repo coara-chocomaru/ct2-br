@@ -105,7 +105,7 @@ type nvm, domain;
 
 # tmpfs
 type_transition nvm tmpfs:file nvm_tmpfs;
-type_transition mwirelessd tmpfs:file mwirelessd_tmpfs;
+# type_transition mwirelessd tmpfs:file mwirelessd_tmpfs;
 type_transition mlan2040coex tmpfs:file mlan2040coex_tmpfs;
 type_transition memsicd tmpfs:file memsicd_tmpfs;
 type_transition memsicp tmpfs:file memsicp_tmpfs;
@@ -114,7 +114,7 @@ type_transition mlaninit tmpfs:file mlaninit_tmpfs;
 #tmpfs_type
 type mlaninit_tmpfs, file_type, fs_type;
 type nvm_tmpfs, file_type, fs_type;
-type mwirelessd_tmpfs, file_type, fs_type;
+# type mwirelessd_tmpfs, file_type, fs_type;
 type memsicd_tmpfs, file_type, fs_type;
 type memsicp_tmpfs, file_type, fs_type;
 type mlan2040coex_tmpfs, file_type, fs_type;
