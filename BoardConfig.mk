@@ -213,7 +213,8 @@ BOARD_SEPOLICY_DIRS := \
 BOARD_SEPOLICY_UNION += \
     device.te \
 	codecIPC_server.te \
-    graphics.te \
+    graphics.te \ 
+    mem.te \
 	file_contexts \
     galcore.te \
     hawk.te \
