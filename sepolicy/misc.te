@@ -15,6 +15,7 @@ allow hostapd wpa_socket:sock_file { create open read write setattr unlink };
 allow system_server wpa_socket:unix_dgram_socket { write };
 allow system_server system_wpa_socket:unix_dgram_socket { write };
 allow wpa system_wpa_socket:unix_stream_socket { connectto };
+
 # wifi
 allow system_server wifi_data_file:dir { create rmdir setattr write add_name remove_name search };
 allow system_server wifi_data_file:file { create open read write getattr setattr unlink };
