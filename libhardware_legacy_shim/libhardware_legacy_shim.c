@@ -3,10 +3,13 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 #define LOG_TAG "HwLegacyShim"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,  LOG_TAG, __VA_ARGS__)
+#define LOGW(...)  __android_log_print(ANDROID_LOG_WARN,  LOG_TAG, __VA_ARGS__)
 
 static void* g_real_handle = NULL;
 
@@ -164,7 +167,19 @@ __attribute__((visibility("default"))) int wifi_start_supplicant(void) {
     return real_wifi_start_supplicant ? real_wifi_start_supplicant() : -1;
 }
 __attribute__((visibility("default"))) int wifi_stop_supplicant(void) {
-    return real_wifi_stop_supplicant ? real_wifi_stop_supplicant() : -1;
+    if (!real_wifi_stop_supplicant) {
+        LOGW("real_wifi_stop_supplicant is NULL, returning 0");
+        return 0;
+    }
+    if (real_is_wifi_driver_loaded && !real_is_wifi_driver_loaded()) {
+        LOGW("WiFi driver not loaded, skipping stop");
+        return 0;
+    }
+    if (real_wifi_supplicant_connection_active && !real_wifi_supplicant_connection_active()) {
+        LOGW("Supplicant connection not active, skipping stop");
+        return 0;
+    }
+    return real_wifi_stop_supplicant();
 }
 __attribute__((visibility("default"))) int wifi_connect_to_supplicant(void) {
     return real_wifi_connect_to_supplicant ? real_wifi_connect_to_supplicant() : -1;
