@@ -57,8 +57,7 @@ type dump_log_data_file, file_type;
 type tel_data_file, file_type;
 type nvm_data_file, file_type, data_file_type;
 
-
-type mlaninit_tmpfs file_type;
+type mlaninit tmpfs:file mlaninit_tmpfs;
 type nvm tmpfs:file nvm_tmpfs;
 type mwirelessd tmpfs:file mwirelessd_tmpfs;
 type memsicd tmpfs:file memsicd_tmpfs;
