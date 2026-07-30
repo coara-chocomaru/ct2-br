@@ -92,6 +92,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libion
 
+PRODUCT_PACKAGES += javax.obex
+
+INTERNAL_SYSTEMIMAGE_DEPS += $(TARGET_OUT)/framework/javax.btobex.jar
+$(TARGET_OUT)/framework/javax.btobex.jar: $(TARGET_OUT)/framework/javax.obex.jar
+	@echo "Copying javax.obex.jar to javax.btobex.jar for Bluetooth"
+	@cp -f $< $@
+
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
