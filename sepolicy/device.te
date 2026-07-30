@@ -84,8 +84,8 @@ type mned_exec, exec_type;
 type kmsg_exec, exec_type;
 type root_detect_exec, exec_type;
 type load_g_cali_data_exec, exec_type;
-type memsicd_exec, exec_type, file_type
-type memsicp_exec, exec_type, file_type
+type memsicd_exec, exec_type, file_type;
+type memsicp_exec, exec_type, file_type;
 type mrvl_gpsd_exec, exec_type;
 type at_router_exec, exec_type;
 type env_exec, exec_type;
