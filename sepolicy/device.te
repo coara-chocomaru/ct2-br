@@ -104,9 +104,17 @@ type setup_fs, domain;
 type mwirelessd, domain;
 type mlan2040coex, domain;
 type mlaninit, domain;
-type memsicd domain;
-type memsicp domain;
-type nvm domain;
+type memsicd, domain;
+type memsicp, domain;
+type nvm, domain;
+
+# tmpfs
+type_transition nvm tmpfs:file nvm_tmpfs;
+type_transition mwirelessd tmpfs:file mwirelessd_tmpfs;
+type_transition mlan2040coex tmpfs:file mlan2040coex_tmpfs;
+type_transition memsicd tmpfs:file memsicd_tmpfs;
+type_transition memsicp tmpfs:file memsicp_tmpfs;
+
 # =========================================================================
 # Section allow
 # =========================================================================
