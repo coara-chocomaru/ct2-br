@@ -1,19 +1,19 @@
 
 allow init wlan_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow init sdio_device:chr_file { ioctl read write getattr lock append open };
-allow init marvellwifi_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow init wifi_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 
 allow unconfineddomain wlan_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain wlan_data_file:dir create_dir_perms;
 allow unconfineddomain wlan_data_file:file create_file_perms;
 
-allow marvellwirelessd wlan_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow marvellwirelessd sysfs:file rw_file_perms;
-allow marvellwirelessd sysfs:dir r_dir_perms;
-allow marvellwirelessd proc:file r_file_perms;
-allow marvellwirelessd self:capability { net_admin net_raw setuid setgid };
-allow marvellwirelessd self:udp_socket { create ioctl read write bind getopt setopt };
-allow marvellwirelessd self:netlink_socket { create ioctl read write bind getopt setopt };
+allow mwirelessd wlan_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow mwirelessd sysfs:file rw_file_perms;
+allow mwirelessd sysfs:dir r_dir_perms;
+allow mwirelessd proc:file r_file_perms;
+allow mwirelessd self:capability { net_admin net_raw setuid setgid };
+allow mwirelessd self:udp_socket { create ioctl read write bind getopt setopt };
+allow mwirelessd self:netlink_socket { create ioctl read write bind getopt setopt };
 
 # mwirelessd
 allow mwirelessd wlan_device:chr_file rw_file_perms;
@@ -41,7 +41,7 @@ allow untrusted_app sensor_device:chr_file { getattr ioctl read write };
 allow mediaserver uio_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow domain ion_device:chr_file { ioctl read write getattr lock append open };
 allow system_server wifi_prop:property_service set;
-allow marvellwirelessd system_prop:property_service set;
+allow mwirelessd system_prop:property_service set;
 allow recovery wlan_device:blk_file { getattr };
 allow shell wlan_device:chr_file { getattr };
 allow untrusted_app wlan_device:chr_file { getattr };
