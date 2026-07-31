@@ -194,3 +194,93 @@ allow wpa dhcp_data_file:sock_file { ioctl read write create getattr setattr loc
 allow wpa dhcp_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
 allow wpa dhcp_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
 allow wpa dhcp_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# mwirelessd
+allow mwirelessd wireless_data_file:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow mwirelessd wireless_data_file:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd wireless_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd wireless_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd wireless_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd wireless_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd wireless_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# mlan2040coex
+allow mlan2040coex wireless_data_file:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow mlan2040coex wireless_data_file:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex wireless_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex wireless_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex wireless_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex wireless_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex wireless_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# mlaninit
+allow mlaninit wireless_data_file:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow mlaninit wireless_data_file:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit wireless_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit wireless_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit wireless_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit wireless_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit wireless_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# nvm
+allow nvm wireless_data_file:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow nvm wireless_data_file:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm wireless_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm wireless_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm wireless_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm wireless_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm wireless_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# wpa
+allow wpa wireless_data_file:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow wpa wireless_data_file:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa wireless_data_file:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa wireless_data_file:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa wireless_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa wireless_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa wireless_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# mwirelessd
+allow mwirelessd mwirelessd_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow mwirelessd mwirelessd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd mwirelessd_socket:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd mwirelessd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd mwirelessd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd mwirelessd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mwirelessd mwirelessd_socket:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# mlan2040coex
+allow mlan2040coex mwirelessd_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow mlan2040coex mwirelessd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex mwirelessd_socket:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex mwirelessd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex mwirelessd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex mwirelessd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlan2040coex mwirelessd_socket:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# mlaninit
+allow mlaninit mwirelessd_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow mlaninit mwirelessd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit mwirelessd_socket:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit mwirelessd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit mwirelessd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit mwirelessd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow mlaninit mwirelessd_socket:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# nvm
+allow nvm mwirelessd_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow nvm mwirelessd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm mwirelessd_socket:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm mwirelessd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm mwirelessd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm mwirelessd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow nvm mwirelessd_socket:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+
+# wpa
+allow wpa mwirelessd_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton add_name remove_name reparent search rmdir open audit_access execmod };
+allow wpa mwirelessd_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa mwirelessd_socket:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa mwirelessd_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa mwirelessd_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa mwirelessd_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
+allow wpa mwirelessd_socket:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton open audit_access };
