@@ -301,6 +301,7 @@ allow wpa wpa_socket:chr_file { ioctl read write create getattr setattr lock rel
 allow wpa system_wpa_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow wpa system_wpa_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename add_name remove_name reparent search rmdir open };
 allow wpa system_wpa_socket:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow wpa devpts:chr_file { read write };
 
 # bluetooth_data_file
 allow wpa bluetooth_data_file:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename add_name remove_name reparent search rmdir open };
