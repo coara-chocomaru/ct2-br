@@ -55,6 +55,7 @@ type wireless_data_file, file_type;
 type dump_log_data_file, file_type;
 type tel_data_file, file_type;
 type nvm_data_file, file_type, data_file_type;
+type mwirelessd_socket, file_type;
 
 # type mlaninit tmpfs:file mlaninit_tmpfs;
 # type nvm tmpfs:file nvm_tmpfs;
@@ -111,9 +112,8 @@ type_transition memsicp tmpfs:file memsicp_tmpfs;
 type_transition mlaninit tmpfs:file mlaninit_tmpfs;
 
 #tmpfs_type
-type mlaninit_tmpfs, file_type;          # fs_type を削除
+type mlaninit_tmpfs, file_type;
 type nvm_tmpfs, file_type;
-type mwirelessd_tmpfs, file_type;
 type memsicd_tmpfs, file_type;
 type memsicp_tmpfs, file_type;
 type mlan2040coex_tmpfs, file_type;
