@@ -221,6 +221,7 @@ BOARD_SEPOLICY_UNION += \
 	file_contexts \
     misc.te \
     galcore.te \
+    allow.te \
     mem.te \
     hawk.te \
     run_hawk_on_boot.te \
