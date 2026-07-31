@@ -16,9 +16,7 @@ type vpu_device, dev_type;
 type mwireless_device, dev_type;
 type infor_device, dev_type;
 type iptables_exec, exec_type, file_type;
-# type hw_random_device, dev_type;
-# type input_device, dev_type;
-# type cpuctl_device, dev_type;
+
 
 type cploader_block_device, dev_type;
 type ssipc_device, dev_type;
@@ -53,15 +51,11 @@ type imsd_socket, file_type;
 type embmsd_socket, file_type;
 type wireless_data_file, file_type;
 type dump_log_data_file, file_type;
+type mwirelessd_socket, file_type;
 type tel_data_file, file_type;
 type nvm_data_file, file_type, data_file_type;
-type mwirelessd_socket, file_type;
 
-# type mlaninit tmpfs:file mlaninit_tmpfs;
-# type nvm tmpfs:file nvm_tmpfs;
-# type mwirelessd tmpfs:file mwirelessd_tmpfs;
-# type memsicd tmpfs:file memsicd_tmpfs;
-# type memsicp tmpfs:file memsicp_tmpfs;
+
 # =========================================================================
 # exec_type
 # =========================================================================
@@ -84,8 +78,17 @@ type mned_exec, exec_type;
 type kmsg_exec, exec_type;
 type root_detect_exec, exec_type;
 type load_g_cali_data_exec, exec_type;
+
 type memsicd_exec, exec_type, file_type;
+init_daemon_domain(memsicd)
+type_transition init memsicd_exec:process memsicd;
+
 type memsicp_exec, exec_type, file_type;
+init_daemon_domain(memsicp)
+type_transition init memsicp_exec:process memsicp;
+
+
+
 type mrvl_gpsd_exec, exec_type;
 type at_router_exec, exec_type;
 type env_exec, exec_type;
@@ -103,20 +106,6 @@ type memsicd, domain;
 type memsicp, domain;
 type nvm, domain;
 
-# tmpfs
-type_transition nvm tmpfs:file nvm_tmpfs;
-# type_transition mwirelessd tmpfs:file mwirelessd_tmpfs;
-type_transition mlan2040coex tmpfs:file mlan2040coex_tmpfs;
-type_transition memsicd tmpfs:file memsicd_tmpfs;
-type_transition memsicp tmpfs:file memsicp_tmpfs;
-type_transition mlaninit tmpfs:file mlaninit_tmpfs;
-
-#tmpfs_type
-type mlaninit_tmpfs, file_type;
-type nvm_tmpfs, file_type;
-type memsicd_tmpfs, file_type;
-type memsicp_tmpfs, file_type;
-type mlan2040coex_tmpfs, file_type;
 
 # =========================================================================
 # Section allow
@@ -288,6 +277,8 @@ allow unconfineddomain embmsd_socket:sock_file { ioctl read write create getattr
 allow untrusted_app embmsd_socket:sock_file { getattr };
 
 # --- Exec: nvm_exec ---
+init_daemon_domain(nvm)
+type_transition init nvm_exec:process nvm;
 allow init nvm_exec:file { read getattr execute open };
 allow recovery nvm_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow setup_fs nvm_exec:file { read getattr execute entrypoint open };
@@ -390,6 +381,7 @@ dontaudit mwirelessd sysfs_devices_system_cpu:dir r_dir_perms;
 dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 
 # --- Domain: mlan2040coex ---
+init_daemon_domain(mlan2040coex)
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow mlan2040coex sysfs:file { write };
 allow init mlan2040coex_exec:file { read getattr execute execute_no_trans open };
@@ -401,6 +393,8 @@ type_transition init mlan2040coex_exec:process mlan2040coex;
 
 
 # --- Domain: mlaninit ---
+init_daemon_domain(mlaninit)
+type_transition init mlaninit_exec:process mlaninit;
 allow init mlaninit:process { transition noatsecure siginh rlimitinh };
 allow mlaninit sysfs:file { write };
 allow init mlaninit_exec:file { read getattr execute open };
