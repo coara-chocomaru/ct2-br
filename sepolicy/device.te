@@ -51,7 +51,6 @@ type ts_device, dev_type;
 # =========================================================================
 type imsd_socket, file_type;
 type embmsd_socket, file_type;
-type mwirelessd_socket, file_type;
 type wireless_data_file, file_type;
 type dump_log_data_file, file_type;
 type tel_data_file, file_type;
