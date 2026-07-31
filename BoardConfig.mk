@@ -63,15 +63,18 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MRVL := true
 
 BOARD_WLAN_VENDOR := MRVL
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_HOSTAPD_DRIVER := NL80211
+WIFI_DRIVER_FW_PATH_PARAM := "/proc/mwlan/config"
 WIFI_DRIVER_MODULE_PATH := "/lib/modules/sd8887.ko"
 WIFI_DRIVER_MODULE_NAME := "sd8887"
-WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/sd8887/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA := "/system/etc/firmware/mrvl/sd8887_uapsta.bin"
 WIFI_DRIVER_FW_PATH_AP := "/system/etc/firmware/mrvl/sd8887_uapsta.bin"
 WIFI_DRIVER_FW_PATH_P2P := "/system/etc/firmware/mrvl/sd8887_uapsta.bin"
 WIFI_SDIO_IF_DRIVER_MODULE_PATH := "/lib/modules/mlan8887.ko"
 WIFI_SDIO_IF_DRIVER_MODULE_NAME := "mlan8887"
-WIFI_SDIO_IF_DRIVER_MODULE_ARG := ""
+CONFIG_CTRL_IFACE := true
+
 MRVL_WIRELESS_DAEMON_API := true
 
 # key
