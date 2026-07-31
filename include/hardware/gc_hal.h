@@ -2854,6 +2854,17 @@ gckEVENT_Unlock(
     IN gceSURF_TYPE Type
     );
 
+/* Schedule an UnmapUserMemory event. */
+gceSTATUS
+gckEVENT_UnmapUserMemory(
+    IN gckEVENT Event,
+    IN gceKERNEL_WHERE FromWhere,
+    IN gctPOINTER Memory,
+    IN gctSIZE_T Size,
+    IN gctPOINTER Info,
+    IN gctUINT32 Address
+    );
+
 gceSTATUS
 gckEVENT_CommitDone(
     IN gckEVENT Event,
