@@ -112,12 +112,12 @@ type_transition memsicp tmpfs:file memsicp_tmpfs;
 type_transition mlaninit tmpfs:file mlaninit_tmpfs;
 
 #tmpfs_type
-type mlaninit_tmpfs, file_type, fs_type;
-type nvm_tmpfs, file_type, fs_type;
-# type mwirelessd_tmpfs, file_type, fs_type;
-type memsicd_tmpfs, file_type, fs_type;
-type memsicp_tmpfs, file_type, fs_type;
-type mlan2040coex_tmpfs, file_type, fs_type;
+type mlaninit_tmpfs, file_type;          # fs_type を削除
+type nvm_tmpfs, file_type;
+type mwirelessd_tmpfs, file_type;
+type memsicd_tmpfs, file_type;
+type memsicp_tmpfs, file_type;
+type mlan2040coex_tmpfs, file_type;
 
 # =========================================================================
 # Section allow
