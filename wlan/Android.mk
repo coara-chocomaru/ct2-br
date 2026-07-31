@@ -27,12 +27,12 @@ WPA_SRC_FILE :=
 include $(WPA_SUPPL_DIR)/wpa_supplicant/android.config
 
 WPA_SUPPL_DIR_INCLUDE = $(WPA_SUPPL_DIR)/src \
-	$(WPA_SUPPL_DIR)/src/common \
-	$(WPA_SUPPL_DIR)/src/drivers \
-	$(WPA_SUPPL_DIR)/src/l2_packet \
-	$(WPA_SUPPL_DIR)/src/utils \
-	$(WPA_SUPPL_DIR)/src/wps \
-	$(WPA_SUPPL_DIR)/wpa_supplicant
+    $(WPA_SUPPL_DIR)/src/common \
+    $(WPA_SUPPL_DIR)/src/drivers \
+    $(WPA_SUPPL_DIR)/src/l2_packet \
+    $(WPA_SUPPL_DIR)/src/utils \
+    $(WPA_SUPPL_DIR)/src/wps \
+    $(WPA_SUPPL_DIR)/wpa_supplicant
 
 ifdef CONFIG_DRIVER_NL80211
 WPA_SUPPL_DIR_INCLUDE += external/libnl-headers
@@ -43,8 +43,9 @@ ifdef CONFIG_DRIVER_WEXT
 WPA_SRC_FILE += driver_cmd_wext.c
 endif
 
-# To force sizeof(enum) = 4
+ifeq ($(TARGET_ARCH),arm)
 L_CFLAGS += -mabi=aapcs-linux
+endif
 
 ifdef CONFIG_ANDROID_LOG
 L_CFLAGS += -DCONFIG_ANDROID_LOG
