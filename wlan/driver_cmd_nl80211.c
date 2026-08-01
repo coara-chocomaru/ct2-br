@@ -48,11 +48,11 @@ static int send_and_recv_msgs(struct wpa_driver_nl80211_data *drv,
 	if (valid_handler)
 		nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, valid_handler, valid_data);
 
-	ret = nl_send_auto_complete(drv->global->nl, msg);   /* ← ここを修正 */
+	ret = nl_send_auto_complete(drv->global->nl, msg);
 	if (ret < 0)
 		goto out;
 
-	ret = nl_recvmsgs(drv->global->nl, cb);             /* ← ここを修正 */
+	ret = nl_recvmsgs(drv->global->nl, cb);
 	if (ret < 0)
 		goto out;
 
@@ -60,7 +60,6 @@ out:
 	nl_cb_put(cb);
 	return ret;
 }
-/* ================================================================ */
 
 static int drv_errors = 0;
 
