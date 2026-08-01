@@ -17,3 +17,4 @@ allow unconfineddomain graphics_device:file { ioctl read write create getattr se
 allow untrusted_app graphics_device:chr_file { ioctl getattr open };
 allow untrusted_app graphics_device:dir { read getattr search open };
 allow zygote graphics_device:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow radio graphics_device:dir search;
