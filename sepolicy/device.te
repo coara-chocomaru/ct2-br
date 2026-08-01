@@ -408,6 +408,10 @@ dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 init_daemon_domain(mlan2040coex)
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow mlan2040coex sysfs:file { write };
+allow mlan2040coex sysfs:file rw_file_perms;
+allow mlan2040coex sysfs:dir  r_dir_perms;
+allow mlan2040coex sysfs:lnk_file read;
+allow mlan2040coex proc:file r_file_perms;
 allow init mlan2040coex_exec:file { read getattr execute execute_no_trans open };
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow recovery mlan2040coex_exec:file { write setattr open };
@@ -421,6 +425,10 @@ init_daemon_domain(mlaninit)
 type_transition init mlaninit_exec:process mlaninit;
 allow init mlaninit:process { transition noatsecure siginh rlimitinh };
 allow mlaninit sysfs:file { write };
+allow mlaninit sysfs:file rw_file_perms;
+allow mlaninit sysfs:dir  r_dir_perms;
+allow mlaninit sysfs:lnk_file read;
+allow mlaninit proc:file r_file_perms;
 allow init mlaninit_exec:file { read getattr execute open };
 allow mlaninit mlaninit_exec:file { read getattr execute entrypoint open };
 allow recovery mlaninit_exec:file { write setattr open };
