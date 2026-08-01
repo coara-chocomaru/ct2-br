@@ -11,25 +11,11 @@
  */
 
 #define LOG_NDEBUG 0
-
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <net/if.h>
-
 #include "driver_nl80211.h"
 #include "wpa_supplicant_i.h"
 #include "config.h"
 #ifdef ANDROID
 #include "android_drv.h"
-#endif
-
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
 #endif
 
 #define WPA_PS_ENABLED		0
@@ -122,6 +108,7 @@ static int wpa_driver_get_power_save(void *priv, int *state)
 	struct wpa_driver_nl80211_data *drv = bss->drv;
 	struct nl_msg *msg;
 	int ret = -1;
+	enum nl80211_ps_state ps_state;
 
 	msg = nlmsg_alloc();
 	if (!msg)
@@ -271,7 +258,7 @@ static int wpa_driver_set_backgroundscan_params(void *priv, char *cmd)
 	if ((ret = ioctl(drv->global->ioctl_sock, SIOCDEVPRIVATE + 14, &ifr)) < 0) {
 		wpa_printf(MSG_ERROR, "ioctl[SIOCSIWPRIV] (bgscan config): %d", ret);
 	} else {
-		wpa_printf(MSG_DEBUG, "%s %s len = %d, %d", __func__, buf, ret, (int)strlen(buf));
+		wpa_printf(MSG_DEBUG, "%s %s len = %d, %d", __func__, buf, ret, strlen(buf));
 	}
 	return ret;
 }
@@ -357,12 +344,12 @@ int wpa_driver_nl80211_driver_cmd(void *priv, char *cmd, char *buf,
 			    (os_strcasecmp(cmd, "RSSI") == 0) ||
 			    (os_strcasecmp(cmd, "GETBAND") == 0) ||
 			    (os_strncasecmp(cmd, "WLS_BATCHING", 12) == 0))
-				ret = (int)strlen(buf); 
+				ret = strlen(buf);
 			else if ((os_strncasecmp(cmd, "COUNTRY", 7) == 0) ||
 				 (os_strncasecmp(cmd, "SETBAND", 7) == 0))
 				wpa_supplicant_event(drv->ctx,
 					EVENT_CHANNEL_LIST_CHANGED, NULL);
-			wpa_printf(MSG_DEBUG, "%s %s len = %d, %d", __func__, buf, ret, (int)strlen(buf));
+			wpa_printf(MSG_DEBUG, "%s %s len = %d, %d", __func__, buf, ret, strlen(buf));
 		}
 	}
 	return ret;
