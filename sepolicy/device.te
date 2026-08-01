@@ -105,7 +105,7 @@ type mlaninit, domain;
 type memsicd, domain;
 type memsicp, domain;
 type nvm, domain;
-type eeh domain;
+type eeh, domain;
 # =========================================================================
 # Section allow
 # =========================================================================
