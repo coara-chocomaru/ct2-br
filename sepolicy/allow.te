@@ -8,6 +8,8 @@ allow mwirelessd wifi_data_file:lnk_file { ioctl read write create getattr setat
 allow mwirelessd wifi_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow mwirelessd wifi_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow mwirelessd wifi_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow mwirelessd devpts:chr_file { read write };
+
 
 # wpa_socket
 allow mwirelessd wpa_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename add_name remove_name reparent search rmdir open };
