@@ -240,7 +240,6 @@ allow nvm bluetooth_data_file:lnk_file { ioctl read write create getattr setattr
 allow nvm bluetooth_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow nvm bluetooth_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow bluetooth self:capability { dac_override };
-allow bluetooth sysfs_wlan:file rw_file_perms;
 
 # bluetooth_socket
 allow nvm bluetooth_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
