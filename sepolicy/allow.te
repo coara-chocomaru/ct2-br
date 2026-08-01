@@ -16,9 +16,6 @@ allow mwirelessd wpa_socket:file { ioctl read write create getattr setattr lock 
 allow mwirelessd wpa_socket:lnk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow mwirelessd wpa_socket:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow mwirelessd wpa_socket:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
-allow wpa wlan_device:chr_file rw_file_perms;
-
-
 
 # system_wpa_socket
 allow mwirelessd system_wpa_socket:sock_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
