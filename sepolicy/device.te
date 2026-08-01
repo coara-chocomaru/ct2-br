@@ -312,8 +312,6 @@ allow init eeh_tmpfs:fifo_file { relabelto };
 allow init eeh_tmpfs:file { relabelto };
 allow init eeh_tmpfs:lnk_file { relabelto };
 allow init eeh_tmpfs:sock_file { relabelto };
-allow marvelltel eeh_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow marvelltel eeh_exec:file { read getattr execute execute_no_trans open };
 allow recovery eeh_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow shell eeh_device:chr_file { getattr };
 allow shell eeh_exec:file { getattr };
@@ -329,8 +327,6 @@ allow unconfineddomain eeh_tmpfs:sock_file { ioctl read write create getattr set
 allow untrusted_app eeh_device:chr_file { getattr };
 allow untrusted_app eeh_exec:file { read getattr execute open };
 allow untrusted_app eeh_tmpfs:file { getattr };
-
-
 
 
 # --- Exec: diag_exec ---
