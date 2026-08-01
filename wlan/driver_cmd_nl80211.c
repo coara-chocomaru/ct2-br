@@ -33,9 +33,33 @@ typedef struct android_wifi_priv_cmd {
 	int total_len;
 } android_wifi_priv_cmd;
 
-int send_and_recv_msgs(struct wpa_driver_nl80211_data *drv, struct nl_msg *msg,
-		       int (*valid_handler)(struct nl_msg *, void *),
-		       void *valid_data);
+static int send_and_recv_msgs(struct wpa_driver_nl80211_data *drv,
+			      struct nl_msg *msg,
+			      int (*valid_handler)(struct nl_msg *, void *),
+			      void *valid_data)
+{
+	struct nl_cb *cb;
+	int ret;
+
+	cb = nl_cb_alloc(NL_CB_DEFAULT);
+	if (!cb)
+		return -ENOMEM;
+
+	if (valid_handler)
+		nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, valid_handler, valid_data);
+
+	ret = nl_send_auto_complete(drv->nl_handle, msg);
+	if (ret < 0)
+		goto out;
+
+	ret = nl_recvmsgs(drv->nl_handle, cb);
+	if (ret < 0)
+		goto out;
+
+out:
+	nl_cb_put(cb);
+	return ret;
+}
 
 static int drv_errors = 0;
 
