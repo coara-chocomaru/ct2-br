@@ -57,7 +57,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := lib_driver_cmd_mrvl
 LOCAL_SHARED_LIBRARIES := libc libcutils
 LOCAL_CFLAGS := $(L_CFLAGS)
-LOCAL_CFLAGS += -Werror
+LOCAL_CFLAGS += -Wno-error=unused-parameter
 LOCAL_SRC_FILES := $(WPA_SRC_FILE)
 LOCAL_C_INCLUDES := $(WPA_SUPPL_DIR_INCLUDE)
 include $(BUILD_STATIC_LIBRARY)
