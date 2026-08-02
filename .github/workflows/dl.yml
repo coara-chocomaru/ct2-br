@@ -1,0 +1,126 @@
+name: Extract frameworks/opt/net/wifi for debugging
+
+on:
+  workflow_dispatch:
+
+env:
+  MANIFEST_URL: 'https://github.com/LineageOS/android'
+  MANIFEST_BRANCH: 'cm-12.1'
+  DEVICE_NAME: 'a03br'
+  MAKEFILE_NAME: 'cm_a03br'
+
+jobs:
+  extract_wifi:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    permissions:
+      contents: write
+
+    steps:
+      - name: Display Run Parameters
+        run: |
+          echo "::group::User Environment Variables"
+          echo "Manifest URL: ${{ env.MANIFEST_URL }}"
+          echo "Manifest Branch: ${{ env.MANIFEST_BRANCH }}"
+          echo "Device Name: ${{ env.DEVICE_NAME }}"
+          echo "Makefile Name: ${{ env.MAKEFILE_NAME }}"
+          echo "::endgroup::"
+
+      - name: Check Out
+        uses: actions/checkout@v3
+
+      - name: Cleanup
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Prepare the environment
+        run: |
+          sudo apt update
+          sudo apt -y install \
+            git repo curl python3 \
+            gperf gcc-multilib g++-multilib \
+            libxml2-utils bc ccache zip unzip
+
+      - name: Install OpenJDK 7
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '7'
+
+      - name: Install repo
+        run: |
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          sudo ln -sf ~/bin/repo /usr/bin/repo
+
+      - name: Initialize repo
+        id: pwd
+        run: |
+          mkdir -p workspace
+          cd workspace
+          echo "workspace-folder=$(pwd)" >> "$GITHUB_OUTPUT"
+          git config --global user.name "azwhikaru"
+          git config --global user.email "azwhikaru+37921907@github.com"
+          repo init --depth=1 -u ${{ env.MANIFEST_URL }} -b ${{ env.MANIFEST_BRANCH }}
+
+      - name: Create Local Manifest
+        run: |
+          mkdir -p workspace/.repo/local_manifests
+          cat << 'EOF' > workspace/.repo/local_manifests/roomservice.xml
+          <?xml version="1.0" encoding="UTF-8"?>
+          <manifest>
+              <project name="coara-chocomaru/ct2-br" path="device/sts/a03br" remote="github" revision="main" />
+              <project name="coara-chocomaru/a03-br_vendor_blob" path="vendor/sts/a03br" remote="github" revision="main" />
+          </manifest>
+          EOF
+
+      - name: Repo Sync
+        working-directory: workspace
+        run: |
+          repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags -c
+
+      - name: Fetch Git LFS files
+        working-directory: workspace
+        run: |
+          repo forall -v -c git lfs pull || true
+
+      - name: Zip frameworks/opt/net/wifi
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          echo "Zipping frameworks/opt/net/wifi..."
+          mkdir -p /tmp/artifacts
+          
+          if [ -d "frameworks/opt/net/wifi" ]; then
+            cd frameworks/opt/net/wifi
+            zip -r /tmp/artifacts/frameworks_opt_net_wifi.zip . -x "*.git*" "*.repo*" > /dev/null
+            echo " Successfully zipped frameworks/opt/net/wifi"
+            ls -lh /tmp/artifacts/frameworks_opt_net_wifi.zip
+          else
+            echo " Error: frameworks/opt/net/wifi directory not found!"
+            exit 1
+          fi
+
+      - name: Collect Additional Debug Info
+        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+        run: |
+          echo "=== WiFi Directory Structure ===" > /tmp/artifacts/wifi_info.txt
+          find frameworks/opt/net/wifi -type f | head -100 >> /tmp/artifacts/wifi_info.txt
+          echo -e "\n=== Android.mk ===" >> /tmp/artifacts/wifi_info.txt
+          cat frameworks/opt/net/wifi/Android.mk >> /tmp/artifacts/wifi_info.txt 2>/dev/null || echo "Android.mk not found" >> /tmp/artifacts/wifi_info.txt
+
+      - name: Upload WiFi Source Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frameworks-opt-net-wifi-${{ env.DEVICE_NAME }}-${{ github.run_id }}
+          path: |
+            /tmp/artifacts/frameworks_opt_net_wifi.zip
+            /tmp/artifacts/wifi_info.txt
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Summary
+        run: |
+          echo " Workflow completed."
+          echo "Download the artifact 'frameworks-opt-net-wifi-...' to inspect the WiFi source code."
