@@ -118,8 +118,6 @@
 /dev/umts_at[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_atgps[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_at[0-9]+_[0-9]+   u:object_r:ssipc_device:s0
-/data/misc/wifi(/.*)?           u:object_r:wifi_data_file:s0
-
 
 # define marvell special gpu label
 /dev/galcore		u:object_r:mrvlgpu_device:s0
