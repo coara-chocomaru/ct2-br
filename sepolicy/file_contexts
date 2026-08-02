@@ -105,7 +105,6 @@
 /dev/lsm9ds1		u:object_r:sensor_device:s0
 /dev/lsm9ds1_gyr	u:object_r:sensor_device:s0
 /dev/ts		u:object_r:ts_device:s0
-/dev/ttyS2 u:object_r:hci_attach_dev:s0
 
 /dev/umts_boot[0-9]+	u:object_r:ssipc_device:s0
 /dev/umts_ipc[0-9]+	u:object_r:ssipc_device:s0
