@@ -93,12 +93,6 @@ jobs:
         run: |
           repo forall -v -c git lfs pull
           
-      - name: Apply Folder Patch
-        working-directory: workspace
-        run: |
-            cp -rf device/sts/a03br/prebuilt/WifiStateMachine_modified.java frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiStateMachine.java
-            rm -rf device/sts/a03br/prebuilt/WifiStateMachine_modified.java || true
-
       - name: Patch libcamera_parameters_shim into libcameraservice Android.mk
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
