@@ -13,14 +13,15 @@
 
 static void* g_real_handle = NULL;
 
+
 static int (*real_wifi_set_mode)(int) = NULL;
-static int (*real_wifi_start_supplicant)(void) = NULL;
-static int (*real_wifi_stop_supplicant)(void) = NULL;
-static int (*real_wifi_connect_to_supplicant)(void) = NULL;
-static int (*real_wifi_close_supplicant_connection)(void) = NULL;
-static int (*real_wifi_wait_for_event)(char*, size_t) = NULL;
-static int (*real_wifi_command)(const char*, char*, size_t*) = NULL;
-static int (*real_wifi_send_command)(const char*, char*, size_t*) = NULL;
+static int (*real_wifi_start_supplicant)(int) = NULL;
+static int (*real_wifi_stop_supplicant)(int) = NULL;
+static int (*real_wifi_connect_to_supplicant)(const char*) = NULL;
+static void (*real_wifi_close_supplicant_connection)(const char*) = NULL;
+static int (*real_wifi_wait_for_event)(const char*, char*, size_t) = NULL;
+static int (*real_wifi_command)(const char*, const char*, char*, size_t*) = NULL;
+static int (*real_wifi_send_command)(int, const char*, char*, size_t*) = NULL;
 static int (*real_wifi_supplicant_connection_active)(void) = NULL;
 static int (*real_is_wifi_driver_loaded)(void) = NULL;
 static int (*real_wifi_load_driver)(void) = NULL;
@@ -29,7 +30,7 @@ static int (*real_wifi_enable)(void) = NULL;
 static int (*real_wifi_disable)(void) = NULL;
 static int (*real_wifi_get_mac_addr)(unsigned char*) = NULL;
 static int (*real_wifi_get_fwstate)(char*, size_t) = NULL;
-static int (*real_wifi_get_fw_path)(char*, size_t) = NULL;
+static const char* (*real_wifi_get_fw_path)(int) = NULL;
 static int (*real_wifi_change_fw_path)(const char*) = NULL;
 static int (*real_wifi_set_drvarg)(const char*, const char*) = NULL;
 static int (*real_wifi_set_drv_arg)(const char*, const char*) = NULL;
@@ -161,18 +162,18 @@ __attribute__((constructor)) void shim_init(void) {
 }
 
 __attribute__((visibility("default"))) int wifi_set_mode(int mode) {
-    if (mode <= 0) {
-        LOGW("wifi_set_mode called with invalid mode %d, forcing STA mode (1)", mode);
-        mode = 1;
+    if (!real_wifi_set_mode) {
+        LOGI("wifi_set_mode: not supported by stock blob, no-op (mode=%d)", mode);
+        return 0;
     }
-    return real_wifi_set_mode ? real_wifi_set_mode(mode) : -1;
+    return real_wifi_set_mode(mode);
 }
 
-__attribute__((visibility("default"))) int wifi_start_supplicant(void) {
-    return real_wifi_start_supplicant ? real_wifi_start_supplicant() : -1;
+__attribute__((visibility("default"))) int wifi_start_supplicant(int p2p_supported) {
+    return real_wifi_start_supplicant ? real_wifi_start_supplicant(p2p_supported) : -1;
 }
 
-__attribute__((visibility("default"))) int wifi_stop_supplicant(void) {
+__attribute__((visibility("default"))) int wifi_stop_supplicant(int p2p_supported) {
     if (!real_wifi_stop_supplicant) {
         LOGW("real_wifi_stop_supplicant is NULL, returning 0");
         return 0;
@@ -185,27 +186,29 @@ __attribute__((visibility("default"))) int wifi_stop_supplicant(void) {
         LOGW("Supplicant connection not active, skipping stop");
         return 0;
     }
-    return real_wifi_stop_supplicant();
+    return real_wifi_stop_supplicant(p2p_supported);
 }
 
-__attribute__((visibility("default"))) int wifi_connect_to_supplicant(void) {
-    return real_wifi_connect_to_supplicant ? real_wifi_connect_to_supplicant() : -1;
+__attribute__((visibility("default"))) int wifi_connect_to_supplicant(const char* ifname) {
+    return real_wifi_connect_to_supplicant ? real_wifi_connect_to_supplicant(ifname) : -1;
 }
 
-__attribute__((visibility("default"))) int wifi_close_supplicant_connection(void) {
-    return real_wifi_close_supplicant_connection ? real_wifi_close_supplicant_connection() : -1;
+__attribute__((visibility("default"))) void wifi_close_supplicant_connection(const char* ifname) {
+    if (real_wifi_close_supplicant_connection) {
+        real_wifi_close_supplicant_connection(ifname);
+    }
 }
 
-__attribute__((visibility("default"))) int wifi_wait_for_event(char* buf, size_t len) {
-    return real_wifi_wait_for_event ? real_wifi_wait_for_event(buf, len) : -1;
+__attribute__((visibility("default"))) int wifi_wait_for_event(const char* ifname, char* buf, size_t len) {
+    return real_wifi_wait_for_event ? real_wifi_wait_for_event(ifname, buf, len) : -1;
 }
 
-__attribute__((visibility("default"))) int wifi_command(const char* cmd, char* reply, size_t* reply_len) {
-    return real_wifi_command ? real_wifi_command(cmd, reply, reply_len) : -1;
+__attribute__((visibility("default"))) int wifi_command(const char* ifname, const char* cmd, char* reply, size_t* reply_len) {
+    return real_wifi_command ? real_wifi_command(ifname, cmd, reply, reply_len) : -1;
 }
 
-__attribute__((visibility("default"))) int wifi_send_command(const char* cmd, char* reply, size_t* reply_len) {
-    return real_wifi_send_command ? real_wifi_send_command(cmd, reply, reply_len) : -1;
+__attribute__((visibility("default"))) int wifi_send_command(int index, const char* cmd, char* reply, size_t* reply_len) {
+    return real_wifi_send_command ? real_wifi_send_command(index, cmd, reply, reply_len) : -1;
 }
 
 __attribute__((visibility("default"))) int wifi_supplicant_connection_active(void) {
@@ -240,8 +243,8 @@ __attribute__((visibility("default"))) int wifi_get_fwstate(char* buf, size_t le
     return real_wifi_get_fwstate ? real_wifi_get_fwstate(buf, len) : -1;
 }
 
-__attribute__((visibility("default"))) int wifi_get_fw_path(char* buf, size_t len) {
-    return real_wifi_get_fw_path ? real_wifi_get_fw_path(buf, len) : -1;
+__attribute__((visibility("default"))) const char* wifi_get_fw_path(int fw_type) {
+    return real_wifi_get_fw_path ? real_wifi_get_fw_path(fw_type) : NULL;
 }
 
 __attribute__((visibility("default"))) int wifi_change_fw_path(const char* path) {
