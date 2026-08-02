@@ -244,6 +244,7 @@ BOARD_SEPOLICY_UNION += \
     radio.te \
     core_compressor.te \
     surfaceflinger.te \
+    sysfs \
     init.te
 	
 # BOARD_SEPOLICY_DIRS := \
