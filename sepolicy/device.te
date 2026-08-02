@@ -64,7 +64,7 @@ type setup_fs_exec, exec_type, file_type;
 type pppmodem_exec, exec_type;
 type eeh_exec, exec_type, file_type;
 type diag_exec, exec_type;
-type atcmdsrv_exec, exec_type, file_type
+type atcmdsrv_exec, exec_type, file_type;
 type marvelltel_exec, exec_type;
 type FMRadiod_exec, exec_type;
 type mwirelessd_exec, exec_type, file_type;
