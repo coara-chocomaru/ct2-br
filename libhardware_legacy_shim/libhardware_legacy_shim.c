@@ -169,11 +169,18 @@ __attribute__((visibility("default"))) int wifi_set_mode(int mode) {
     return real_wifi_set_mode(mode);
 }
 
+static int map_p2p_supported_to_vendor_mode(int p2p_supported) {
+    return p2p_supported ? 2 : 0;
+}
+
 __attribute__((visibility("default"))) int wifi_start_supplicant(int p2p_supported) {
-    return real_wifi_start_supplicant ? real_wifi_start_supplicant(p2p_supported) : -1;
+    int vendor_mode = map_p2p_supported_to_vendor_mode(p2p_supported);
+    LOGI("wifi_start_supplicant: p2p_supported=%d -> vendor mode=%d", p2p_supported, vendor_mode);
+    return real_wifi_start_supplicant ? real_wifi_start_supplicant(vendor_mode) : -1;
 }
 
 __attribute__((visibility("default"))) int wifi_stop_supplicant(int p2p_supported) {
+    int vendor_mode = map_p2p_supported_to_vendor_mode(p2p_supported);
     if (!real_wifi_stop_supplicant) {
         LOGW("real_wifi_stop_supplicant is NULL, returning 0");
         return 0;
@@ -186,7 +193,8 @@ __attribute__((visibility("default"))) int wifi_stop_supplicant(int p2p_supporte
         LOGW("Supplicant connection not active, skipping stop");
         return 0;
     }
-    return real_wifi_stop_supplicant(p2p_supported);
+    LOGI("wifi_stop_supplicant: p2p_supported=%d -> vendor mode=%d", p2p_supported, vendor_mode);
+    return real_wifi_stop_supplicant(vendor_mode);
 }
 
 __attribute__((visibility("default"))) int wifi_connect_to_supplicant(const char* ifname) {
