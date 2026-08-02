@@ -13,7 +13,6 @@
 
 static void* g_real_handle = NULL;
 
-
 static int (*real_wifi_set_mode)(int) = NULL;
 static int (*real_wifi_start_supplicant)(int) = NULL;
 static int (*real_wifi_stop_supplicant)(int) = NULL;
@@ -162,6 +161,7 @@ __attribute__((constructor)) void shim_init(void) {
 }
 
 __attribute__((visibility("default"))) int wifi_set_mode(int mode) {
+
     if (!real_wifi_set_mode) {
         LOGI("wifi_set_mode: not supported by stock blob, no-op (mode=%d)", mode);
         return 0;
