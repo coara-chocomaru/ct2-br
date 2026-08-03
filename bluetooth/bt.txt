@@ -1,2 +1,2 @@
-BLUETOOTH_UART_DEVICE_PORT = "/dev/ttyAMA4"
+BLUETOOTH_UART_DEVICE_PORT = "/dev/mbtchar0"
 FW_PATCHFILE_LOCATION = "/system/etc/firmware/"
