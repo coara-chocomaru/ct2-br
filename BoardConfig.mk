@@ -54,7 +54,7 @@ MALLOC_SVELTE := true
 TARGET_LOW_RAM_DEVICE := true
 
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/sts/a03br/bluetooth
-BOARD_BLUEDROID_VENDOR_CONF := device/sts/a03br/bluetooth/bt.txt
+BOARD_BLUEDROID_VENDOR_CONF := device/sts/a03br/bluetooth/vnd_mrvl.txt
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MRVL := true
 USE_BLUETOOTH_SAP := false
