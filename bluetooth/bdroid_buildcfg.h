@@ -6,5 +6,5 @@
 #define BLE_VND_INCLUDED FALSE
 #define BTM_WBS_INCLUDED FALSE
 #define BTIF_HF_WBS_PREFERRED FALSE
-#BLUETOOTH_UART_DEVICE_PORT = "/dev/mbtchar0"
+#define BLUETOOTH_UART_DEVICE_PORT = "/dev/mbtchar0"
 #endif
