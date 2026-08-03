@@ -21,6 +21,7 @@ ro.zygote.disable_gl_preload=true
 ro.sf.lcd_density=160
 ro.debuggable=1
 ro.adb.secure=0
+ro.boot.wificountrycode=JP
 ro.secure=0
 ro.kernel.andrid.checkjni=0
 sys.viewroot.hw=false
