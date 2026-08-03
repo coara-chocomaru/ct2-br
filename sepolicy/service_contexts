@@ -1,0 +1,4 @@
+Streaming.Media		u:object_r:mediaserver_service:s0
+ReceiveBootService	u:object_r:system_server_service:s0
+PowerHintService	u:object_r:system_server_service:s0
+codecIPCservice		u:object_r:system_server_service:s0
