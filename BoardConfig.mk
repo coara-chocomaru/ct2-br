@@ -246,6 +246,7 @@ BOARD_SEPOLICY_UNION += \
     surfaceflinger.te \
     sysfs.te \
     prop.te \
+    service_contexts \
     init.te
 	
 # BOARD_SEPOLICY_DIRS := \
