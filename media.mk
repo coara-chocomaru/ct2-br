@@ -1,4 +1,4 @@
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     libtinyalsa \
     libtinycompress \
     libtinymix \
