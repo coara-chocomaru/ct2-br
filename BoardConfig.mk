@@ -237,6 +237,7 @@ BOARD_SEPOLICY_UNION += \
     core_compressor.te \
     surfaceflinger.te \
     sysfs.te \
+    settings_country.te \
     prop.te \
     service_contexts \
     init.te
