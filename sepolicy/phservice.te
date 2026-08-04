@@ -2,6 +2,7 @@
 type phservice, domain;
 type phservice_exec, exec_type, file_type;
 init_daemon_domain(phservice)
+type_transition init phservice_exec:process phservice;
 
 allow servicemanager phservice:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow servicemanager phservice:file { ioctl read write create getattr setattr lock append unlink link rename open };
