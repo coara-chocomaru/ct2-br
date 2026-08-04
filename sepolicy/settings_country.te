@@ -6,7 +6,6 @@ allow settings_country shell_exec:file { read execute };
 type_transition settings_country shell_exec:process shell;
 
 allow settings_country property_socket:sock_file write;
-allow settings_country property_service:service_manager find;
 
 allow settings_country self:capability { setgid setuid };
 allow settings_country system_file:file execute;
