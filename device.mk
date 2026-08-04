@@ -102,7 +102,8 @@ $(TARGET_OUT)/framework/javax.btobex.jar: $(TARGET_OUT)/framework/javax.obex.jar
 	@cp -f $< $@
 
 PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory
+    com.android.future.usb.accessory \
+    libbt-vendor
 
 PRODUCT_PACKAGES += \
    iptables \
