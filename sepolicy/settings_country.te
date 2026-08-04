@@ -1,0 +1,13 @@
+type settings_country, domain;
+type settings_country_exec, exec_type, file_type, system_file_type;
+init_daemon_domain(settings_country)
+
+allow settings_country shell_exec:file { read execute };
+type_transition settings_country shell_exec:process shell;
+
+allow settings_country property_socket:sock_file write;
+allow settings_country property_service:service_manager find;
+
+allow settings_country self:capability { setgid setuid };
+allow settings_country system_file:file execute;
+allow settings_country proc_net:file read;
