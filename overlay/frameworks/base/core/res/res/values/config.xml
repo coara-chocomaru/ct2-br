@@ -28,7 +28,7 @@
     <bool name="config_safe_media_volume_enabled">true</bool>
     <bool name="config_useFixedVolume">false</bool>
     <bool name="config_speed_up_audio_on_mt_calls">true</bool>
-    <bool name="config_camera_sound_forced">true</bool>
+    <bool name="config_camera_sound_forced">false</bool>
     <bool name="config_useDevInputEventForAudioJack">true</bool>
     <bool name="config_bluetooth_sco_off_call">false</bool>
     <bool name="config_bluetooth_wide_band_speech">true</bool>
