@@ -297,15 +297,6 @@ service vncserver /system/bin/logwrapper /system/bin/androidvncserver
     class core
     disabled
 
-# create filesystem if necessary
-service setup_fs /system/bin/setup_fs \
-        /dev/block/platform/soc.1/by-name/userdata \
-        /dev/block/platform/soc.1/by-name/cache
-    class core
-    user root
-    group root
-    oneshot
-
 #service mned /system/bin/MarvellNfcExtensionsDaemon
 #    class main
 #    user nfc
@@ -351,10 +342,3 @@ on property:sys.boot_completed=1
     write /sys/class/devfreq/devfreq-ddr/polling_interval 50
     exec /system/bin/ts_calibrator
     start kinitlog
-
-service kinitlog /system/bin/kinitlog.sh
-    class main
-    user root
-    group root
-    oneshot
-    disabled
