@@ -13,7 +13,7 @@ int main() {
     }
 
     char result[64] = {0};
-    if (fgets(result, sizeof(result), fp) != nullptr) {
+    if (fgets(result, sizeof(result), fp) != NULL) {
         size_t len = strlen(result);
         if (len > 0 && result[len - 1] == '\n') {
             result[len - 1] = '\0';
