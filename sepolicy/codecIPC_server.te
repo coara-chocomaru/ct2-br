@@ -4,6 +4,7 @@ type codecIPC_server_exec, exec_type, file_type;
 init_daemon_domain(codecIPC_server)
 type_transition init codecIPC_server_exec:process codecIPC_server;
 
+allow codecIPC_server system_server_service:service_manager { add find };
 
 #neverallow Google CTS-android-m-preview: 
 #neverallow { domain -servicemanager } *:binder set_context_mgr
