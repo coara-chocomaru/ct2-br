@@ -1,7 +1,6 @@
 #include <dlfcn.h>
 #include <android/log.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -212,45 +211,12 @@ __attribute__((visibility("default"))) int wifi_wait_for_event(const char* ifnam
     return real_wifi_wait_for_event ? real_wifi_wait_for_event(ifname, buf, len) : -1;
 }
 
-static const char* DRIVER_COUNTRY_PREFIX = "DRIVER COUNTRY";
-
-static const char* fixup_driver_country_command(const char* cmd, char* out, size_t out_size) {
-    size_t prefix_len;
-    const char* rest;
-
-    if (!cmd) {
-        return cmd;
-    }
-
-    prefix_len = strlen(DRIVER_COUNTRY_PREFIX);
-    if (strncmp(cmd, DRIVER_COUNTRY_PREFIX, prefix_len) != 0) {
-        return cmd;
-    }
-
-    rest = cmd + prefix_len;
-    while (*rest == ' ') {
-        rest++;
-    }
-
-    if (*rest == '\0') {
-        snprintf(out, out_size, "%s JP", DRIVER_COUNTRY_PREFIX);
-        LOGI("wifi_command: empty country code detected, defaulting to JP");
-        return out;
-    }
-
-    return cmd;
-}
-
 __attribute__((visibility("default"))) int wifi_command(const char* ifname, const char* cmd, char* reply, size_t* reply_len) {
-    char fixed_cmd[64];
-    const char* actual_cmd = fixup_driver_country_command(cmd, fixed_cmd, sizeof(fixed_cmd));
-    return real_wifi_command ? real_wifi_command(ifname, actual_cmd, reply, reply_len) : -1;
+    return real_wifi_command ? real_wifi_command(ifname, cmd, reply, reply_len) : -1;
 }
 
 __attribute__((visibility("default"))) int wifi_send_command(int index, const char* cmd, char* reply, size_t* reply_len) {
-    char fixed_cmd[64];
-    const char* actual_cmd = fixup_driver_country_command(cmd, fixed_cmd, sizeof(fixed_cmd));
-    return real_wifi_send_command ? real_wifi_send_command(index, actual_cmd, reply, reply_len) : -1;
+    return real_wifi_send_command ? real_wifi_send_command(index, cmd, reply, reply_len) : -1;
 }
 
 __attribute__((visibility("default"))) int wifi_supplicant_connection_active(void) {
@@ -346,10 +312,6 @@ __attribute__((visibility("default"))) int wifi_get_band(void) {
 }
 
 __attribute__((visibility("default"))) int wifi_set_country_code(const char* code) {
-    if (!code || code[0] == '\0') {
-        LOGI("wifi_set_country_code: empty country code detected, defaulting to JP");
-        return real_wifi_set_country_code ? real_wifi_set_country_code("JP") : -1;
-    }
     return real_wifi_set_country_code ? real_wifi_set_country_code(code) : -1;
 }
 
