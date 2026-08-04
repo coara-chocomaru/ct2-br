@@ -160,10 +160,19 @@ static void bt_vnd_mrvl_if_cleanup(void)
 	return;
 }
 
+/** SSR cleanup is used in HW reset cases
+ *  which would close all the client channels
+ *  and turns off the chip */
+static void bt_vnd_mrvl_if_ssr_cleanup(int reason)
+{
+	ALOGI("ssr_cleanup (reason=%d)", reason);
+}
+
 const bt_vendor_interface_t BLUETOOTH_VENDOR_LIB_INTERFACE = {
-	sizeof(bt_vendor_interface_t),
-	bt_vnd_mrvl_if_init,
-	bt_vnd_mrvl_if_op,
-	bt_vnd_mrvl_if_cleanup,
+	.size        = sizeof(bt_vendor_interface_t),
+	.init        = bt_vnd_mrvl_if_init,
+	.op          = bt_vnd_mrvl_if_op,
+	.cleanup     = bt_vnd_mrvl_if_cleanup,
+	.ssr_cleanup = bt_vnd_mrvl_if_ssr_cleanup,
 };
 
