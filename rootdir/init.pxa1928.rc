@@ -290,16 +290,6 @@ service vncserver /system/bin/logwrapper /system/bin/androidvncserver
     class core
     disabled
 
-#service mned /system/bin/MarvellNfcExtensionsDaemon
-#    class main
-#    user nfc
-#    group nfc
-
-# init.rc does not yet support applying capabilities, so run as root and
-# let FMRadioServer drop uid to system with the right linux capabilities
-#service FMRadiod /system/bin/FMRadioServer
-#    class late_start
-
 on property:ro.config.low_ram=true
     # Enable KSM
     write /sys/kernel/mm/ksm/pages_to_scan 100
@@ -328,11 +318,6 @@ service codecIPC_server /system/bin/codecIPC_server
     ioprio rt 4
 
 on property:sys.boot_completed=1
-    # 1. due to emmc calibration, kernel disable touch input by default.
-    # enable it, when boot completed.
-    # 2. enable ddr polling interval as 50, remove from phservice
-    # write /sys/kernel/debug/inputbst_enable 1
     start settings_country
     write /sys/class/devfreq/devfreq-ddr/polling_interval 50
     exec /system/bin/ts_calibrator
-    start kinitlog
