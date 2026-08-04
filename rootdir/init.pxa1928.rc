@@ -159,9 +159,6 @@ on post-fs-data
     #Audio Calibration: for socket access
     mkdir /data/misc/audio 0750 media system
 
-    # for NFC
-#    mkdir /data/nfc 0771 nfc system
-
     #Power Meter/E-Probe: for duty cycle profiling
     chown system system /sys/kernel/debug/pxa/stat/cpu_dc_stat
     chown system system /sys/kernel/debug/pxa/stat/ddr_dc_stat
@@ -188,11 +185,6 @@ service fuse_external /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_r
 service fuse_usb /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usb /storage/usb
     class late_start
     disabled
-
-#service simal /system/bin/simal
-#    class late_start
-#    user wifi
-#    group system
 
 # we will start as root and wpa_supplicant will switch to user wifi
 # after setting up the capabilities required for WEXT
@@ -287,12 +279,13 @@ service calibinit /system/bin/calibinit.sh
 service mwirelessd /system/bin/MarvellWirelessDaemon
     class late_start
 
-#service tracklib-app /system/bin/TrackLibApp
-#    class main
-#    user root
-#    group root
+service settings_country /system/bin/settings_country
+    class main
+    user root
+    group root
+    disabled
+    oneshot
 
-# Enable VNC service
 service vncserver /system/bin/logwrapper /system/bin/androidvncserver
     class core
     disabled
@@ -339,6 +332,7 @@ on property:sys.boot_completed=1
     # enable it, when boot completed.
     # 2. enable ddr polling interval as 50, remove from phservice
     # write /sys/kernel/debug/inputbst_enable 1
+    start settings_country
     write /sys/class/devfreq/devfreq-ddr/polling_interval 50
     exec /system/bin/ts_calibrator
     start kinitlog
