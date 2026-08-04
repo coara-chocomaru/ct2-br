@@ -15,6 +15,7 @@ allow shell phservice:binder { call };
 allow shell phservice_exec:file { getattr };
 allow system_app phservice:binder { call };
 allow system_server phservice:binder { call };
+allow phservice system_server_service:service_manager { add find };
 #neverallow Google CTS-android-m-preview:
 #neverallow { domain -system_server -system_app -init -installd } system_data_file:file { append create link unlink relabelfrom rename setattr write }
 #allow phservice system_data_file:file create_file_perms;
