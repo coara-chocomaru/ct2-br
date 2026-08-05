@@ -662,6 +662,7 @@ allow bluetooth bluetooth_prop:property_service set;
 allow bluetooth sysfs_bluetooth_writable:file rw_file_perms;
 
 # mediaserver
+allow mediaserver dump_log_data_file:dir search;
 allow appdomain mediaserver:binder { transfer };
 allow binderservicedomain mediaserver:binder { transfer };
 allow drmserver mediaserver:binder { call transfer };
