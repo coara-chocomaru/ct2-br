@@ -1,8 +1,11 @@
 type settings_country, domain;
 type settings_country_exec, exec_type, file_type;
 init_daemon_domain(settings_country)
+allow settings_country shell:process { rlimitinh siginh noatsecure };
 allow settings_country shell_exec:file { getattr open read execute execute_no_trans };
 allow settings_country shell:process transition;
+allow shell settings_country:fd use;
+allow shell settings_country:process sigchld;
 type_transition settings_country shell_exec:process shell;
 
 allow settings_country property_socket:sock_file write;
