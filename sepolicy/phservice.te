@@ -14,6 +14,9 @@ allow phservice sysfs_devices_system_cpu:file { ioctl read write create getattr 
 allow phservice dumpstate:fd use;
 allow shell phservice:binder { call };
 allow shell phservice_exec:file { getattr };
+allow phservice shell:fd { use };
+allow phservice shell:fifo_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow phservice shell_exec:file { read execute execute_no_trans open };
 allow system_app phservice:binder { call };
 allow system_server phservice:binder { call };
 allow phservice system_server_service:service_manager { add find };
