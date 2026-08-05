@@ -395,6 +395,7 @@ allow untrusted_app mwireless_device:chr_file { ioctl read write create getattr 
 
 # --- mwirelessd
 init_daemon_domain(mwirelessd)
+allow mwirelessd shell_exec:file { read execute execute_no_trans open };
 allow init mwirelessd:process { transition noatsecure siginh rlimitinh };
 allow init mwirelessd_exec:file { read getattr execute open };
 allow mwirelessd mwirelessd_exec:file { read getattr execute entrypoint open };
@@ -435,6 +436,7 @@ dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 # --- Domain: mlan2040coex ---
 init_daemon_domain(mlan2040coex)
 type_transition init mlan2040coex_exec:process mlan2040coex;
+allow mlan2040coex shell_exec:file { read execute execute_no_trans open };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex_exec:file { read getattr execute open };
@@ -473,6 +475,7 @@ allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
 init_daemon_domain(mlaninit)
 type_transition init mlaninit_exec:process mlaninit;
 allow init mlaninit:process { transition noatsecure siginh rlimitinh };
+allow mlaninit shell_exec:file { read execute execute_no_trans open };
 allow mlaninit sysfs:file { write };
 allow mlaninit sysfs:file rw_file_perms;
 allow mlaninit sysfs:dir  r_dir_perms;
