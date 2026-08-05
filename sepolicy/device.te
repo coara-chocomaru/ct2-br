@@ -618,6 +618,7 @@ allow untrusted_app vpu_device:chr_file { getattr };
 
 
 # bluetooth
+allow bluetooth init:unix_stream_socket { connectto };
 allow bluetooth bluetooth_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow bluetooth bluetooth_data_file:fifo_file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow bluetooth bluetooth_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
