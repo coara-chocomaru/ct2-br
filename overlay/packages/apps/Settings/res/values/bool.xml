@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="config_show_mobile_plan">false</bool>
+    <bool name="config_show_nfc">false</bool>
+    <bool name="config_show_android_beam">false</bool>
+</resources>
