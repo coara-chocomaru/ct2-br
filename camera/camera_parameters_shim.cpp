@@ -4,6 +4,7 @@
 #include <utils/Log.h>
 #include <dlfcn.h>
 #include <string.h>
+#include <stddef.h>
 #include <pthread.h>
 
 namespace android {
@@ -21,7 +22,7 @@ const char CameraParameters::PIXEL_FORMAT_YUV420P_I420[] = "yuv420p";
 
 typedef const char *(*camera_parameters_get_t)(const void *thiz, const char *key);
 
-static camera_parameters_get_t g_orig_camera_parameters_get = nullptr;
+static camera_parameters_get_t g_orig_camera_parameters_get = NULL;
 static pthread_once_t g_resolve_once = PTHREAD_ONCE_INIT;
 
 static void camera_params_shim_resolve_original(void)
@@ -29,7 +30,7 @@ static void camera_params_shim_resolve_original(void)
     g_orig_camera_parameters_get = reinterpret_cast<camera_parameters_get_t>(
         dlsym(RTLD_NEXT, "_ZNK7android15CameraParameters3getEPKc"));
 
-    if (g_orig_camera_parameters_get == nullptr) {
+    if (g_orig_camera_parameters_get == NULL) {
         ALOGE("CameraParametersShim: failed to resolve original CameraParameters::get symbol: %s", dlerror());
     } else {
         ALOGI("CameraParametersShim: resolved original CameraParameters::get symbol");
@@ -42,14 +43,14 @@ const char *CameraParameters::get(const char *key) const
 {
     pthread_once(&g_resolve_once, camera_params_shim_resolve_original);
 
-    const char *original_value = nullptr;
+    const char *original_value = NULL;
 
-    if (g_orig_camera_parameters_get != nullptr) {
+    if (g_orig_camera_parameters_get != NULL) {
         original_value = g_orig_camera_parameters_get(this, key);
     }
 
-    if (original_value != nullptr && strcmp(original_value, "yuv422i-uyvy") == 0) {
-        ALOGI("CameraParametersShim: remapping unsupported color format \"yuv422i-uyvy\" to \"yuv422i-yuyv\" for key \"%s\"", key != nullptr ? key : "(null)");
+    if (original_value != NULL && strcmp(original_value, "yuv422i-uyvy") == 0) {
+        ALOGI("CameraParametersShim: remapping unsupported color format \"yuv422i-uyvy\" to \"yuv422i-yuyv\" for key \"%s\"", key != NULL ? key : "(null)");
         return "yuv422i-yuyv";
     }
 
