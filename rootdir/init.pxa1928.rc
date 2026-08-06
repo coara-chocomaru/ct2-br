@@ -286,6 +286,13 @@ service settings_country /system/bin/settings_country
     disabled
     oneshot
 
+service perfd /system/bin/perfd
+    class main
+    user root
+    group root system
+    oneshot
+    disabled
+
 service vncserver /system/bin/logwrapper /system/bin/androidvncserver
     class core
     disabled
@@ -319,5 +326,6 @@ service codecIPC_server /system/bin/codecIPC_server
 
 on property:sys.boot_completed=1
     start settings_country
+    start perfd
     write /sys/class/devfreq/devfreq-ddr/polling_interval 50
     exec /system/bin/ts_calibrator
