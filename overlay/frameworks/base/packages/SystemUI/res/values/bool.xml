@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="config_recents_use_hardware_layers">false</bool>
+    <bool name="config_recents_fake_shadows">false</bool>
+    <bool name="config_statusBarShowNumber">false</bool>
+    <bool name="config_showPhoneRSSIForData">false</bool>
+    <bool name="config_showMin3G">false</bool>
+    <bool name="config_dead_zone_flash">false</bool>
+    <bool name="enable_ticker">false</bool>
+    <bool name="config_keyguardUserSwitcher">false</bool>
+    <bool name="doze_display_state_supported">false</bool>
+    <bool name="doze_pulse_on_significant_motion">false</bool>
+    <bool name="doze_pulse_on_pick_up">false</bool>
+    <bool name="doze_proximity_check_before_pulse">true</bool>
+    <bool name="doze_pulse_on_notifications">true</bool>
+    <bool name="doze_pickup_performs_proximity_check">false</bool>
+    <bool name="enable_volume_ui">true</bool>
+</resources>
