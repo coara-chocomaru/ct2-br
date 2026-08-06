@@ -226,6 +226,7 @@ BOARD_SEPOLICY_UNION += \
     galcore.te \
     allow.te \
     mem.te \
+    bt.te \
     hawk.te \
     run_hawk_on_boot.te \
     init.te \
