@@ -290,6 +290,7 @@ allow wpa wifi_data_file:lnk_file { ioctl read write create getattr setattr lock
 allow wpa wifi_data_file:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow wpa wifi_data_file:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow wpa wifi_data_file:blk_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
+allow wpa self:file { ioctl read write getattr lock append open };
 
 # wpa_socket
 allow wpa wpa_socket:dir { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename add_name remove_name reparent search rmdir open };
