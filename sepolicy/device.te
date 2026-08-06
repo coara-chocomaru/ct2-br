@@ -662,7 +662,6 @@ allow bluetooth bluetooth_prop:property_service set;
 allow bluetooth sysfs_bluetooth_writable:file rw_file_perms;
 
 # mediaserver
-allow mediaserver dump_log_data_file:dir search;
 allow appdomain mediaserver:binder { transfer };
 allow binderservicedomain mediaserver:binder { transfer };
 allow drmserver mediaserver:binder { call transfer };
@@ -708,6 +707,10 @@ allow mediaserver audio_device:chr_file { read write open };
 allow mediaserver self:capability { sys_nice };
 allow mediaserver system_prop:property_service set;
 allow mediaserver camera_data_file:file { write create };
+allow mediaserver dump_log_data_file:file { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow mediaserver dump_log_data_file:fifo_file { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow mediaserver dump_log_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+
 
 
 # fuse
@@ -876,6 +879,7 @@ allow netd iptables_exec:file { read getattr execute open };
 allow system_server iptables_exec:file { read getattr execute open };
 
 # dalvikcache
+allow shell dalvikcache_data_file:file { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow appdomain dalvikcache_data_file:file { execute };
 allow appdomain dalvikcache_data_file:lnk_file { ioctl read getattr lock open };
 allow appdomain dalvikcache_profiles_data_file:dir { getattr search };
