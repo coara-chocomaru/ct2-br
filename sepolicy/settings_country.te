@@ -7,9 +7,8 @@ allow settings_country shell:process transition;
 allow shell settings_country:fd use;
 allow shell settings_country:process sigchld;
 type_transition settings_country shell_exec:process shell;
-allow shell settings_country:fifo_file write;
+allow shell settings_country:fifo_file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
 allow settings_country property_socket:sock_file write;
-
 allow settings_country self:capability { setgid setuid };
 allow settings_country system_file:file execute;
 allow settings_country proc_net:file read;
