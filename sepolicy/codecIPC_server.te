@@ -7,7 +7,7 @@ type_transition init codecIPC_server_exec:process codecIPC_server;
 allow codecIPC_server shell:fd { use };
 allow codecIPC_server system_server_service:service_manager { add find };
 allow codecIPC_server ion_device:chr_file { open read write ioctl getattr };
-allow codecIPC_server self:file map;
+allow codecIPC_server self:file { create read write setattr };
 #neverallow Google CTS-android-m-preview: 
 #neverallow { domain -servicemanager } *:binder set_context_mgr
 #allow codecIPC_server servicemanager:binder { transfer call impersonate set_context_mgr };
