@@ -52,6 +52,16 @@ allow unconfineddomain codecIPC_server_tmpfs:file { ioctl read write create geta
 allow unconfineddomain codecIPC_server_tmpfs:lnk_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow unconfineddomain codecIPC_server_tmpfs:sock_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename execute swapon quotaon mounton open audit_access execmod };
 allow untrusted_app codecIPC_server_exec:file { read getattr execute open };
+allow codecIPC_server dump_log_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow codecIPC_server dump_log_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow codecIPC_server self:dir { ioctl read getattr search open };
+allow codecIPC_server self:fd { use };
+allow codecIPC_server self:fifo_file { ioctl read write getattr lock append open };
+allow codecIPC_server self:file { ioctl read write getattr lock append open };
+allow codecIPC_server self:lnk_file { ioctl read getattr lock open };
+allow codecIPC_server self:process { fork sigchld sigkill sigstop signull signal getsched setsched getsession getpgid setpgid getcap setcap getattr setrlimit };
+allow codecIPC_server self:unix_dgram_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown sendto };
+allow codecIPC_server self:unix_stream_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown connectto };
 
 #ipc
 allow shell ipc_device:chr_file { getattr };
