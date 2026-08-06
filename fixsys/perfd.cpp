@@ -2,6 +2,7 @@
 #include <cctype>
 #include <cerrno>
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <dirent.h>
 #include <fcntl.h>
@@ -126,18 +127,33 @@ static void optimize_gpufreq() {
     }
 }
 
+static long parse_khz(const std::string &hz_str) {
+    if (hz_str.empty()) {
+        return 0;
+    }
+    return strtol(hz_str.c_str(), nullptr, 10) / 1000;
+}
+
 static void optimize_devfreq() {
     std::vector<std::string> devices = list_dir("/sys/class/devfreq", "");
     for (const auto &dev : devices) {
         std::string base = "/sys/class/devfreq/" + dev;
+        std::string max_freq_hz = read_sysfs(base + "/max_freq");
+        if (dev.compare(0, 11, "devfreq-ddr") == 0) {
+            long max_khz = parse_khz(max_freq_hz);
+            if (max_khz > 0) {
+                write_sysfs(base + "/disable_ddr_fc", "1");
+                write_sysfs(base + "/ddr_freq", std::to_string(max_khz));
+            }
+            continue;
+        }
         std::string available = read_sysfs(base + "/available_governors");
         if (contains_token(available, "performance")) {
             write_sysfs(base + "/governor", "performance");
         } else if (contains_token(available, "userspace")) {
-            std::string max_freq = read_sysfs(base + "/max_freq");
-            if (!max_freq.empty()) {
+            if (!max_freq_hz.empty()) {
                 write_sysfs(base + "/governor", "userspace");
-                write_sysfs(base + "/set_freq", max_freq);
+                write_sysfs(base + "/userspace/set_freq", max_freq_hz);
             }
         }
     }
