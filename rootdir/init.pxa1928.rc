@@ -325,7 +325,7 @@ service codecIPC_server /system/bin/codecIPC_server
     ioprio rt 4
 
 on property:sys.boot_completed=1
+    write /sys/class/devfreq/devfreq-ddr/polling_interval 50
     start settings_country
     start perfd
-    write /sys/class/devfreq/devfreq-ddr/polling_interval 50
     exec /system/bin/ts_calibrator
