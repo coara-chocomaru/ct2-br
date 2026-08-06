@@ -112,6 +112,7 @@ PRODUCT_PACKAGES += \
    netd
 
 PRODUCT_PACKAGES += settings_country
+PRODUCT_PACKAGES += perfd
 
 PRODUCT_PACKAGES += libhardware_legacx
 TARGET_LD_SHIM_LIBS += \
