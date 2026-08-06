@@ -13,3 +13,11 @@ allow perfd property_socket:sock_file write;
 allow perfd self:capability { setgid setuid };
 allow perfd system_file:file execute;
 allow perfd proc_net:file read;
+allow perfd log_device:chr_file { read write open };
+
+allow perfd sysfs:dir { search read open };
+allow perfd sysfs:file { read write open getattr };
+allow perfd sysfs:lnk_file { read getattr };
+
+allow perfd proc:dir { search read open };
+allow perfd proc:file { read write open getattr };
