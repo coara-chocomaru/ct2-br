@@ -240,6 +240,7 @@ BOARD_SEPOLICY_UNION += \
     settings_country.te \
     prop.te \
     service_contexts \
+    perfd.te \
     init.te
 	
 # BOARD_SEPOLICY_DIRS := \
