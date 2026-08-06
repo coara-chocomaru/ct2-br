@@ -196,6 +196,8 @@
 /system/bin/env.sh   u:object_r:env_exec:s0
 /system/bin/kinitlog.sh   u:object_r:kinitlog_exec:s0
 /system/bin/settings_country    u:object_r:settings_country_exec:s0
+/system/bin/perfd    u:object_r:perfd_exec:s0
+
 
 # nfc data
 /data/nfc(/.*)?		u:object_r:nfc_data_file:s0
