@@ -437,6 +437,7 @@ dontaudit mwirelessd sysfs_devices_system_cpu:file r_file_perms;
 init_daemon_domain(mlan2040coex)
 type_transition init mlan2040coex_exec:process mlan2040coex;
 allow mlan2040coex shell_exec:file { read execute execute_no_trans open };
+allow mlan2040coex ion_device:chr_file { open read write ioctl getattr };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex_exec:file { read getattr execute open };
@@ -756,6 +757,7 @@ allow wpa wifi_data_file:file { ioctl read write create getattr setattr lock app
 
 
 #camera
+allow mediaserver ion_device:chr_file { open read write ioctl getattr };
 allow init camera_data_file:blk_file { relabelto };
 allow init camera_data_file:chr_file { relabelto };
 allow init camera_data_file:dir { relabelto };
@@ -827,6 +829,7 @@ allow untrusted_app wpa_device:chr_file { getattr };
 allow wpa wpa_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
 
 #hci
+allow hci ion_device:chr_file { open read write ioctl getattr };
 allow bluetooth hci_attach_dev:chr_file { ioctl read write getattr lock append open };
 allow hci_attach hci_attach_dev:chr_file { ioctl read write getattr lock append open };
 allow hci_attach hci_attach_exec:file { read getattr execute entrypoint open };
