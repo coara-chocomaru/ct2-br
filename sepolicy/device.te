@@ -717,8 +717,8 @@ allow mediaserver audio_device:chr_file { read write open };
 allow mediaserver self:capability { sys_nice };
 allow mediaserver system_prop:property_service set;
 allow mediaserver camera_data_file:file { write create };
-allow mediaserver dump_log_data_file:file { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
-allow mediaserver dump_log_data_file:fifo_file { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow mediaserver dump_log_data_file:fifo_file { ioctl read write create getattr setattr unlink link rename open };
+allow mediaserver dump_log_data_file:file { ioctl read write create getattr setattr unlink link rename open };
 allow mediaserver dump_log_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow mediaserver ion_device:chr_file { ioctl read write getattr lock append open };
 
