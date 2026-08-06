@@ -438,7 +438,7 @@ init_daemon_domain(mlan2040coex)
 type_transition init mlan2040coex_exec:process mlan2040coex;
 allow mlan2040coex shell_exec:file { read execute execute_no_trans open };
 allow mlan2040coex ion_device:chr_file { open read write ioctl getattr };
-allow mlan2040coex self:file map;
+allow mlan2040coex self:file { create read write setattr };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex_exec:file { read getattr execute open };
@@ -670,7 +670,7 @@ allow bluetooth bluetooth_prop:property_service set;
 allow bluetooth sysfs_bluetooth_writable:file rw_file_perms;
 
 # mediaserver
-allow mediaserver self:file map;
+allow mediaserver self:file { create read write setattr };
 allow mediaserver debugfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow appdomain mediaserver:binder { transfer };
 allow binderservicedomain mediaserver:binder { transfer };
@@ -787,7 +787,7 @@ allow unconfineddomain camera_data_file:sock_file { ioctl read write create geta
 allow unconfineddomain camera_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain camera_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow camera_device ion_device:chr_file { ioctl read write getattr lock append open };
-allow camera_device self:file map;
+allow camera_device self:file { create read write setattr };
 
 # audio
 allow bootanim audio_device:chr_file { ioctl read write getattr lock append open };
