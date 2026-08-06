@@ -438,6 +438,7 @@ init_daemon_domain(mlan2040coex)
 type_transition init mlan2040coex_exec:process mlan2040coex;
 allow mlan2040coex shell_exec:file { read execute execute_no_trans open };
 allow mlan2040coex ion_device:chr_file { open read write ioctl getattr };
+allow mlan2040coex self:file map;
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex:process { transition noatsecure siginh rlimitinh };
 allow init mlan2040coex_exec:file { read getattr execute open };
@@ -669,6 +670,7 @@ allow bluetooth bluetooth_prop:property_service set;
 allow bluetooth sysfs_bluetooth_writable:file rw_file_perms;
 
 # mediaserver
+allow mediaserver self:file map;
 allow mediaserver debugfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow appdomain mediaserver:binder { transfer };
 allow binderservicedomain mediaserver:binder { transfer };
@@ -785,7 +787,7 @@ allow unconfineddomain camera_data_file:sock_file { ioctl read write create geta
 allow unconfineddomain camera_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow unconfineddomain camera_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow camera_device ion_device:chr_file { ioctl read write getattr lock append open };
-
+allow camera_device self:file map;
 
 # audio
 allow bootanim audio_device:chr_file { ioctl read write getattr lock append open };
@@ -841,6 +843,7 @@ allow bluetooth hci_attach_dev:chr_file { ioctl read write getattr lock append o
 allow hci_attach hci_attach_dev:chr_file { ioctl read write getattr lock append open };
 allow hci_attach hci_attach_exec:file { read getattr execute entrypoint open };
 allow hci_attach hci_attach_tmpfs:file { read write };
+allow hci_attach self:file map;
 allow init hci_attach:process { transition noatsecure siginh rlimitinh };
 allow init hci_attach_exec:file { read getattr execute open };
 allow recovery hci_attach_exec:file { ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename open };
