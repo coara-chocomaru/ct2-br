@@ -3,4 +3,4 @@ allow bootanim surfaceflinger:binder { call transfer };
 allow bootanim surfaceflinger:fd { use };
 allow surfaceflinger sysfs:dir search;
 allow surfaceflinger sysfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
-allow surfaceflinger ion_device:chr_file { open read write ioctl map getattr };
+allow surfaceflinger ion_device:chr_file { open read write ioctl getattr };
