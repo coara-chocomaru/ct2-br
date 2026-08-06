@@ -452,6 +452,20 @@ allow init mlan2040coex_tmpfs:sock_file { relabelto };
 allow mlan2040coex mlan2040coex_exec:file { read getattr execute entrypoint open };
 allow mlan2040coex mlan2040coex_tmpfs:file { read write };
 allow recovery mlan2040coex_exec:file { write setattr open };
+allow mlan2040coex dump_log_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow mlan2040coex dump_log_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow mlan2040coex property_socket:sock_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow mlan2040coex self:capability { setgid setuid net_admin net_raw sys_module };
+allow mlan2040coex self:dir { ioctl read getattr search open };
+allow mlan2040coex self:fd { use };
+allow mlan2040coex self:fifo_file { ioctl read write getattr lock append open };
+allow mlan2040coex self:file { ioctl read write getattr lock append open };
+allow mlan2040coex self:lnk_file { ioctl read getattr lock open };
+allow mlan2040coex self:netlink_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow mlan2040coex self:process { fork sigchld sigkill sigstop signull signal getsched setsched getsession getpgid setpgid getcap setcap getattr setrlimit };
+allow mlan2040coex self:tcp_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown recvfrom sendto recv_msg send_msg name_bind connectto newconn acceptfrom node_bind name_connect };
+allow mlan2040coex self:unix_dgram_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown sendto };
+allow mlan2040coex self:unix_stream_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown connectto };
 allow system_server mlan2040coex:unix_stream_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown recvfrom sendto recv_msg send_msg name_bind connectto newconn acceptfrom };
 allow unconfineddomain mlan2040coex:binder { call set_context_mgr transfer };
 allow unconfineddomain mlan2040coex_tmpfs:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
@@ -670,7 +684,18 @@ allow bluetooth bluetooth_prop:property_service set;
 allow bluetooth sysfs_bluetooth_writable:file rw_file_perms;
 
 # mediaserver
-allow mediaserver self:file { create read write setattr };
+allow mediaserver self:dir { ioctl read getattr search open };
+allow mediaserver self:fd { use };
+allow mediaserver self:fifo_file { ioctl read write getattr lock append open };
+allow mediaserver self:file { ioctl read write getattr lock append open };
+allow mediaserver self:lnk_file { ioctl read getattr lock open };
+allow mediaserver self:netlink_route_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown nlmsg_read };
+allow mediaserver self:process { fork sigchld sigkill sigstop signull signal getsched setsched getsession getpgid setpgid getcap setcap getattr setrlimit execmem };
+allow mediaserver self:rawip_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow mediaserver self:tcp_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown };
+allow mediaserver self:udp_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown };
+allow mediaserver self:unix_dgram_socket { ioctl read write create getattr setattr lock append bind connect getopt setopt shutdown sendto };
+allow mediaserver self:unix_stream_socket { ioctl read write create getattr setattr lock append bind connect listen accept getopt setopt shutdown connectto };
 allow mediaserver debugfs:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow appdomain mediaserver:binder { transfer };
 allow binderservicedomain mediaserver:binder { transfer };
@@ -721,8 +746,11 @@ allow mediaserver dump_log_data_file:fifo_file { ioctl read write create getattr
 allow mediaserver dump_log_data_file:file { ioctl read write create getattr setattr unlink link rename open };
 allow mediaserver dump_log_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
 allow mediaserver ion_device:chr_file { ioctl read write getattr lock append open };
-
-
+allow mediaserver binderservicedomain:fd { use };
+allow mediaserver binderservicedomain:binder { call transfer };
+allow mediaserver gpu_device:chr_file { ioctl read write getattr lock append open };
+allow mediaserver media_data_file:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
+allow mediaserver media_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
 
 # fuse
 allow appdomain fuse:dir { ioctl read write create getattr setattr unlink link rename add_name remove_name reparent search rmdir open };
