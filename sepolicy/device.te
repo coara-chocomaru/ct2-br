@@ -617,6 +617,12 @@ allow unconfineddomain vpu_device:chr_file { ioctl read write create getattr set
 allow unconfineddomain vpu_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
 allow untrusted_app vpu_device:chr_file { getattr };
 
+# ipc
+allow shell ipc_device:chr_file { getattr };
+allow system_server ipc_device:chr_file { ioctl read write create getattr setattr lock append unlink link rename open };
+allow unconfineddomain ipc_device:chr_file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow unconfineddomain ipc_device:file { ioctl read write create getattr setattr lock relabelfrom append unlink link rename swapon quotaon mounton open audit_access };
+allow untrusted_app ipc_device:chr_file { getattr };
 
 # bluetooth
 allow bluetooth init:unix_stream_socket { connectto };
