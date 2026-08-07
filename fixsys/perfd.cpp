@@ -39,8 +39,9 @@ static std::string read_sysfs(const std::string &path) {
     std::string result;
     if (fgets(buf, sizeof(buf), fp) != nullptr) {
         result = buf;
-        while (!result.empty() && (result.back() == '\n' || result.back() == '\r')) {
-            result.pop_back();
+        while (!result.empty() &&
+               (result[result.size() - 1] == '\n' || result[result.size() - 1] == '\r')) {
+            result.erase(result.size() - 1, 1);
         }
     }
     fclose(fp);
@@ -100,7 +101,10 @@ static void optimize_cpufreq() {
 }
 
 static void optimize_gpufreq() {
-    static const std::vector<std::string> cores = {"gpu0", "gpu1", "gpu2"};
+    std::vector<std::string> cores;
+    cores.push_back("gpu0");
+    cores.push_back("gpu1");
+    cores.push_back("gpu2");
     for (const auto &core : cores) {
         std::string base = "/sys/devices/platform/galcore/gpu/" + core + "/gpufreq";
         std::string available = read_sysfs(base + "/scaling_available_governors");
