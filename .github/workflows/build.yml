@@ -387,6 +387,7 @@ jobs:
           export _JAVA_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true -Djava.util.secureRandomSeed=true"
           export USE_CCACHE=1
           export CCACHE_DIR="$HOME/.ccache"
+          export WITH_DEXPREOPT_COMP=false
           export WITH_DEXPREOPT=true
           lunch ${{ env.MAKEFILE_NAME }}-userdebug
 
