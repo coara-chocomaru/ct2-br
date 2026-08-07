@@ -127,6 +127,12 @@ static void optimize_gpufreq() {
     }
 }
 
+static std::string long_to_string(long value) {
+    char buf[32];
+    snprintf(buf, sizeof(buf), "%ld", value);
+    return std::string(buf);
+}
+
 static long parse_khz(const std::string &hz_str) {
     if (hz_str.empty()) {
         return 0;
@@ -143,7 +149,7 @@ static void optimize_devfreq() {
             long max_khz = parse_khz(max_freq_hz);
             if (max_khz > 0) {
                 write_sysfs(base + "/disable_ddr_fc", "1");
-                write_sysfs(base + "/ddr_freq", std::to_string(max_khz));
+                write_sysfs(base + "/ddr_freq", long_to_string(max_khz));
             }
             continue;
         }
