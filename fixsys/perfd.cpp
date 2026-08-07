@@ -1,6 +1,7 @@
 #include <android/log.h>
 #include <cctype>
 #include <cerrno>
+#include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -32,12 +33,12 @@ static bool write_sysfs(const std::string &path, const std::string &value) {
 
 static std::string read_sysfs(const std::string &path) {
     FILE *fp = fopen(path.c_str(), "r");
-    if (fp == nullptr) {
+    if (fp == NULL) {
         return std::string();
     }
     char buf[256];
     std::string result;
-    if (fgets(buf, sizeof(buf), fp) != nullptr) {
+    if (fgets(buf, sizeof(buf), fp) != NULL) {
         result = buf;
         while (!result.empty() &&
                (result[result.size() - 1] == '\n' || result[result.size() - 1] == '\r')) {
@@ -55,11 +56,11 @@ static bool contains_token(const std::string &haystack, const std::string &token
 static std::vector<std::string> list_dir(const std::string &base, const std::string &prefix) {
     std::vector<std::string> result;
     DIR *dir = opendir(base.c_str());
-    if (dir == nullptr) {
+    if (dir == NULL) {
         return result;
     }
     struct dirent *entry;
-    while ((entry = readdir(dir)) != nullptr) {
+    while ((entry = readdir(dir)) != NULL) {
         std::string name = entry->d_name;
         if (name == "." || name == "..") {
             continue;
@@ -74,7 +75,8 @@ static std::vector<std::string> list_dir(const std::string &base, const std::str
 
 static void optimize_cpufreq() {
     std::vector<std::string> cpus = list_dir("/sys/devices/system/cpu", "cpu");
-    for (const auto &cpu : cpus) {
+    for (size_t i = 0; i < cpus.size(); ++i) {
+        const std::string &cpu = cpus[i];
         if (cpu.size() < 4 || !isdigit(static_cast<unsigned char>(cpu[3]))) {
             continue;
         }
@@ -105,7 +107,8 @@ static void optimize_gpufreq() {
     cores.push_back("gpu0");
     cores.push_back("gpu1");
     cores.push_back("gpu2");
-    for (const auto &core : cores) {
+    for (size_t i = 0; i < cores.size(); ++i) {
+        const std::string &core = cores[i];
         std::string base = "/sys/devices/platform/galcore/gpu/" + core + "/gpufreq";
         std::string available = read_sysfs(base + "/scaling_available_governors");
         std::string max_freq = read_sysfs(base + "/cpuinfo_max_freq");
@@ -141,12 +144,13 @@ static long parse_khz(const std::string &hz_str) {
     if (hz_str.empty()) {
         return 0;
     }
-    return strtol(hz_str.c_str(), nullptr, 10) / 1000;
+    return strtol(hz_str.c_str(), NULL, 10) / 1000;
 }
 
 static void optimize_devfreq() {
     std::vector<std::string> devices = list_dir("/sys/class/devfreq", "");
-    for (const auto &dev : devices) {
+    for (size_t i = 0; i < devices.size(); ++i) {
+        const std::string &dev = devices[i];
         std::string base = "/sys/class/devfreq/" + dev;
         std::string max_freq_hz = read_sysfs(base + "/max_freq");
         if (dev.compare(0, 11, "devfreq-ddr") == 0) {
@@ -171,7 +175,8 @@ static void optimize_devfreq() {
 
 static void optimize_io_scheduler() {
     std::vector<std::string> blocks = list_dir("/sys/block", "");
-    for (const auto &block : blocks) {
+    for (size_t i = 0; i < blocks.size(); ++i) {
+        const std::string &block = blocks[i];
         if (block.compare(0, 4, "loop") == 0 || block.compare(0, 3, "ram") == 0) {
             continue;
         }
