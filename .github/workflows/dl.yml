@@ -91,32 +91,23 @@ jobs:
           echo "Zipping frameworks/opt/net/wifi..."
           mkdir -p /tmp/artifacts
           
-          if [ -d "frameworks/opt/net/wifi" ]; then
-            cd frameworks/opt/net/wifi
-            zip -r /tmp/artifacts/frameworks_opt_net_wifi.zip . -x "*.git*" "*.repo*" > /dev/null
-            echo " Successfully zipped frameworks/opt/net/wifi"
-            ls -lh /tmp/artifacts/frameworks_opt_net_wifi.zip
+          if [ -d "frameworks/av/media/mediaserver" ]; then
+            cd frameworks/av/media/mediaserver
+            zip -r /tmp/artifacts/frameworks-av-media-mediaserver.zip . -x "*.git*" "*.repo*" > /dev/null
+            echo " Successfully zipped frameworks/av/media/mediaserver"
+            ls -lh /tmp/artifacts/frameworks-av-media-mediaserver.zip
           else
             echo " Error: frameworks/opt/net/wifi directory not found!"
             exit 1
           fi
 
-      - name: Collect Additional Debug Info
-        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-        run: |
-          echo "=== WiFi Directory Structure ===" > /tmp/artifacts/wifi_info.txt
-          find frameworks/opt/net/wifi -type f | head -100 >> /tmp/artifacts/wifi_info.txt
-          echo -e "\n=== Android.mk ===" >> /tmp/artifacts/wifi_info.txt
-          cat frameworks/opt/net/wifi/Android.mk >> /tmp/artifacts/wifi_info.txt 2>/dev/null || echo "Android.mk not found" >> /tmp/artifacts/wifi_info.txt
-
-      - name: Upload WiFi Source Artifact
+       - name: Upload WiFi Source Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: frameworks-opt-net-wifi-${{ env.DEVICE_NAME }}-${{ github.run_id }}
           path: |
-            /tmp/artifacts/frameworks_opt_net_wifi.zip
-            /tmp/artifacts/wifi_info.txt
+            /tmp/artifacts/frameworks-av-media-mediaserver.zip
           retention-days: 14
           if-no-files-found: warn
 
