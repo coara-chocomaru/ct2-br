@@ -107,8 +107,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += settings_country
 PRODUCT_PACKAGES += perfd
 PRODUCT_PACKAGES += bluetooth.default
-
+PRODUCT_PACKAGES += libcamera_ion_shim
 PRODUCT_PACKAGES += libhardware_legacx
+
 TARGET_LD_SHIM_LIBS += \
     /system/lib/libwifi-service.so|libhardware_legacx.so \
     /system/lib64/libwifi-service.so|libhardware_legacx.so
