@@ -24,6 +24,6 @@ allow perfd sysfs:lnk_file { read getattr };
 
 allow perfd proc:dir { search read open };
 allow perfd proc:file { read write open getattr };
-allow perfd sysfs_devices_system_iosched:file { open read write };
 allow perfd proc_dirty_ratio:file { open read write };
 allow perfd sysfs_lowmemorykiller:file { open read write };
+allow perfd sysfs_devices_system_iosched:file { open read write getattr };
