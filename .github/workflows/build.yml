@@ -101,14 +101,23 @@ jobs:
           with open(path, "r") as f:
               content = f.read()
 
-          old = "LOCAL_SHARED_LIBRARIES :=  \\\n"
-          new = "LOCAL_SHARED_LIBRARIES :=  \\\n    libcamera_ion_shim \\\n"
+          old = "LOCAL_SHARED_LIBRARIES := \\\n\tlibaudioflinger \\\n"
+          new = "LOCAL_SHARED_LIBRARIES := \\\n\tlibcamera_ion_shim \\\n\tlibaudioflinger \\\n"
 
           if old not in content:
               raise SystemExit(
-                  "ERROR: expected LOCAL_SHARED_LIBRARIES marker not found in "
+                  "ERROR: expected 'LOCAL_SHARED_LIBRARIES := \\\\' + 'libaudioflinger \\\\' block not found in "
                   + path
-                  + " - actual mediaserver Android.mk layout differs, refusing to patch blindly"
+                  + " - actual mediaserver Android.mk layout differs (check tabs vs spaces with 'cat -A'), refusing to patch blindly"
+              )
+
+          if content.count(old) != 1:
+              raise SystemExit(
+                  "ERROR: matched block appeared "
+                  + str(content.count(old))
+                  + " times in "
+                  + path
+                  + " - expected exactly 1, refusing to patch ambiguously"
               )
 
           content = content.replace(old, new)
@@ -116,6 +125,9 @@ jobs:
           with open(path, "w") as f:
               f.write(content)
 
+          print("Patched libcamera_ion_shim into mediaserver LOCAL_SHARED_LIBRARIES (first entry) in " + path)
+          PYEOF
+          grep -n -A 14 "LOCAL_SHARED_LIBRARIES" frameworks/av/media/mediaserver/Android.mk
           print("Patched libcamera_ion_shim into mediaserver LOCAL_SHARED_LIBRARIES in " + path)
           PYEOF
           grep -n -A 12 "LOCAL_SHARED_LIBRARIES" frameworks/av/media/mediaserver/Android.mk
