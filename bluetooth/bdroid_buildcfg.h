@@ -1,4 +1,5 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 #define BLE_VND_INCLUDED TRUE
+#define BTA_DM_COD {0x1C, 0x05, 0x02}
 #endif
