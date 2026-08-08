@@ -4,6 +4,10 @@ allow binderservicedomain appdomain:fifo_file { write };
 allow binderservicedomain devpts:chr_file { ioctl read write getattr lock append open };
 allow bluetooth dump_log_data_file:file { ioctl read write create getattr setattr lock append unlink link rename open };
 allow bluetooth efs_file:dir { search };
+allow bluetooth mwirelessd:dir search;
+allow bluetooth mwirelessd:sock_file { read write };
+allow bluetooth mwirelessd:unix_stream_socket connectto;
+
 allow bluetooth property_socket:sock_file { write };
 allow bluetooth self:capability { net_admin };
 allow bluetooth self:capability2 { wake_alarm };
