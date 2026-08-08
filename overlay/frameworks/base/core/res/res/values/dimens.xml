@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="status_bar_height">25dp</dimen>
+    <dimen name="navigation_bar_height">48dp</dimen>
+    <dimen name="navigation_bar_height_landscape">48dp</dimen>
+    <dimen name="navigation_bar_width">42dp</dimen>
+    <dimen name="status_bar_icon_size">24dp</dimen>
+    <dimen name="status_bar_content_number_size">48sp</dimen>
+    <dimen name="status_bar_edge_ignore">5dp</dimen>
+</resources>
