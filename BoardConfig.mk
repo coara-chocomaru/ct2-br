@@ -6,7 +6,9 @@ TARGET_DEVICE := a03br
 TARGET_SOC := pxa1928
 TARGET_BOARD_PLATFORM := mrvl
 BOARD_USES_MRVL_HARDWARE := true
+BOARD_USES_ION := true
 MALLOC_IMPL := dlmalloc
+
 # gpuが無理だったら
 # TARGET_FORCE_CPU_UPLOAD := true
 
