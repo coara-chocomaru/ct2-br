@@ -87,7 +87,6 @@ TARGET_LD_SHIM_LIBS += \
     /system/lib/hw/camera.mrvl.so|libcamera_parameters_shim.so \
     /system/lib64/hw/camera.mrvl.so|libcamera_parameters_shim.so
 
-
 PRODUCT_PACKAGES += \
     libstlport
 
@@ -107,7 +106,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += settings_country
 PRODUCT_PACKAGES += perfd
 PRODUCT_PACKAGES += bluetooth.default
-PRODUCT_PACKAGES += libcamera_ion_shim
 PRODUCT_PACKAGES += libhardware_legacx
 
 TARGET_LD_SHIM_LIBS += \
