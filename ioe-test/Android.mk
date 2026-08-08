@@ -6,5 +6,5 @@ LOCAL_SRC_FILES := camera_ion_shim.c
 LOCAL_SHARED_LIBRARIES := liblog libcutils libdl
 LOCAL_CFLAGS := -Wall -Wextra -fvisibility=default
 LOCAL_PRELINK_MODULE := false
-LOCAL_MULTILIB := both
+LOCAL_32_BIT_ONLY := true
 include $(BUILD_SHARED_LIBRARY)
