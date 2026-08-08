@@ -73,7 +73,7 @@ jobs:
               <project name="coara-chocomaru/a03-br_vendor_blob" path="vendor/sts/a03br" remote="github" revision="main" />
           </manifest>
           EOF
-
+          
       - name: Repo Sync
         working-directory: workspace
         run: |
@@ -100,7 +100,7 @@ jobs:
             exit 1
           fi
 
-       - name: Upload WiFi Source Artifact
+      - name: Upload WiFi Source Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
