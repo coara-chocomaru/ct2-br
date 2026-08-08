@@ -92,7 +92,7 @@ jobs:
         working-directory: workspace
         run: |
           repo forall -v -c git lfs pull
-      
+          
       - name: Patch camera_ion_shim into mediaserver Android.mk
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         run: |
@@ -128,9 +128,6 @@ jobs:
           print("Patched libcamera_ion_shim into mediaserver LOCAL_SHARED_LIBRARIES (first entry) in " + path)
           PYEOF
           grep -n -A 14 "LOCAL_SHARED_LIBRARIES" frameworks/av/media/mediaserver/Android.mk
-          print("Patched libcamera_ion_shim into mediaserver LOCAL_SHARED_LIBRARIES in " + path)
-          PYEOF
-          grep -n -A 12 "LOCAL_SHARED_LIBRARIES" frameworks/av/media/mediaserver/Android.mk
           
       - name: Patch libcamera_parameters_shim into libcameraservice Android.mk
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
