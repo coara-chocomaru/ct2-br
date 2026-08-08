@@ -422,7 +422,16 @@ allow init mwirelessd_tmpfs:file { relabelto };
 allow init mwirelessd_tmpfs:lnk_file { relabelto };
 allow init mwirelessd_tmpfs:sock_file { relabelto };
 allow mwirelessd mwirelessd:sock_file { create unlink setattr };
-domain_read_all_domains_state(mwirelessd)
+allow mwirelessd init:dir search;
+allow mwirelessd init:file { read open getattr };
+allow mwirelessd kernel:dir search;
+allow mwirelessd kernel:file { read open getattr };
+allow mwirelessd ueventd:dir search;
+allow mwirelessd ueventd:file { read open getattr };
+allow mwirelessd logd:dir search;
+allow mwirelessd logd:file { read open getattr };
+allow mwirelessd healthd:dir search;
+allow mwirelessd healthd:file { read open getattr };
 allow mwirelessd mwirelessd:unix_stream_socket { create bind listen accept };
 allow mwirelessd bluetooth:unix_stream_socket accept;
 allow mwirelessd mwirelessd_tmpfs:file { read write };
