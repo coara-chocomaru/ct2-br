@@ -14,9 +14,6 @@ allow perfd property_socket:sock_file write;
 
 allow perfd sysfs_devices_system_cpu:file write;
 allow perfd self:capability dac_override;
-allow perfd sysfs_devices_system_iosched:file read;
-allow perfd proc_dirty_ratio:file write;
-allow perfd sysfs_lowmemorykiller:file write;
 allow perfd self:capability { setgid setuid };
 allow perfd system_file:file execute;
 allow perfd proc_net:file read;
@@ -27,3 +24,6 @@ allow perfd sysfs:lnk_file { read getattr };
 
 allow perfd proc:dir { search read open };
 allow perfd proc:file { read write open getattr };
+allow perfd sysfs_devices_system_iosched:file { open read write };
+allow perfd proc_dirty_ratio:file { open read write };
+allow perfd sysfs_lowmemorykiller:file { open read write };
