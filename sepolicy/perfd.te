@@ -9,8 +9,6 @@ allow shell perfd:process sigchld;
 type_transition perfd shell_exec:process shell;
 
 allow perfd property_socket:sock_file write;
-allow perfd gpu_device:chr_file rw_file_perms;
-allow perfd sysfs_devfreq:file rw_file_perms;
 allow perfd sysfs_devices_system_cpu:file write;
 allow perfd self:capability dac_override;
 allow perfd self:capability { setgid setuid };
