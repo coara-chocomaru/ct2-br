@@ -124,7 +124,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += settings_country
 PRODUCT_PACKAGES += perfd
 PRODUCT_PACKAGES += bluetooth.default
-PRODUCT_PACKAGES += gralloc.default.so
+PRODUCT_PACKAGES += gralloc.default
 PRODUCT_PACKAGES += libhardware_legacx
 
 TARGET_LD_SHIM_LIBS += \
