@@ -13,7 +13,6 @@ PRODUCT_FULL_TREBLE_OVERRIDE := false
 
 
 LOCAL_PATH := device/sts/a03br
-# PRODUCT_BUILD_VENDOR_IMAGE := false
 
 # Product characteristics
 DEVICE_PACKAGE_OVERLAYS += \
@@ -204,3 +203,5 @@ PRODUCT_COPY_FILES += \
 
 # include device/sts/a03br/media.mk
 include device/sts/a03br/permissions.mk
+PRODUCT_SOONG_NAMESPACES += device/sts/a03br
+PRODUCT_SOONG_NAMESPACES += vendor/sts/a03br
