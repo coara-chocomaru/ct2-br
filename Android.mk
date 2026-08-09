@@ -11,7 +11,7 @@ KERNEL_OUT := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ
 $(KERNEL_OUT):
 	mkdir -p $(KERNEL_OUT)
 
-LOCAL_SDK_VERSION := 22
+LOCAL_SDK_VERSION := 28
 JAVA_SDK_ENFORCEMENT_ERROR := false
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif
