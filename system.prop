@@ -5,7 +5,6 @@ user.language=ja
 user.region=JP
 debug.egl.hw=0
 debug.sf.hw=1
-camera2.portability.force_api=1
 ro.crypto.state=unsupported
 persist.sys.purgeable_assets=1
 debug.hwui.render_dirty_regions=false
@@ -38,4 +37,4 @@ persist.service.adb.enable=1
 wifi.interface=wlan0
 wifidirect.interface=p2p0
 ro.wifi.active_roaming.enable=true
-persist.sys.display.format=1
+
