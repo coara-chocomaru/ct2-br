@@ -43,6 +43,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.selinux=0 \
+    log.tag.Minikin=S \
     ro.telephony.disable=true \
     ro.kernel.android.checkjni=0 \
     ro.carrier=wifi-only \
