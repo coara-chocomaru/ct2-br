@@ -78,7 +78,7 @@ jobs:
           cat << 'EOF' > workspace/.repo/local_manifests/roomservice.xml
           <?xml version="1.0" encoding="UTF-8"?>
           <manifest>
-              <project name="coara-chocomaru/ct2-br" path="device/sts/a03br" remote="github" revision="main" />
+              <project name="coara-chocomaru/ct2-br" path="device/sts/a03br" remote="github" revision="test" />
               <project name="coara-chocomaru/a03-br_vendor_blob" path="vendor/sts/a03br" remote="github" revision="main" />
           </manifest>
           EOF
