@@ -1,4 +1,4 @@
-name: LineageOS 
+name: LineageOS-test
 
 on:
   push:
@@ -453,14 +453,7 @@ jobs:
 
           retry_make org.cyanogenmod.platform-res -j$(nproc --all)
           retry_make webview -j$(nproc --all)
-          retry_make ${{ env.BUILD_TARGET }} -j$(nproc --all) WITH_DEXPREOPT=true
-
-      - name: Show ccache statistics
-        if: always()
-        run: |
-          echo "ccache's cleanup-to-configured-limit is asynchronous, not real-time - under sustained -j4 write load over a multi-hour build it can transiently overshoot the configured max size significantly before the next cleanup pass catches up (observed directly: 17.36 GB actual vs an 8 GB configured limit in one run). Forcing cleanup here, right before the job ends and actions/cache automatically saves ~/.ccache, keeps the uploaded cache within the intended budget instead of eating further into the account's shared 10 GB free cache storage tier."
-          ccache -c
-          ccache -s
+          retry_make ${{ env.BUILD_TARGET }} -j$(nproc --all) WITH_DEXPREOPT=trues
       
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
