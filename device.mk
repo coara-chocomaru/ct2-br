@@ -14,8 +14,7 @@ PRODUCT_FULL_TREBLE_OVERRIDE := false
 
 LOCAL_PATH := device/sts/a03br
 
-# Product characteristics
-DEVICE_PACKAGE_OVERLAYS += \
+# DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
