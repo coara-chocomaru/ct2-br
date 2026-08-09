@@ -59,7 +59,7 @@ on init
 
     chown system system /sys/class/graphics/fb0/device/vsync
     chmod 0660 /sys/class/graphics/fb0/device/vsync
-
+    chmod 0666 /dev/mbtchar0
     # sysclk
     chown system system /proc/driver/sspa_sysclk
     chmod 0666 /proc/driver/sspa_sysclk
