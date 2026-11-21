@@ -3,7 +3,7 @@ name: LineageOS
 on:
   push:
     branches:
-      - main5
+      - main
   workflow_dispatch:
 
 env:
@@ -53,7 +53,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '7'
+          java-version: '8'
 
       - name: Install repo
         run: |
