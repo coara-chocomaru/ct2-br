@@ -126,6 +126,7 @@ PRODUCT_PACKAGES += perfd
 PRODUCT_PACKAGES += bluetooth.default
 PRODUCT_PACKAGES += gralloc.default
 PRODUCT_PACKAGES += libhardware_legacx
+PRODUCT_PACKAGES += pxa_fastboot_trigger
 
 TARGET_LD_SHIM_LIBS += \
     /system/lib/libwifi-service.so|libhardware_legacx.so \
