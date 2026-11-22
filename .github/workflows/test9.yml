@@ -65,11 +65,24 @@ jobs:
           tar -xzf "${archive_path}" -C "${RUNNER_TEMP}"
           test -x "${java_home}/bin/java"
           test -x "${java_home}/bin/javac"
+          test -x "${java_home}/bin/jar"
+          java_version="$("${java_home}/bin/java" -version 2>&1)"
+          javac_version="$("${java_home}/bin/javac" -version 2>&1)"
+          printf '%s\n' "${java_version}"
+          printf '%s\n' "${javac_version}"
+          printf '%s\n' "${java_version}" | grep -Eq 'version "1\.7\.0_[0-9]+"'
+          printf '%s\n' "${javac_version}" | grep -Eq '^javac 1\.7\.0_[0-9]+'
+          jar_test_dir="${RUNNER_TEMP}/jdk7-jar-check"
+          jar_test_archive="${RUNNER_TEMP}/jdk7-jar-check.jar"
+          mkdir -p "${jar_test_dir}"
+          printf 'JDK 7 jar tool check\n' > "${jar_test_dir}/check.txt"
+          "${java_home}/bin/jar" cf "${jar_test_archive}" -C "${jar_test_dir}" check.txt
+          jar_listing="$("${java_home}/bin/jar" tf "${jar_test_archive}")"
+          printf '%s\n' "${jar_listing}" | grep -Fqx 'check.txt'
+          rm -rf "${jar_test_dir}" "${jar_test_archive}"
           echo "JAVA_HOME=${java_home}" >> "${GITHUB_ENV}"
           echo "${java_home}/bin" >> "${GITHUB_PATH}"
-          "${java_home}/bin/java" -version
-          "${java_home}/bin/javac" -version
-          "${java_home}/bin/jar" -version
+          echo "JDK 7 toolchain verification passed"
 
       - name: Install repo
         run: |
